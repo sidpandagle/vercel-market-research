@@ -85,63 +85,63 @@ export default async function ReportPage({
     {
       label: `Revenue, ${baseYearLabel}`,
       value: report.marketSize2024 || '—',
-      bg: 'bg-[#ede7ff]',
-      labelColor: 'text-[#4d3f9a]',
-      valueColor: 'text-[#3a2c8f]',
+      bg: 'bg-gradient-to-br from-[#E3F2FD] to-[#BBDEFB]',
+      labelColor: 'text-[#1565C0]',
+      valueColor: 'text-[#0D47A1]',
       icon: (
         <svg
           aria-hidden
-          className="w-10 h-10 text-[#6b4de6]"
+          className="w-10 h-10 text-[#2196F3]"
           viewBox="0 0 64 64"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
             d="M16 44c0-6.627 5.373-12 12-12s12 5.373 12 12"
-            stroke="#6b4de6"
+            stroke="#2196F3"
             strokeWidth="3"
             strokeLinecap="round"
           />
-          <path d="M12 48h40" stroke="#6b4de6" strokeWidth="3" strokeLinecap="round" />
+          <path d="M12 48h40" stroke="#2196F3" strokeWidth="3" strokeLinecap="round" />
           <path
             d="M28 28V18c0-3.314 2.686-6 6-6s6 2.686 6 6v2"
-            stroke="#6b4de6"
+            stroke="#2196F3"
             strokeWidth="3"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
-          <path d="M24 36v-6" stroke="#6b4de6" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M38 32v-4" stroke="#6b4de6" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-          <circle cx="34" cy="20" r="2" fill="#6b4de6" />
+          <path d="M24 36v-6" stroke="#2196F3" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M38 32v-4" stroke="#2196F3" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+          <circle cx="34" cy="20" r="2" fill="#2196F3" />
         </svg>
       ),
     },
     {
       label: `Forecast, ${forecastEndYear}`,
       value: report.marketSize2032 || '—',
-      bg: 'bg-[#d9f0df]',
-      labelColor: 'text-[#0f6c4c]',
-      valueColor: 'text-[#0f5c46]',
+      bg: 'bg-gradient-to-br from-[#E0F2F1] to-[#B2DFDB]',
+      labelColor: 'text-[#00897B]',
+      valueColor: 'text-[#00695C]',
       icon: (
         <svg
           aria-hidden
-          className="w-10 h-10 text-[#0d7a55]"
+          className="w-10 h-10 text-[#26A69A]"
           viewBox="0 0 64 64"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
             d="M10 46l10-18 10 12 12-22 12 28"
-            stroke="#0d7a55"
+            stroke="#26A69A"
             strokeWidth="3"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
-          <path d="M10 52h44" stroke="#0d7a55" strokeWidth="3" strokeLinecap="round" />
-          <circle cx="20" cy="28" r="2" fill="#0d7a55" />
-          <circle cx="30" cy="40" r="2" fill="#0d7a55" />
-          <circle cx="42" cy="20" r="2" fill="#0d7a55" />
-          <circle cx="54" cy="48" r="2" fill="#0d7a55" />
+          <path d="M10 52h44" stroke="#26A69A" strokeWidth="3" strokeLinecap="round" />
+          <circle cx="20" cy="28" r="2" fill="#26A69A" />
+          <circle cx="30" cy="40" r="2" fill="#26A69A" />
+          <circle cx="42" cy="20" r="2" fill="#26A69A" />
+          <circle cx="54" cy="48" r="2" fill="#26A69A" />
         </svg>
       ),
     },
@@ -149,33 +149,33 @@ export default async function ReportPage({
       // label: `CAGR, ${forecastRangeLabel}`,
       label: `CAGR, ${'2025'}`,
       value: report.cagr || '—',
-      bg: 'bg-[#d6edff]',
-      labelColor: 'text-[#1c7cc0]',
-      valueColor: 'text-[#0c5f99]',
+      bg: 'bg-gradient-to-br from-[#E8F5E9] to-[#C8E6C9]',
+      labelColor: 'text-[#43A047]',
+      valueColor: 'text-[#2E7D32]',
       icon: (
         <svg
           aria-hidden
-          className="w-10 h-10 text-[#1c7cc0]"
+          className="w-10 h-10 text-[#66BB6A]"
           viewBox="0 0 64 64"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
             d="M14 40h6v-8h-6v8zm12 0h6V20h-6v20zm12 0h6V28h-6v12zm12 0h6V16h-6v24z"
-            fill="#1c7cc0"
+            fill="#66BB6A"
             opacity="0.3"
           />
-          <path d="M12 44h40" stroke="#1c7cc0" strokeWidth="3" strokeLinecap="round" />
+          <path d="M12 44h40" stroke="#66BB6A" strokeWidth="3" strokeLinecap="round" />
           <path
             d="M12 34c6-4 10-6 16-6s10 2 16 6 10 6 16 6"
-            stroke="#1c7cc0"
+            stroke="#66BB6A"
             strokeWidth="3"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
           <path
             d="M40 18l4-4 4 4"
-            stroke="#1c7cc0"
+            stroke="#66BB6A"
             strokeWidth="3"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -186,21 +186,21 @@ export default async function ReportPage({
     {
       label: 'Report Coverage',
       value: 'Global',
-      bg: 'bg-[#ffe6c7]',
-      labelColor: 'text-[#b16806]',
-      valueColor: 'text-[#a05c05]',
+      bg: 'bg-gradient-to-br from-[#F3E5F5] to-[#E1BEE7]',
+      labelColor: 'text-[#8E24AA]',
+      valueColor: 'text-[#6A1B9A]',
       icon: (
         <svg
           aria-hidden
-          className="w-10 h-10 text-[#c57b0b]"
+          className="w-10 h-10 text-[#AB47BC]"
           viewBox="0 0 64 64"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <circle cx="32" cy="28" r="14" stroke="#c57b0b" strokeWidth="3" />
-          <path d="M32 14v4m0 28v4m14-14h4M14 32h4" stroke="#c57b0b" strokeWidth="3" strokeLinecap="round" />
-          <path d="M24 44l-6 6" stroke="#c57b0b" strokeWidth="3" strokeLinecap="round" />
-          <path d="M40 44l6 6" stroke="#c57b0b" strokeWidth="3" strokeLinecap="round" />
+          <circle cx="32" cy="28" r="14" stroke="#AB47BC" strokeWidth="3" />
+          <path d="M32 14v4m0 28v4m14-14h4M14 32h4" stroke="#AB47BC" strokeWidth="3" strokeLinecap="round" />
+          <path d="M24 44l-6 6" stroke="#AB47BC" strokeWidth="3" strokeLinecap="round" />
+          <path d="M40 44l6 6" stroke="#AB47BC" strokeWidth="3" strokeLinecap="round" />
         </svg>
       ),
     },
