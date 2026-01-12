@@ -5,13 +5,14 @@ import { useSearchParams } from "next/navigation";
 import { Section, Container, Card, CardHeader, CardTitle, CardDescription, CardContent, Button, Badge } from "@/components/ui";
 import { CONTACT_INFO } from "@/lib/contact";
 import { QuickContactSection, TrustedPartnersSidebar } from "@/components/contact";
+import { submitRequestSampleForm, isFormError } from "@/lib/api";
 
 function RequestSampleForm() {
   const searchParams = useSearchParams();
   const reportTitle = searchParams.get("report") || "";
-  
+
   const [formData, setFormData] = useState({
-    name: "",
+    fullName: "",
     email: "",
     company: "",
     phone: "",
@@ -21,6 +22,7 @@ function RequestSampleForm() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -32,17 +34,26 @@ function RequestSampleForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
+    setError(null);
+
+    // Submit to API
+    const response = await submitRequestSampleForm(formData);
+
     setIsSubmitting(false);
+
+    if (isFormError(response)) {
+      // Handle error
+      setError(response.message);
+      return;
+    }
+
+    // Success
     setSubmitted(true);
-    
+
     // Reset form after 3 seconds
     setTimeout(() => {
       setFormData({
-        name: "",
+        fullName: "",
         email: "",
         company: "",
         phone: "",
@@ -51,6 +62,7 @@ function RequestSampleForm() {
         additionalInfo: "",
       });
       setSubmitted(false);
+      setError(null);
     }, 3000);
   };
 
@@ -100,17 +112,27 @@ function RequestSampleForm() {
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
+                    {error && (
+                      <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                        <div className="flex items-center gap-2">
+                          <svg className="w-5 h-5 text-red-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          <p className="text-sm text-red-800">{error}</p>
+                        </div>
+                      </div>
+                    )}
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
-                        <label htmlFor="name" className="block text-sm font-medium mb-2">
+                        <label htmlFor="fullName" className="block text-sm font-medium mb-2">
                           Full Name *
                         </label>
                         <input
                           type="text"
-                          id="name"
-                          name="name"
+                          id="fullName"
+                          name="fullName"
                           required
-                          value={formData.name}
+                          value={formData.fullName}
                           onChange={handleChange}
                           className="w-full px-4 py-2 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary)] bg-[var(--background)]"
                           placeholder="John Doe"

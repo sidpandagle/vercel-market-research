@@ -11,24 +11,15 @@ export default function CTASection() {
           </h2>
 
           <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
-            Schedule a demo to see how our research can drive your decisions
+            Get in touch with our team to see how our research can drive your decisions
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-            <Link href="/request-demo">
+          <div className="flex justify-center mt-8">
+            <Link href="/contact">
               <Button
                 variant="secondary"
                 size="lg"
                 className="bg-white text-[var(--primary)] hover:bg-white/90"
-              >
-                Request Demo
-              </Button>
-            </Link>
-            <Link href="/contact">
-              <Button
-                variant="outline"
-                size="lg"
-                className="border-white text-white hover:bg-white/10"
               >
                 Contact Sales
               </Button>
