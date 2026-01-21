@@ -4,6 +4,31 @@ import type { ApiReport, Report } from './reports.types';
 import type { ApiBlog, Blog } from './blogs.types';
 import type { ApiPressRelease, PressRelease } from './press-releases.types';
 
+// Helper types for JSON parsing
+interface KeyPlayer {
+  name?: string;
+  marketShare?: string;
+  headquarters?: string;
+  description?: string;
+}
+
+interface TOCSubsection {
+  id?: string;
+  title: string;
+}
+
+interface TOCSection {
+  id?: string;
+  title: string;
+  subsections?: TOCSubsection[];
+}
+
+interface TOCChapter {
+  id?: string;
+  title: string;
+  sections?: TOCSection[];
+}
+
 /**
  * Parse HTML list to array of strings
  */
@@ -41,7 +66,7 @@ function parseKeyPlayers(jsonString?: string): Array<{ name: string; marketShare
       return [];
     }
 
-    return players.map((player: any) => ({
+    return players.map((player: KeyPlayer) => ({
       name: player.name || 'Unknown Company',
       marketShare: player.marketShare || '0%',
       headquarters: player.headquarters || player.description || 'N/A',
@@ -55,19 +80,19 @@ function parseKeyPlayers(jsonString?: string): Array<{ name: string; marketShare
 /**
  * Parse table of contents JSON string and flatten nested structure
  */
-function parseTableOfContents(tocString?: string): any[] {
+function parseTableOfContents(tocString?: string): Array<{ id: string; title: string; number?: string; children?: Array<{ id: string; title: string; number?: string }> }> {
   if (!tocString) return [];
 
   try {
-    const toc = JSON.parse(tocString);
+    const toc = JSON.parse(tocString) as { chapters?: TOCChapter[] };
     if (!toc.chapters || !Array.isArray(toc.chapters)) {
       return [];
     }
 
     // Flatten the nested structure into a flat array with proper numbering
-    const flatTOC: any[] = [];
+    const flatTOC: Array<{ id: string; title: string; number?: string; children?: Array<{ id: string; title: string; number?: string }> }> = [];
 
-    toc.chapters.forEach((chapter: any, chapterIndex: number) => {
+    toc.chapters.forEach((chapter: TOCChapter, chapterIndex: number) => {
       const chapterNumber = (chapterIndex + 1).toString();
 
       // Add chapter
@@ -79,7 +104,7 @@ function parseTableOfContents(tocString?: string): any[] {
 
       // Add sections if they exist
       if (chapter.sections && Array.isArray(chapter.sections)) {
-        chapter.sections.forEach((section: any, sectionIndex: number) => {
+        chapter.sections.forEach((section: TOCSection, sectionIndex: number) => {
           const sectionNumber = `${chapterNumber}.${sectionIndex + 1}`;
 
           flatTOC.push({
@@ -90,7 +115,7 @@ function parseTableOfContents(tocString?: string): any[] {
 
           // Add subsections if they exist
           if (section.subsections && Array.isArray(section.subsections)) {
-            section.subsections.forEach((subsection: any, subsectionIndex: number) => {
+            section.subsections.forEach((subsection: TOCSubsection, subsectionIndex: number) => {
               const subsectionNumber = `${sectionNumber}.${subsectionIndex + 1}`;
 
               flatTOC.push({

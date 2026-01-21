@@ -1,11 +1,12 @@
 // Press Release API client functions
 
-import { apiFetch, buildQueryString, type ApiResponse } from './config';
+import { apiFetch, buildQueryString, type ApiResponse, type PaginationMeta } from './config';
 import type {
   PressReleaseFilters,
   PressReleasesListData,
   PressReleaseDetailData,
   PressRelease,
+  ApiPressRelease,
 } from './press-releases.types';
 import { mapApiPressReleasesToPressReleases, mapApiPressReleaseToPressRelease } from './mappers';
 
@@ -42,7 +43,7 @@ export async function getPressReleases(
   }
 
   // Handle different response structures
-  let apiPressReleases: any[];
+  let apiPressReleases: ApiPressRelease[];
 
   // Check if data is directly the array or nested
   if (Array.isArray(response.data)) {
@@ -50,7 +51,7 @@ export async function getPressReleases(
     apiPressReleases = response.data;
   } else if (response.data && typeof response.data === 'object' && 'pressReleases' in response.data) {
     // API returned { pressReleases: [...], page, limit, total, totalPages }
-    apiPressReleases = (response.data as any).pressReleases;
+    apiPressReleases = (response.data as { pressReleases: ApiPressRelease[] }).pressReleases;
   } else {
     console.error('Unexpected response structure:', response.data);
     return {
@@ -66,7 +67,7 @@ export async function getPressReleases(
   return {
     success: true,
     data: mappedPressReleases,
-    meta: (response.data as any)?.meta,
+    meta: (response.data as { meta?: PaginationMeta })?.meta,
   };
 }
 
@@ -91,12 +92,12 @@ export async function getPressReleaseBySlug(slug: string): Promise<ApiResponse<P
   }
 
   // Handle different response structures
-  let apiPressRelease: any;
+  let apiPressRelease: ApiPressRelease;
 
   if (response.data && typeof response.data === 'object') {
     // Check if data is nested or direct
     if ('pressRelease' in response.data) {
-      apiPressRelease = (response.data as any).pressRelease;
+      apiPressRelease = (response.data as { pressRelease: ApiPressRelease }).pressRelease;
     } else {
       // Assume response.data is the press release itself
       apiPressRelease = response.data;

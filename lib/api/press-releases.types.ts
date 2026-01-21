@@ -12,7 +12,7 @@ export interface ApiPressReleaseMetadata {
   keywords?: string[];
   description?: string;
   author?: string;
-  [key: string]: any;
+  [key: string]: string | string[] | undefined;
 }
 
 /**

@@ -49,13 +49,10 @@ export interface FormSubmissionResponse {
   createdAt: string;
 }
 
-// Error response
+// Error response (for form-specific error handling)
 export interface FormErrorResponse {
   success: false;
   error: string;
   message: string;
   statusCode?: number;
 }
-
-// API Response wrapper
-export type ApiResponse<T> = T | FormErrorResponse;

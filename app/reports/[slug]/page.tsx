@@ -223,7 +223,7 @@ export default async function ReportPage({
 
   // Fetch related reports
   // TODO: Fetch related reports from API when relatedReportIds are provided
-  const relatedReports: any[] = [];
+  // const relatedReports: Report[] = [];
 
   return (
     <div className="bg-[var(--background)]">
@@ -300,7 +300,7 @@ export default async function ReportPage({
                       Market Overview
                     </h2>
                     <StyledReportContent
-                      htmlContent={report.marketDetails}
+                      htmlContent={report.marketDetails ?? ''}
                       reportSlug={report.slug}
                     />
 

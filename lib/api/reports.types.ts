@@ -46,7 +46,7 @@ export interface ApiReportSections {
   marketDetails?: string;
   keyFindings?: string;
   tableOfContents?: string;
-  [key: string]: any;
+  [key: string]: string | undefined;
 }
 
 /**
@@ -106,6 +106,7 @@ export interface Report {
   marketSize2032?: string;
   cagr?: string;
   overview?: string;
+  marketDetails?: string;
   keyFindings?: string[];
   segmentation?: {
     byType?: Array<{ name: string; share: string; description?: string }>;

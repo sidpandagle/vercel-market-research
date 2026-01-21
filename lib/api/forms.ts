@@ -3,9 +3,9 @@ import type {
   RequestSampleFormData,
   FormSubmissionRequest,
   FormSubmissionResponse,
-  ApiResponse,
   FormMetadata,
 } from './forms.types';
+import type { ApiResponse } from './config';
 
 // Base API configuration
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';

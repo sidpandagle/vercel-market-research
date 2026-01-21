@@ -1,12 +1,13 @@
 // Report API client functions
 
-import { apiFetch, buildQueryString, type ApiResponse } from './config';
+import { apiFetch, buildQueryString, type ApiResponse, type PaginationMeta } from './config';
 import type {
   ReportFilters,
   ReportsListData,
   ReportDetailData,
   SearchResultsData,
   Report,
+  ApiReport,
 } from './reports.types';
 import { mapApiReportsToReports, mapApiReportToReport } from './mappers';
 
@@ -45,7 +46,7 @@ export async function getReports(
   }
 
   // Handle different response structures
-  let apiReports: any[];
+  let apiReports: ApiReport[];
 
   // Check if data is directly the array or nested
   if (Array.isArray(response.data)) {
@@ -53,7 +54,7 @@ export async function getReports(
     apiReports = response.data;
   } else if (response.data && typeof response.data === 'object' && 'data' in response.data) {
     // API returned { data: [...], meta: {...} }
-    apiReports = (response.data as any).data;
+    apiReports = (response.data as { data: ApiReport[] }).data;
   } else {
     console.error('Unexpected response structure:', response.data);
     return {
@@ -69,7 +70,7 @@ export async function getReports(
   return {
     success: true,
     data: mappedReports,
-    meta: (response.data as any)?.meta,
+    meta: (response.data as { meta?: PaginationMeta })?.meta,
   };
 }
 
@@ -94,12 +95,12 @@ export async function getReportBySlug(slug: string): Promise<ApiResponse<Report>
   }
 
   // Handle different response structures
-  let apiReport: any;
+  let apiReport: ApiReport;
 
   if (response.data && typeof response.data === 'object') {
     // Check if data is nested or direct
     if ('data' in response.data) {
-      apiReport = (response.data as any).data;
+      apiReport = (response.data as { data: ApiReport }).data;
       console.log(apiReport);
     } else {
       // Assume response.data is the report itself
@@ -158,12 +159,12 @@ export async function searchReports(
   }
 
   // Handle different response structures
-  let apiReports: any[];
+  let apiReports: ApiReport[];
 
   if (Array.isArray(response.data)) {
     apiReports = response.data;
   } else if (response.data && typeof response.data === 'object' && 'data' in response.data) {
-    apiReports = (response.data as any).data;
+    apiReports = (response.data as { data: ApiReport[] }).data;
   } else {
     console.error('Unexpected search response structure:', response.data);
     return {
@@ -179,6 +180,6 @@ export async function searchReports(
   return {
     success: true,
     data: mappedReports,
-    meta: (response.data as any)?.meta,
+    meta: (response.data as { meta?: PaginationMeta })?.meta,
   };
 }

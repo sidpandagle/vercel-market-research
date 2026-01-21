@@ -1,11 +1,12 @@
 // Blog API client functions
 
-import { apiFetch, buildQueryString, type ApiResponse } from './config';
+import { apiFetch, buildQueryString, type ApiResponse, type PaginationMeta } from './config';
 import type {
   BlogFilters,
   BlogsListData,
   BlogDetailData,
   Blog,
+  ApiBlog,
 } from './blogs.types';
 import { mapApiBlogsToblogs, mapApiBlogToBlog } from './mappers';
 
@@ -42,7 +43,7 @@ export async function getBlogs(
   }
 
   // Handle different response structures
-  let apiBlogs: any[];
+  let apiBlogs: ApiBlog[];
 
   // Check if data is directly the array or nested
   if (Array.isArray(response.data)) {
@@ -50,7 +51,7 @@ export async function getBlogs(
     apiBlogs = response.data;
   } else if (response.data && typeof response.data === 'object' && 'blogs' in response.data) {
     // API returned { blogs: [...], page, limit, total, totalPages }
-    apiBlogs = (response.data as any).blogs;
+    apiBlogs = (response.data as { blogs: ApiBlog[] }).blogs;
   } else {
     console.error('Unexpected response structure:', response.data);
     return {
@@ -66,7 +67,7 @@ export async function getBlogs(
   return {
     success: true,
     data: mappedBlogs,
-    meta: (response.data as any)?.meta,
+    meta: (response.data as { meta?: PaginationMeta })?.meta,
   };
 }
 
@@ -91,12 +92,12 @@ export async function getBlogBySlug(slug: string): Promise<ApiResponse<Blog>> {
   }
 
   // Handle different response structures
-  let apiBlog: any;
+  let apiBlog: ApiBlog;
 
   if (response.data && typeof response.data === 'object') {
     // Check if data is nested or direct
     if ('blog' in response.data) {
-      apiBlog = (response.data as any).blog;
+      apiBlog = (response.data as { blog: ApiBlog }).blog;
     } else {
       // Assume response.data is the blog itself
       apiBlog = response.data;

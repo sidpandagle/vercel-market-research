@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { Suspense } from 'react';
 import { getReports, isApiError } from '@/lib/api';
 import { ReportsListingClient } from '@/components/reports';
@@ -26,12 +27,12 @@ async function ReportsContent() {
         <div className="text-center space-y-4">
           <h2 className="text-2xl font-bold text-gray-900">Unable to Load Reports</h2>
           <p className="text-gray-600">{response.message}</p>
-          <a
+          <Link
             href="/reports"
             className="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             Try Again
-          </a>
+          </Link>
         </div>
       </div>
     );

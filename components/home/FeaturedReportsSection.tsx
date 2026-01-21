@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { Section, Container, Grid, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Badge, Button } from '@/components/ui';
 import { formatDate } from '@/lib/utils';
-import { getReports, isApiError } from '@/lib/api';
+import { getReports, isApiError, type Report } from '@/lib/api';
 
 export default async function FeaturedReportsSection() {
   // Try to fetch featured reports from API
-  let featuredReports: any[] = [];
+  let featuredReports: Report[] = [];
 
   const response = await getReports({
     status: 'published',
