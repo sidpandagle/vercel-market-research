@@ -1,10 +1,38 @@
 import Link from 'next/link';
 import { Section, Container, Grid, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Badge, Button } from '@/components/ui';
 import { formatDate } from '@/lib/utils';
-import reports from '@/data/reports.json';
+import { getReports, isApiError } from '@/lib/api';
 
-export default function FeaturedReportsSection() {
-  const featuredReports = reports.slice(0, 3);
+export default async function FeaturedReportsSection() {
+  // Try to fetch featured reports from API
+  let featuredReports: any[] = [];
+
+  const response = await getReports({
+    status: 'published',
+    is_featured: true,
+    limit: 3,
+  });
+
+  if (!isApiError(response)) {
+    featuredReports = response.data;
+  }
+
+  // Fallback: if no featured reports, get the latest 3 published reports
+  if (featuredReports.length === 0) {
+    const fallbackResponse = await getReports({
+      status: 'published',
+      limit: 3,
+    });
+
+    if (!isApiError(fallbackResponse)) {
+      featuredReports = fallbackResponse.data;
+    }
+  }
+
+  // If still no reports, don't render the section
+  if (featuredReports.length === 0) {
+    return null;
+  }
 
   return (
     <Section background="muted" padding="lg">

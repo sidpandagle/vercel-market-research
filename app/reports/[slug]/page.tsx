@@ -1,21 +1,27 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import reports from "@/data/reports.json";
+import { getReports, getReportBySlug, isApiError } from "@/lib/api";
 import teamMembers from "@/data/team-members.json";
 import { Breadcrumb, Badge, Card, CardContent, Button } from "@/components/ui";
 import { Download } from "lucide-react";
 import { ReportContentWrapper } from "@/components/reports/ReportContentWrapper";
-import {
-  MarketGrowthChart,
-  MarketSharePieChart,
-  RegionalAnalysisChart,
-} from "@/components/reports/charts";
+import { StyledReportContent } from "@/components/reports/StyledReportContent";
 import MeetTheTeam from "@/components/reports/MeetTheTeam";
 import FAQ from "@/components/reports/FAQ";
 
+// Enable ISR with 10-minute revalidation
+export const revalidate = 600;
+
 export async function generateStaticParams() {
-  return reports.map((report) => ({
+  const response = await getReports({ status: 'published', limit: 1000 });
+
+  if (isApiError(response)) {
+    console.error('Failed to fetch reports for static generation:', response.message);
+    return [];
+  }
+
+  return response.data.map((report) => ({
     slug: report.slug,
   }));
 }
@@ -38,7 +44,7 @@ interface Report {
   marketSize2024?: string;
   marketSize2032?: string;
   cagr?: string;
-  overview?: string;
+  marketDetails?: string;
   keyFindings?: string[];
   segmentation?: {
     byType?: Array<{ name: string; share: string; description?: string }>;
@@ -63,11 +69,16 @@ export default async function ReportPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const report = reports.find((r) => r.slug === slug) as Report | undefined;
 
-  if (!report) {
+  // Fetch report from API
+  const response = await getReportBySlug(slug);
+
+  if (isApiError(response)) {
+    console.error('Failed to fetch report:', response.message);
     notFound();
   }
+
+  const report = response.data as Report;
 
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
@@ -75,7 +86,7 @@ export default async function ReportPage({
     { label: report.title },
   ];
 
-  const hasFullContent = !!(report.tableOfContents && report.overview);
+  const hasFullContent = !!(report.fullReportTOC && report.marketDetails);
 
   const baseYearLabel = report.baseYear || '2024';
   const forecastEndYear = report.forecastPeriod?.split('-')[1] || '2032';
@@ -146,8 +157,7 @@ export default async function ReportPage({
       ),
     },
     {
-      // label: `CAGR, ${forecastRangeLabel}`,
-      label: `CAGR, ${'2025'}`,
+      label: `CAGR, ${forecastRangeLabel}`,
       value: report.cagr || '—',
       bg: 'bg-gradient-to-br from-[#E8F5E9] to-[#C8E6C9]',
       labelColor: 'text-[#43A047]',
@@ -212,19 +222,8 @@ export default async function ReportPage({
     : [];
 
   // Fetch related reports
-  const relatedReports = report.relatedReportIds
-    ? reports
-        .filter((r) => report.relatedReportIds!.includes(r.id))
-        .slice(0, 4)
-        .map((r) => ({
-          id: r.id,
-          slug: r.slug,
-          title: r.title,
-          category: r.category,
-          date: r.date,
-          price: r.price,
-        }))
-    : [];
+  // TODO: Fetch related reports from API when relatedReportIds are provided
+  const relatedReports: any[] = [];
 
   return (
     <div className="bg-[var(--background)]">
@@ -236,7 +235,6 @@ export default async function ReportPage({
 
       <div className="px-4 py-8 md:px-6">
         <ReportContentWrapper
-          tableOfContents={report.tableOfContents}
           fullReportTOC={report.fullReportTOC}
           hasFullContent={hasFullContent}
           price={report.price}
@@ -297,13 +295,14 @@ export default async function ReportPage({
 
               {hasFullContent ? (
                 <>
-                  <section id="overview" className="mb-12 scroll-mt-24">
-                    <h2 className="text-3xl font-bold text-[var(--foreground)] mb-6">
+                  <section className="mb-12">
+                    <h2 id="overview" className="text-3xl font-bold text-[var(--foreground)] mb-6 scroll-mt-24">
                       Market Overview
                     </h2>
-                    <div className="prose prose-lg max-w-none text-[var(--muted-foreground)]">
-                      <p>{report.overview}</p>
-                    </div>
+                    <StyledReportContent
+                      htmlContent={report.marketDetails}
+                      reportSlug={report.slug}
+                    />
 
                     {report.keyFindings && report.keyFindings.length > 0 && (
                       <div className="mt-8">
@@ -323,116 +322,10 @@ export default async function ReportPage({
                     )}
                   </section>
 
-                  {report.marketSize2024 && report.marketSize2032 && report.cagr && (
-                    <section id="market-size" className="mb-12 scroll-mt-24">
-                      <h2 className="text-3xl font-bold text-[var(--foreground)] mb-6">
-                        Market Size & Forecast
-                      </h2>
-                      <p className="text-[var(--muted-foreground)] mb-8">
-                        The market is projected to grow from {report.marketSize2024} in{' '}
-                        {report.baseYear || '2024'} to {report.marketSize2032} by{' '}
-                        {report.forecastPeriod?.split('-')[1] || '2032'}, at a CAGR of{' '}
-                        {report.cagr} during the forecast period.
-                      </p>
+                  {/* Images (Refer Below) */}
 
-                      {/* Market Analysis Charts */}
-                      <div className="space-y-6">
-                        <div className="bg-white rounded-lg shadow-sm border border-[var(--border)] p-6">
-                          <h3 className="text-xl font-semibold text-[var(--foreground)] mb-4">
-                            Market Size by Segment (2020-2024)
-                          </h3>
-                          <Image
-                            src="/assets/images/chart1.png"
-                            alt="Global Medical Device Market - Bar Chart showing market size by segment from 2020-2024"
-                            width={1200}
-                            height={600}
-                            className="w-full h-auto max-w-4xl mx-auto"
-                            priority
-                          />
-                          
-                        {/* Download Sample Report CTA */}
-                        <div className="rounded-2xl pt-6">
-                          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-center sm:text-left">
-                            <p className="text-[var(--muted-foreground)] text-base sm:text-lg font-medium">
-                              To learn more about this report,
-                            </p>
-                            <Link href={`/request-sample?report=${report.slug}`}>
-                              <Button
-                                variant="primary"
-                                size="lg"
-                                className="gap-2 shadow-primary hover:shadow-primary-lg whitespace-nowrap"
-                              >
-                                <Download className="w-5 h-5" />
-                                Download Free Sample
-                              </Button>
-                            </Link>
-                          </div>
-                        </div>
-                        </div>
-
-                        <div className="bg-white rounded-lg shadow-sm border border-[var(--border)] p-6">
-                          <h3 className="text-xl font-semibold text-[var(--foreground)] mb-4">
-                            Market Distribution by Segment
-                          </h3>
-                          <Image
-                            src="/assets/images/chart2.png"
-                            alt="Global Medical Device Market - Pie Chart showing market distribution by segment 2020-2024"
-                            width={1200}
-                            height={600}
-                            className="w-full h-auto max-w-4xl mx-auto"
-                          />
-                      </div>
-                        </div>
-
-                    </section>
-                  )}
-
-                  {/* {report.segmentation && (
-                    <section id="segmentation" className="mb-12 scroll-mt-24">
-                      <h2 className="text-3xl font-bold text-[var(--foreground)] mb-6">
-                        Market Segmentation
-                      </h2>
-                      <div className="space-y-8">
-                        {report.segmentation.byType && (
-                          <div id="seg-type" className="scroll-mt-24">
-                            <MarketSharePieChart
-                              title="Market Share by Service Type"
-                              segments={report.segmentation.byType}
-                            />
-                          </div>
-                        )}
-
-                        {report.segmentation.byApplication && (
-                          <div id="seg-application" className="scroll-mt-24">
-                            <MarketSharePieChart
-                              title="Market Share by Application"
-                              segments={report.segmentation.byApplication}
-                            />
-                          </div>
-                        )}
-
-                        {report.segmentation.byEndUser && (
-                          <div id="seg-end-user" className="scroll-mt-24">
-                            <MarketSharePieChart
-                              title="Market Share by End User"
-                              segments={report.segmentation.byEndUser}
-                            />
-                          </div>
-                        )}
-
-                        {report.segmentation.byRegion && (
-                          <div id="seg-region" className="scroll-mt-24">
-                            <RegionalAnalysisChart
-                              regions={report.segmentation.byRegion}
-                            />
-                          </div>
-                        )}
-                      </div>
-                    </section>
-                  )} */}
-
-                  <section id="competitive" className="mb-12 scroll-mt-24">
-                    <h2 className="text-3xl font-bold text-[var(--foreground)] mb-6">
+                  <section className="mb-12">
+                    <h2 id="competitive" className="text-3xl font-bold text-[var(--foreground)] mb-6 scroll-mt-24">
                       Competitive Landscape
                     </h2>
                     <p className="text-[var(--muted-foreground)] mb-8">
@@ -446,7 +339,7 @@ export default async function ReportPage({
                         <h3 className="text-xl font-semibold text-[var(--foreground)] mb-6">
                           Key Market Players
                         </h3>
-                        <div className="grid gap-4">
+                        <div className="grid gap-4 px-44">
                           {report.keyPlayers.map((player, index) => (
                             <Card key={index} className="hover:shadow-md transition-shadow">
                               <CardContent className="">
@@ -476,8 +369,8 @@ export default async function ReportPage({
                     )}
                   </section>
 
-                  <section id="drivers" className="mb-12 scroll-mt-24">
-                    <h2 className="text-3xl font-bold text-[var(--foreground)] mb-6">
+                  {/* <section className="mb-12">
+                    <h2 id="drivers" className="text-3xl font-bold text-[var(--foreground)] mb-6 scroll-mt-24">
                       Market Drivers & Opportunities
                     </h2>
                     <div className="prose prose-lg max-w-none text-[var(--muted-foreground)]">
@@ -491,8 +384,8 @@ export default async function ReportPage({
                     </div>
                   </section>
 
-                  <section id="challenges" className="mb-12 scroll-mt-24">
-                    <h2 className="text-3xl font-bold text-[var(--foreground)] mb-6">
+                  <section className="mb-12">
+                    <h2 id="challenges" className="text-3xl font-bold text-[var(--foreground)] mb-6 scroll-mt-24">
                       Challenges & Restraints
                     </h2>
                     <div className="prose prose-lg max-w-none text-[var(--muted-foreground)]">
@@ -504,7 +397,7 @@ export default async function ReportPage({
                         <li>Limited digital literacy in certain regions</li>
                       </ul>
                     </div>
-                  </section>
+                  </section> */}
 
                   {/* NEW SECTIONS */}
                   <MeetTheTeam teamMembers={reportTeamMembers} />
@@ -543,3 +436,70 @@ export default async function ReportPage({
     </div>
   );
 }
+
+
+
+// Images Section - To be added within the full content condition
+// {report.marketSize2024 && report.marketSize2032 && report.cagr && (
+//   <section className="mb-12">
+//     <h2 id="market-size" className="text-3xl font-bold text-[var(--foreground)] mb-6 scroll-mt-24">
+//       Market Size & Forecast
+//     </h2>
+//     <p className="text-[var(--muted-foreground)] mb-8">
+//       The market is projected to grow from {report.marketSize2024} in{' '}
+//       {report.baseYear || '2024'} to {report.marketSize2032} by{' '}
+//       {report.forecastPeriod?.split('-')[1] || '2032'}, at a CAGR of{' '}
+//       {report.cagr} during the forecast period.
+//     </p>
+
+//     {/* Market Analysis Charts */}
+//     <div className="space-y-6">
+//       <div className="bg-white rounded-lg shadow-sm border border-[var(--border)] p-6">
+//         <h3 className="text-xl font-semibold text-[var(--foreground)] mb-4">
+//           Market Size by Segment (2020-2024)
+//         </h3>
+//         <Image
+//           src="/assets/images/chart1.png"
+//           alt="Global Medical Device Market - Bar Chart showing market size by segment from 2020-2024"
+//           width={1200}
+//           height={600}
+//           className="w-full h-auto max-w-4xl mx-auto"
+//           priority
+//         />
+        
+//       {/* Download Sample Report CTA */}
+//       <div className="rounded-2xl pt-6">
+//         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-center sm:text-left">
+//           <p className="text-[var(--muted-foreground)] text-base sm:text-lg font-medium">
+//             To learn more about this report,
+//           </p>
+//           <Link href={`/request-sample?report=${report.slug}`}>
+//             <Button
+//               variant="primary"
+//               size="lg"
+//               className="gap-2 shadow-primary hover:shadow-primary-lg whitespace-nowrap"
+//             >
+//               <Download className="w-5 h-5" />
+//               Download Free Sample
+//             </Button>
+//           </Link>
+//         </div>
+//       </div>
+//       </div>
+
+//       <div className="bg-white rounded-lg shadow-sm border border-[var(--border)] p-6">
+//         <h3 className="text-xl font-semibold text-[var(--foreground)] mb-4">
+//           Market Distribution by Segment
+//         </h3>
+//         <Image
+//           src="/assets/images/chart2.png"
+//           alt="Global Medical Device Market - Pie Chart showing market distribution by segment 2020-2024"
+//           width={1200}
+//           height={600}
+//           className="w-full h-auto max-w-4xl mx-auto"
+//         />
+//     </div>
+//       </div>
+
+//   </section>
+// )}

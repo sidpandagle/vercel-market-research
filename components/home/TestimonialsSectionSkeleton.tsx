@@ -12,7 +12,7 @@ export default function TestimonialsSectionSkeleton() {
 
           <Grid cols={3} gap="lg">
             {[...Array(3)].map((_, index) => (
-              <SkeletonCard key={index} hasAvatar />
+              <SkeletonCard key={index} hasAvatar hasImage={false} />
             ))}
           </Grid>
         </div>

@@ -1,20 +1,12 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import reportsData from '@/data/reports.json';
-
-interface Report {
-  id: number;
-  slug: string;
-  title: string;
-  description: string;
-  category: string;
-  price: string;
-  region: string;
-}
+import { useDebounce } from '@/hooks/useDebounce';
+import { searchReports, isApiError } from '@/lib/api';
+import type { Report } from '@/lib/api/reports.types';
 
 interface SearchBarProps {
   variant?: 'hero' | 'header';
@@ -30,36 +22,55 @@ export default function SearchBar({
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [results, setResults] = useState<Report[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  // Search logic
-  const performSearch = useCallback((searchQuery: string) => {
-    if (!searchQuery.trim()) {
-      setResults([]);
-      return;
-    }
+  // Debounce the search query to avoid too many API calls
+  const debouncedQuery = useDebounce(query, 300);
 
-    const lowercaseQuery = searchQuery.toLowerCase();
-    const filtered = (reportsData as Report[]).filter((report) => {
-      return (
-        report.title.toLowerCase().includes(lowercaseQuery) ||
-        report.description.toLowerCase().includes(lowercaseQuery) ||
-        report.category.toLowerCase().includes(lowercaseQuery) ||
-        report.region.toLowerCase().includes(lowercaseQuery)
-      );
-    });
+  // Perform API search when debounced query changes
+  useEffect(() => {
+    const performSearch = async () => {
+      if (!debouncedQuery.trim()) {
+        setResults([]);
+        setIsLoading(false);
+        return;
+      }
 
-    setResults(filtered.slice(0, 5)); // Limit to 5 results
-  }, []);
+      setIsLoading(true);
+
+      try {
+        const response = await searchReports(debouncedQuery, 1, 5);
+
+        if (!isApiError(response)) {
+          setResults(response.data);
+        } else {
+          setResults([]);
+          console.error('Search error:', response.message);
+        }
+      } catch (error) {
+        console.error('Search failed:', error);
+        setResults([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    performSearch();
+  }, [debouncedQuery]);
 
   // Handle input change
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setQuery(value);
-    performSearch(value);
     setIsOpen(true);
+
+    // Show loading state immediately when user types
+    if (value.trim()) {
+      setIsLoading(true);
+    }
   };
 
   // Handle keyboard navigation
@@ -175,7 +186,12 @@ export default function SearchBar({
       {/* Search Results Dropdown */}
       {isOpen && query && (
         <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-200 rounded-xl shadow-lg overflow-hidden z-50 max-h-96 overflow-y-auto">
-          {results.length > 0 ? (
+          {isLoading ? (
+            <div className="p-8 text-center">
+              <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-ocean-600 border-r-transparent mb-3"></div>
+              <p className="text-sm text-slate-600">Searching...</p>
+            </div>
+          ) : results.length > 0 ? (
             <>
               <div className="p-3 border-b border-slate-100 bg-slate-50">
                 <p className="text-xs font-medium text-slate-600">

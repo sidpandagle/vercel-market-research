@@ -6,6 +6,7 @@ import { Section, Container, Grid } from '@/components/ui';
 import ReportCard from './ReportCard';
 import FilterSidebar, { FilterState } from './FilterSidebar';
 import Pagination from './Pagination';
+import SearchBar from './SearchBar';
 import categories from '@/data/categories.json';
 
 interface Report {
@@ -38,6 +39,8 @@ export default function ReportsListingClient({ reports }: ReportsListingClientPr
     searchQuery: ''
   });
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchResults, setSearchResults] = useState<Report[] | null>(null);
+  const [isSearching, setIsSearching] = useState(false);
 
   // Handle URL category and search parameters on mount
   useEffect(() => {
@@ -65,6 +68,13 @@ export default function ReportsListingClient({ reports }: ReportsListingClientPr
     });
   }, [searchParams]);
 
+  // Handle search results from SearchBar
+  const handleSearchResults = (results: Report[] | null, loading: boolean) => {
+    setSearchResults(results);
+    setIsSearching(loading);
+    setCurrentPage(1); // Reset to first page when search changes
+  };
+
   // Helper function to check if price is in range
   const isPriceInRange = (price: string, range: string): boolean => {
     const priceNum = parseInt(price.replace(/[^0-9]/g, ''));
@@ -84,8 +94,10 @@ export default function ReportsListingClient({ reports }: ReportsListingClientPr
   };
 
   // Filter reports based on active filters
+  // Use search results if available, otherwise use all reports
   const filteredReports = useMemo(() => {
-    return reports.filter((report) => {
+    const dataSource = searchResults !== null ? searchResults : reports;
+    return dataSource.filter((report) => {
       // Search query filter
       if (filters.searchQuery) {
         const searchLower = filters.searchQuery.toLowerCase();
@@ -123,7 +135,7 @@ export default function ReportsListingClient({ reports }: ReportsListingClientPr
 
       return true;
     });
-  }, [reports, filters]);
+  }, [reports, filters, searchResults]);
 
   // Calculate pagination
   const totalPages = Math.ceil(filteredReports.length / ITEMS_PER_PAGE);
@@ -168,13 +180,21 @@ export default function ReportsListingClient({ reports }: ReportsListingClientPr
 
           {/* Main Content */}
           <main>
+            {/* Search Bar */}
+            <div className="mb-6">
+              <SearchBar
+                onSearchResults={handleSearchResults}
+                placeholder="Search reports by title, description, or keywords..."
+              />
+            </div>
+
             {/* Header */}
             <div className="mb-8">
               <h1 className="text-4xl font-bold mb-2 text-[var(--foreground)]">
                 Research Reports
               </h1>
               <p className="text-lg text-[var(--muted-foreground)]">
-                {filteredReports.length} {filteredReports.length === 1 ? 'report' : 'reports'} available
+                {isSearching ? 'Searching...' : `${filteredReports.length} ${filteredReports.length === 1 ? 'report' : 'reports'} available`}
               </p>
             </div>
 

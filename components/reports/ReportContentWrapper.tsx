@@ -6,9 +6,10 @@ import { FullReportTOC } from './FullReportTOC';
 import { CTAPanel } from './CTAPanel';
 import { CustomizeReportCard } from './CustomizeReportCard';
 import { groupTableOfContents, SidebarTOCItem, TOCItem } from '@/lib/toc-utils';
+import { useGeneratedTOC } from '@/hooks/useGeneratedTOC';
 
 interface ReportContentWrapperProps {
-  tableOfContents?: SidebarTOCItem[];  // For sidebar navigation
+  tableOfContents?: SidebarTOCItem[];  // For sidebar navigation (optional, will be auto-generated if not provided)
   fullReportTOC?: TOCItem[];           // For full report TOC modal
   hasFullContent: boolean;
   price: string;
@@ -26,6 +27,12 @@ export const ReportContentWrapper: React.FC<ReportContentWrapperProps> = ({
 }) => {
   const [showFullTOC, setShowFullTOC] = useState(false);
   const targetSectionRef = useRef<string | null>(null);
+
+  // Auto-generate TOC from h2 headings if not provided
+  const generatedTOC = useGeneratedTOC('article');
+
+  // Use provided TOC or fall back to auto-generated TOC
+  const activeTOC = tableOfContents || generatedTOC;
 
   // Transform full report TOC data into chapters
   const chapters = fullReportTOC ? groupTableOfContents(fullReportTOC) : [];
@@ -76,16 +83,16 @@ export const ReportContentWrapper: React.FC<ReportContentWrapperProps> = ({
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
       {/* Left Sidebar - TOC Navigation */}
-      {hasFullContent && tableOfContents && (
-        <aside className="hidden lg:block lg:col-span-3 2xl:col-span-2">
+      <aside className="hidden lg:block lg:col-span-3 2xl:col-span-2">
+        {hasFullContent && activeTOC && activeTOC.length > 0 && (
           <TableOfContents
-            items={tableOfContents}
+            items={activeTOC}
             onShowFullTOC={() => setShowFullTOC(true)}
             showFullTOC={showFullTOC}
             onNavigateToSection={handleNavigateToSection}
           />
-        </aside>
-      )}
+        )}
+      </aside>
 
       {/* Main Content Area */}
       <main className={hasFullContent ? 'lg:col-span-6 2xl:col-span-8' : 'lg:col-span-9  2xl:col-span-8'}>

@@ -1,64 +1,64 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Section, Container, Badge } from "@/components/ui";
-import { getBlogs, getBlogBySlug, isApiError } from "@/lib/api";
+import { getPressReleases, getPressReleaseBySlug, isApiError } from "@/lib/api";
 import type { Metadata } from "next";
 
-interface BlogPageProps {
+interface PressReleasePageProps {
   params: Promise<{
     slug: string;
   }>;
 }
 
 export async function generateStaticParams() {
-  const response = await getBlogs({ status: 'published', limit: 100 });
+  const response = await getPressReleases({ status: 'published', limit: 100 });
 
   if (isApiError(response)) {
-    console.error('Failed to fetch blogs for static params:', response.message);
+    console.error('Failed to fetch press releases for static params:', response.message);
     return [];
   }
 
-  return response.data.map((blog) => ({
-    slug: blog.slug,
+  return response.data.map((pressRelease) => ({
+    slug: pressRelease.slug,
   }));
 }
 
-export async function generateMetadata({ params }: BlogPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: PressReleasePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const response = await getBlogBySlug(slug);
+  const response = await getPressReleaseBySlug(slug);
 
   if (isApiError(response)) {
     return {
-      title: "Blog Not Found",
+      title: "Press Release Not Found",
     };
   }
 
-  const blog = response.data;
+  const pressRelease = response.data;
 
   return {
-    title: `${blog.title} | Healthcare Insights`,
-    description: blog.excerpt,
+    title: `${pressRelease.title} | Press Releases`,
+    description: pressRelease.excerpt,
     openGraph: {
-      title: blog.title,
-      description: blog.excerpt,
+      title: pressRelease.title,
+      description: pressRelease.excerpt,
       type: "article",
-      publishedTime: blog.date,
-      authors: [blog.author],
+      publishedTime: pressRelease.date,
+      authors: [pressRelease.author],
     },
   };
 }
 
-export default async function BlogDetailPage({ params }: BlogPageProps) {
+export default async function PressReleaseDetailPage({ params }: PressReleasePageProps) {
   const { slug } = await params;
-  const response = await getBlogBySlug(slug);
+  const response = await getPressReleaseBySlug(slug);
 
   if (isApiError(response)) {
     notFound();
   }
 
-  const blog = response.data;
+  const pressRelease = response.data;
 
-  const paragraphs = blog.content.split("\n\n");
+  const paragraphs = pressRelease.content.split("\n\n");
 
   return (
     <>
@@ -66,7 +66,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
         <Container size="sm">
           <div className="mb-6">
             <Link
-              href="/blog"
+              href="/press-releases"
               className="text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors inline-flex items-center gap-1"
             >
               <svg
@@ -82,37 +82,37 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
               >
                 <path d="m15 18-6-6 6-6"/>
               </svg>
-              Back to Insights
+              Back to Press Releases
             </Link>
           </div>
 
           <div className="mb-6">
-            <Badge variant="default">{blog.category}</Badge>
+            <Badge variant="default">{pressRelease.category}</Badge>
           </div>
 
           <h1 className="mb-6 text-4xl font-bold md:text-5xl lg:text-6xl">
-            {blog.title}
+            {pressRelease.title}
           </h1>
 
           <p className="text-xl text-[var(--muted-foreground)] mb-8 leading-relaxed">
-            {blog.excerpt}
+            {pressRelease.excerpt}
           </p>
 
           <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--muted-foreground)] pb-8 border-b border-[var(--border)]">
             <div className="flex items-center gap-2">
               <div className="w-10 h-10 rounded-full bg-[var(--primary)] flex items-center justify-center text-white font-semibold">
-                {blog.author.split(" ").map(n => n[0]).join("")}
+                {pressRelease.author.split(" ").map(n => n[0]).join("")}
               </div>
-              <span className="font-medium text-[var(--foreground)]">{blog.author}</span>
+              <span className="font-medium text-[var(--foreground)]">{pressRelease.author}</span>
             </div>
             <span>•</span>
-            <time>{blog.date}</time>
+            <time>{pressRelease.date}</time>
             <span>•</span>
-            <span>{blog.readTime}</span>
-            {blog.location && (
+            <span>{pressRelease.readTime}</span>
+            {pressRelease.location && (
               <>
                 <span>•</span>
-                <span>{blog.location}</span>
+                <span>{pressRelease.location}</span>
               </>
             )}
           </div>
@@ -134,7 +134,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
 
           <div className="mt-12 pt-8 border-t border-[var(--border)]">
             <Link
-              href="/blog"
+              href="/press-releases"
               className="inline-flex items-center gap-2 text-[var(--primary)] hover:underline font-medium"
             >
               <svg
@@ -150,7 +150,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
               >
                 <path d="m15 18-6-6 6-6"/>
               </svg>
-              View all insights
+              View all press releases
             </Link>
           </div>
         </Container>

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter, Badge } from "@/components/ui";
 
-interface BlogCardProps {
+interface PressReleaseCardProps {
   slug: string;
   title: string;
   excerpt: string;
@@ -12,7 +12,7 @@ interface BlogCardProps {
   location?: string;
 }
 
-export function BlogCard({
+export function PressReleaseCard({
   slug,
   title,
   excerpt,
@@ -21,9 +21,9 @@ export function BlogCard({
   date,
   readTime,
   location,
-}: BlogCardProps) {
+}: PressReleaseCardProps) {
   return (
-    <Link href={`/blog/${slug}`} className="group">
+    <Link href={`/press-releases/${slug}`} className="group">
       <Card className="h-full hover:shadow-primary-lg hover:border-ocean-500 transition-all duration-300 hover:-translate-y-1">
         <CardHeader>
           <div className="mb-3">
