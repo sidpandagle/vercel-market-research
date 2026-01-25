@@ -1,9 +1,6 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import Link from 'next/link';
-import { Button } from '@/components/ui';
-import { Download } from 'lucide-react';
 
 interface StyledReportContentProps {
   htmlContent: string;
@@ -22,7 +19,7 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
     // Find all images in the content
     const images = contentRef.current.querySelectorAll('img');
 
-    images.forEach((img) => {
+    images.forEach((img, i) => {
       // Skip if already wrapped
       if (img.parentElement?.classList.contains('image-wrapper')) return;
 
@@ -34,28 +31,30 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
       const imageContainer = document.createElement('div');
       imageContainer.className = 'image-container';
 
-      // Create CTA section (matching the commented code styling)
-      const ctaSection = document.createElement('div');
-      ctaSection.className = 'image-cta-section';
-      ctaSection.innerHTML = `
-        <div class="image-cta-content">
-          <div class="image-cta-text">To learn more about this report,</div>
-          <a href="/request-sample${reportSlug ? `?report=${reportSlug}` : ''}" class="image-cta-button">
-            <svg class="download-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            Download Free Sample
-          </a>
-        </div>
-      `;
-
       // Wrap the image
       img.parentNode?.insertBefore(wrapper, img);
       imageContainer.appendChild(img);
       wrapper.appendChild(imageContainer);
-      wrapper.appendChild(ctaSection);
+
+      if(i==0){
+        // Create CTA section (matching the commented code styling)
+        const ctaSection = document.createElement('div');
+        ctaSection.className = 'image-cta-section';
+        ctaSection.innerHTML = `
+          <div class="image-cta-content">
+            <div class="image-cta-text">To learn more about this report,</div>
+            <a href="/request-sample${reportSlug ? `?report=${reportSlug}` : ''}" class="image-cta-button">
+              <svg class="download-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              Download Free Sample
+            </a>
+          </div>
+        `;
+        wrapper.appendChild(ctaSection);
+      }
     });
   }, [htmlContent, reportSlug]);
 
@@ -68,7 +67,7 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
       />
       <style jsx global>{`
         .image-wrapper {
-          margin: 1.5rem 0;
+          margin: 1rem 0;
           width: 100%;
         }
 
@@ -77,20 +76,20 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
           border-radius: 0.5rem;
           box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
           border: 1px solid var(--border);
-          padding: 1.5rem;
+          padding: 0.75rem;
         }
 
         .image-container img {
           width: 100%;
           height: auto;
-          max-width: 56rem;
+          max-width: 100%;
           margin: 0 auto !important;
           display: block;
         }
 
         .image-cta-section {
           border-radius: 1rem;
-          padding-top: 1.5rem;
+          padding-top: 1rem;
         }
 
         .image-cta-content {
@@ -98,33 +97,36 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          gap: 1rem;
+          gap: 0.75rem;
           text-align: center;
         }
 
         .image-cta-text {
           color: var(--muted-foreground);
-          font-size: 1rem;
+          font-size: 0.875rem;
           font-weight: 500;
           margin: 0;
+          line-height: 1.5;
         }
 
         .image-cta-button {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          gap: 0.625rem;
+          gap: 0.5rem;
           background: linear-gradient(to right, #0F2D52, #2563A3, #3B7CB8);
           color: white !important;
-          padding: 0.875rem 1.75rem;
+          padding: 0.75rem 1.25rem;
           border-radius: 0.75rem;
           font-weight: 600;
-          font-size: 1.125rem;
+          font-size: 0.875rem;
           text-decoration: none;
           transition: all 0.2s ease-in-out;
           box-shadow: 0 4px 14px 0 rgba(37, 99, 163, 0.2);
           white-space: nowrap;
           transform: translateY(0);
+          width: 100%;
+          max-width: 280px;
         }
 
         // .image-cta-button:hover {
@@ -134,11 +136,48 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
         // }
 
         .download-icon {
-          width: 1.25rem;
-          height: 1.25rem;
+          width: 1rem;
+          height: 1rem;
+          flex-shrink: 0;
+        }
+
+        @media (min-width: 480px) {
+          .image-wrapper {
+            margin: 1.25rem 0;
+          }
+
+          .image-container {
+            padding: 1rem;
+          }
+
+          .image-cta-text {
+            font-size: 0.9375rem;
+          }
+
+          .image-cta-button {
+            font-size: 0.9375rem;
+            padding: 0.8125rem 1.5rem;
+          }
+
+          .download-icon {
+            width: 1.125rem;
+            height: 1.125rem;
+          }
         }
 
         @media (min-width: 640px) {
+          .image-wrapper {
+            margin: 1.5rem 0;
+          }
+
+          .image-container {
+            padding: 1.5rem;
+          }
+
+          .image-cta-section {
+            padding-top: 1.5rem;
+          }
+
           .image-cta-content {
             flex-direction: row;
             gap: 1rem;
@@ -146,7 +185,34 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
           }
 
           .image-cta-text {
+            font-size: 1rem;
+          }
+
+          .image-cta-button {
+            width: auto;
+            font-size: 1rem;
+            padding: 0.875rem 1.75rem;
+          }
+
+          .download-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+          }
+        }
+
+        @media (min-width: 768px) {
+          .image-cta-text {
             font-size: 1.125rem;
+          }
+
+          .image-cta-button {
+            font-size: 1.125rem;
+          }
+        }
+
+        @media (min-width: 1024px) {
+          .image-container img {
+            max-width: 56rem;
           }
         }
       `}</style>

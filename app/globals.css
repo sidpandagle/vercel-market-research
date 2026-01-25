@@ -242,14 +242,6 @@ body {
     @apply text-[var(--primary)] underline hover:text-[var(--primary-hover)] transition-colors;
   }
 
-  .prose ol {
-    @apply list-decimal list-outside ml-6 mb-4 space-y-2;
-  }
-
-  .prose li {
-    @apply text-[var(--muted-foreground)] leading-relaxed;
-  }
-
   .prose blockquote {
     @apply border-l-4 border-[var(--primary)] pl-4 italic text-[var(--muted-foreground)] my-6;
   }
@@ -327,7 +319,19 @@ body {
   /* Market Highlight section styling (matches Key Findings) */
   /* Target any h2/h3 followed by a ul (like Market Highlight section) */
   .prose ul {
-    @apply bg-[#ede9fe] rounded-lg pb-1 pt-2 px-12 ml-5 space-y-0 list-disc list-outside mb-4;
+    @apply rounded-lg pb-1 pt-2 px-12 space-y-0 list-disc list-outside mb-4;
+  }
+
+  .prose > ul:first-of-type {
+    @apply bg-[#ede9fe];
+  }
+  
+  .prose ol {
+    @apply list-decimal list-outside ml-6 mb-4 space-y-2;
+  }
+
+  .prose li {
+    @apply text-[var(--muted-foreground)] leading-relaxed;
   }
 
   .prose ul li {
@@ -337,4 +341,11 @@ body {
   .prose ul li:last-child {
     @apply border-b-0;
   }
+
+  .prose img.tiptap-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
 }

@@ -9,19 +9,19 @@ export default function HeroSection() {
         {/* Grid pattern overlay */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#8882_1px,transparent_1px),linear-gradient(to_bottom,#8882_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
 
-        {/* Gradient orbs with mesh effect */}
-        <div className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-gradient-to-br from-ocean-500/30 via-bright-400/20 to-transparent rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float"></div>
-        <div className="absolute top-20 -right-40 w-[600px] h-[600px] bg-gradient-to-bl from-bright-500/30 via-ocean-400/20 to-transparent rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute -bottom-20 left-1/3 w-[400px] h-[400px] bg-gradient-to-tr from-navy-500/20 via-ocean-300/15 to-transparent rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-float" style={{ animationDelay: '4s' }}></div>
+        {/* Gradient orbs with mesh effect - Optimized with will-change and reduced blur */}
+        <div className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-gradient-to-br from-ocean-500/30 via-bright-400/20 to-transparent rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-float motion-reduce:animate-none [will-change:transform]"></div>
+        <div className="absolute top-20 -right-40 w-[600px] h-[600px] bg-gradient-to-bl from-bright-500/30 via-ocean-400/20 to-transparent rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-float motion-reduce:animate-none [will-change:transform]" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute -bottom-20 left-1/3 w-[400px] h-[400px] bg-gradient-to-tr from-navy-500/20 via-ocean-300/15 to-transparent rounded-full mix-blend-multiply filter blur-2xl opacity-50 animate-float motion-reduce:animate-none [will-change:transform]" style={{ animationDelay: '4s' }}></div>
       </div>
 
       <Container size="lg" className="relative">
         <div className="flex flex-col items-center text-center space-y-8 relative z-10">
           {/* Floating badge */}
-          <div className="animate-fadeIn flex items-center gap-2">
+          <div className="animate-fadeIn motion-reduce:animate-none motion-reduce:animate-none flex items-center gap-2">
             <Badge variant="outline" className="backdrop-blur-sm bg-white/50 border-ocean-200 text-navy-800 px-4 py-1.5 shadow-sm hover:shadow-md transition-shadow">
               <span className="relative flex h-2 w-2 mr-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-ocean-400 opacity-75"></span>
+                <span className="animate-ping motion-reduce:animate-none absolute inline-flex h-full w-full rounded-full bg-ocean-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-ocean-500"></span>
               </span>
               Trusted by 500+ Healthcare Leaders
@@ -29,7 +29,7 @@ export default function HeroSection() {
           </div>
 
           {/* Main headline with modern typography */}
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 animate-fadeIn leading-[1.1]" style={{ animationDelay: '0.05s' }}>
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 animate-fadeIn motion-reduce:animate-none motion-reduce:animate-none leading-[1.1]" style={{ animationDelay: '0.05s' }}>
             Transform Healthcare
             <br />
             <span className="relative inline-block mt-2">
@@ -50,20 +50,20 @@ export default function HeroSection() {
             </span>
           </h1>
 
-          <p className="text-xl md:text-2xl text-slate-600 max-w-3xl animate-fadeIn leading-relaxed font-light" style={{ animationDelay: '0.1s' }}>
+          <p className="text-xl md:text-2xl text-slate-600 max-w-3xl animate-fadeIn motion-reduce:animate-none leading-relaxed font-light" style={{ animationDelay: '0.1s' }}>
             Access comprehensive market research, expert analysis, and actionable intelligence
             to drive strategic decisions in the rapidly evolving healthcare landscape.
           </p>
 
           {/* Floating stats cards - glassmorphic */}
-          <div className="hidden lg:flex absolute top-32 -left-12 animate-fadeIn" style={{ animationDelay: '0.3s' }}>
+          <div className="hidden lg:flex absolute top-32 -left-12 animate-fadeIn motion-reduce:animate-none" style={{ animationDelay: '0.3s' }}>
             <div className="backdrop-blur-md bg-white/60 border border-white/20 rounded-2xl p-4 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
               <div className="text-3xl font-bold text-navy-900">2,500+</div>
               <div className="text-sm text-slate-600">Reports Published</div>
             </div>
           </div>
 
-          <div className="hidden lg:flex absolute top-48 -right-12 animate-fadeIn" style={{ animationDelay: '0.4s' }}>
+          <div className="hidden lg:flex absolute top-48 -right-12 animate-fadeIn motion-reduce:animate-none" style={{ animationDelay: '0.4s' }}>
             <div className="backdrop-blur-md bg-white/60 border border-white/20 rounded-2xl p-4 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
               <div className="text-3xl font-bold text-navy-900">98%</div>
               <div className="text-sm text-slate-600">Client Satisfaction</div>
@@ -71,7 +71,7 @@ export default function HeroSection() {
           </div>
 
           {/* Search Bar with glassmorphic style */}
-          <div className="w-full max-w-3xl flex justify-center animate-fadeIn relative z-50" style={{ animationDelay: '0.15s' }}>
+          <div className="w-full max-w-3xl flex justify-center animate-fadeIn motion-reduce:animate-none relative z-50" style={{ animationDelay: '0.15s' }}>
             <div className="w-full px-4 sm:px-0 backdrop-blur-sm">
               <SearchBar
                 variant="hero"
@@ -82,7 +82,7 @@ export default function HeroSection() {
           </div>
 
           {/* CTA buttons with enhanced styling */}
-          <div className="flex flex-col sm:flex-row gap-4 animate-fadeIn z-1" style={{ animationDelay: '0.2s' }}>
+          <div className="flex flex-col sm:flex-row gap-4 animate-fadeIn motion-reduce:animate-none z-1" style={{ animationDelay: '0.2s' }}>
             <Link href="/reports">
               <Button
                 variant="primary"
@@ -105,7 +105,7 @@ export default function HeroSection() {
           </div>
 
           {/* Trust indicators */}
-          <div className="flex flex-wrap items-center justify-center gap-6 pt-8 animate-fadeIn" style={{ animationDelay: '0.25s' }}>
+          <div className="flex flex-wrap items-center justify-center gap-6 pt-8 animate-fadeIn motion-reduce:animate-none" style={{ animationDelay: '0.25s' }}>
             <div className="flex items-center gap-2 text-sm text-slate-600">
               <svg className="w-5 h-5 text-ocean-500" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />

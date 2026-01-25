@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   description: "Latest news and announcements from Healthcare Foresights. Stay informed about our research publications, industry insights, and company developments.",
 };
 
+// Enable ISR with 5-minute revalidation
+export const revalidate = 300;
+
 export default async function PressReleasesPage() {
   // Fetch press releases from API
   const response = await getPressReleases({ status: 'published', limit: 100 });

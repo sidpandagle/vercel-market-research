@@ -271,7 +271,7 @@ export function mapApiReportToReport(apiReport: ApiReport): Report {
     title: apiReport.title,
     description: apiReport.description,
     category: apiReport.category_name || 'Uncategorized',
-    date: apiReport.publish_date || apiReport.created_at,
+    date: formatDate(apiReport.publish_date || apiReport.created_at),
     price,
     region,
     year,
@@ -369,18 +369,19 @@ function parseTags(tagsString?: string): string[] {
  * @returns Blog formatted for UI components
  */
 export function mapApiBlogToBlog(apiBlog: ApiBlog): Blog {
-  // Get author name from metadata or default
-  const author = apiBlog.metadata?.author || 'Healthcare Foresights';
+  // Use populated category from API or fallback
+  const category = apiBlog.category?.name || 'Healthcare Insights';
+
+  // Use populated author from API or fallback
+  const author = apiBlog.author?.name
+    || apiBlog.metadata?.author
+    || 'Healthcare Foresights';
 
   // Format date
   const date = formatDate(apiBlog.publishDate || apiBlog.createdAt);
 
   // Calculate read time
   const readTime = calculateReadTime(apiBlog.content);
-
-  // Get category (would need to be fetched from categories API or passed in)
-  // For now, using a default
-  const category = 'Healthcare Insights';
 
   // Parse tags
   const tags = parseTags(apiBlog.tags);
@@ -423,18 +424,19 @@ export function mapApiBlogsToblogs(apiBlogs: ApiBlog[]): Blog[] {
  * @returns PressRelease formatted for UI components
  */
 export function mapApiPressReleaseToPressRelease(apiPressRelease: ApiPressRelease): PressRelease {
-  // Get author name from metadata or default
-  const author = apiPressRelease.metadata?.author || 'Media Relations';
+  // Use populated category from API or fallback
+  const category = apiPressRelease.category?.name || 'Press Release';
+
+  // Use populated author from API or fallback
+  const author = apiPressRelease.author?.name
+    || apiPressRelease.metadata?.author
+    || 'Media Relations';
 
   // Format date
   const date = formatDate(apiPressRelease.publishDate || apiPressRelease.createdAt);
 
   // Calculate read time
   const readTime = calculateReadTime(apiPressRelease.content);
-
-  // Get category (would need to be fetched from categories API or passed in)
-  // For now, using a default
-  const category = 'Press Release';
 
   // Parse tags
   const tags = parseTags(apiPressRelease.tags);

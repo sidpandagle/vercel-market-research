@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   description: "Expert insights, analysis, and updates on healthcare market trends, innovations, and industry developments from our team of healthcare specialists.",
 };
 
+// Enable ISR with 5-minute revalidation
+export const revalidate = 300;
+
 export default async function BlogPage() {
   // Fetch blogs from API
   const response = await getBlogs({ status: 'published', limit: 100 });

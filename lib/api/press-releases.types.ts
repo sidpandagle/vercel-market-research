@@ -16,6 +16,34 @@ export interface ApiPressReleaseMetadata {
 }
 
 /**
+ * Author entity from API
+ */
+export interface ApiAuthor {
+  id: number;
+  name: string;
+  role?: string;
+  bio?: string;
+  imageUrl?: string;
+  linkedinUrl?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/**
+ * Category entity from API
+ */
+export interface ApiCategory {
+  id: number;
+  name: string;
+  slug: string;
+  description?: string;
+  image_url?: string;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+/**
  * Press Release entity from API (matches actual API response)
  */
 export interface ApiPressRelease {
@@ -26,6 +54,8 @@ export interface ApiPressRelease {
   content: string;
   categoryId?: number;
   authorId?: number;
+  author?: ApiAuthor;
+  category?: ApiCategory;
   tags?: string;
   status: PressReleaseStatus;
   publishDate?: string | null;

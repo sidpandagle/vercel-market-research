@@ -16,6 +16,34 @@ export interface ApiBlogMetadata {
 }
 
 /**
+ * Author entity from API
+ */
+export interface ApiAuthor {
+  id: number;
+  name: string;
+  role?: string;
+  bio?: string;
+  imageUrl?: string;
+  linkedinUrl?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/**
+ * Category entity from API
+ */
+export interface ApiCategory {
+  id: number;
+  name: string;
+  slug: string;
+  description?: string;
+  image_url?: string;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+/**
  * Blog entity from API (matches actual API response)
  */
 export interface ApiBlog {
@@ -26,6 +54,8 @@ export interface ApiBlog {
   content: string;
   categoryId?: number;
   authorId?: number;
+  author?: ApiAuthor;
+  category?: ApiCategory;
   tags?: string;
   status: BlogStatus;
   publishDate?: string | null;
