@@ -1,4 +1,5 @@
 // Blog types for API integration
+import type { ApiCategory } from './categories.types';
 
 /**
  * Blog status from API
@@ -27,20 +28,6 @@ export interface ApiAuthor {
   linkedinUrl?: string;
   createdAt: string;
   updatedAt: string;
-}
-
-/**
- * Category entity from API
- */
-export interface ApiCategory {
-  id: number;
-  name: string;
-  slug: string;
-  description?: string;
-  image_url?: string;
-  is_active: boolean;
-  created_at: string;
-  updated_at: string;
 }
 
 /**

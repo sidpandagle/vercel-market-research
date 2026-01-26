@@ -1,4 +1,6 @@
 // Press Release types for API integration
+import type { ApiCategory } from './categories.types';
+import type { ApiAuthor } from './blogs.types';
 
 /**
  * Press Release status from API
@@ -13,34 +15,6 @@ export interface ApiPressReleaseMetadata {
   description?: string;
   author?: string;
   [key: string]: string | string[] | undefined;
-}
-
-/**
- * Author entity from API
- */
-export interface ApiAuthor {
-  id: number;
-  name: string;
-  role?: string;
-  bio?: string;
-  imageUrl?: string;
-  linkedinUrl?: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-/**
- * Category entity from API
- */
-export interface ApiCategory {
-  id: number;
-  name: string;
-  slug: string;
-  description?: string;
-  image_url?: string;
-  is_active: boolean;
-  created_at: string;
-  updated_at: string;
 }
 
 /**
