@@ -1,5 +1,6 @@
 // Blog types for API integration
 import type { ApiCategory } from './categories.types';
+import type { ApiAuthor } from './common.types';
 
 /**
  * Blog status from API
@@ -14,20 +15,6 @@ export interface ApiBlogMetadata {
   description?: string;
   author?: string;
   [key: string]: string | string[] | undefined;
-}
-
-/**
- * Author entity from API
- */
-export interface ApiAuthor {
-  id: number;
-  name: string;
-  role?: string;
-  bio?: string;
-  imageUrl?: string;
-  linkedinUrl?: string;
-  createdAt: string;
-  updatedAt: string;
 }
 
 /**

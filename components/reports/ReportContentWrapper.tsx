@@ -13,6 +13,7 @@ interface ReportContentWrapperProps {
   fullReportTOC?: TOCItem[];           // For full report TOC modal
   hasFullContent: boolean;
   price: string;
+  discounted_price: string;
   reportTitle?: string;
   children: ReactNode;
 }
@@ -22,6 +23,7 @@ export const ReportContentWrapper: React.FC<ReportContentWrapperProps> = ({
   fullReportTOC,
   hasFullContent,
   price,
+  discounted_price,
   reportTitle,
   children,
 }) => {
@@ -110,7 +112,7 @@ export const ReportContentWrapper: React.FC<ReportContentWrapperProps> = ({
       <aside className={hasFullContent ? 'lg:col-span-3 2xl:col-span-2' : 'lg:col-span-2 2xl:col-span-2'}>
         <div className="sticky top-24 space-y-4">
           <CustomizeReportCard reportTitle={reportTitle} />
-          <CTAPanel price={price} reportTitle={reportTitle} />
+          <CTAPanel discounted_price={discounted_price} price={price} reportTitle={reportTitle} />
         </div>
       </aside>
     </div>

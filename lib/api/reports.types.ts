@@ -1,4 +1,5 @@
 // Report types for API integration
+import type { ApiAuthor } from './common.types';
 
 /**
  * Report status from API
@@ -76,6 +77,8 @@ export interface ApiReport {
   market_metrics?: ApiMarketMetrics;
   sections?: ApiReportSections;
   faqs?: ApiFaq[];
+  author_ids?: number[];
+  authors?: ApiAuthor[];
   created_by?: number;
   updated_by?: number;
   created_at: string;
@@ -93,6 +96,7 @@ export interface Report {
   category: string;
   date: string;
   price: string;
+  discounted_price?: string;
   region: string;
   year: string;
   reportType: string;
@@ -128,6 +132,15 @@ export interface Report {
     question: string;
     answer: string;
   }>;
+  authors?: Array<{
+    id: number;
+    name: string;
+    role?: string;
+    bio?: string;
+    imageUrl?: string;
+    linkedinUrl?: string;
+    createdAt: string;
+    updatedAt: string;}>;
 }
 
 /**

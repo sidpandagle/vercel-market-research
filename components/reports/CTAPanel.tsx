@@ -6,12 +6,13 @@ import { cn } from '@/lib/utils';
 
 interface CTAPanelProps {
   price: string;
+  discounted_price: string;
   reportTitle?: string;
   className?: string;
 }
 
 export const CTAPanel = React.forwardRef<HTMLDivElement, CTAPanelProps>(
-  ({ price, reportTitle, className }, ref) => {
+  ({ price, discounted_price, reportTitle, className }, ref) => {
     return (
       <Card ref={ref}>
         <CardContent className="space-y-4">
@@ -21,10 +22,10 @@ export const CTAPanel = React.forwardRef<HTMLDivElement, CTAPanelProps>(
             </p>
             <div className="mb-2">
               <p className="text-lg text-[var(--muted-foreground)] line-through">
-                $3490/-
+                {price}/-
               </p>
               <p className="text-4xl font-bold text-[var(--foreground)]">
-                $3090/-
+                {discounted_price}/-
               </p>
             </div>
             <p className="text-xs text-[var(--muted-foreground)] mt-2">

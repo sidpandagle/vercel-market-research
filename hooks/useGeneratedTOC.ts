@@ -29,7 +29,6 @@ export function useGeneratedTOC(
     const extractTOCItems = (): SidebarTOCItem[] => {
       const container = document.querySelector(containerSelector);
       if (!container) {
-        console.warn(`Container "${containerSelector}" not found`);
         return [];
       }
 

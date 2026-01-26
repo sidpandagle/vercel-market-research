@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { getReports, getReportBySlug, isApiError } from "@/lib/api";
-import teamMembers from "@/data/team-members.json";
 import { Breadcrumb, Badge, Card, CardContent, Button } from "@/components/ui";
 import { Download } from "lucide-react";
 import { ReportContentWrapper } from "@/components/reports/ReportContentWrapper";
@@ -34,6 +33,7 @@ interface Report {
   category: string;
   date: string;
   price: string;
+  discounted_price: string;
   region: string;
   year: string;
   reportType: string;
@@ -60,6 +60,16 @@ interface Report {
   faqs?: Array<{
     question: string;
     answer: string;
+  }>;
+  authors: Array<{
+    id: number;
+    name: string;
+    role?: string;
+    bio?: string;
+    imageUrl?: string;
+    linkedinUrl?: string;
+    createdAt: string;
+    updatedAt: string;
   }>;
 }
 
@@ -195,7 +205,7 @@ export default async function ReportPage({
     },
     {
       label: 'Report Coverage',
-      value: 'Global',
+      value: report.region,
       bg: 'bg-gradient-to-br from-[#F3E5F5] to-[#E1BEE7]',
       labelColor: 'text-[#8E24AA]',
       valueColor: 'text-[#6A1B9A]',
@@ -216,11 +226,6 @@ export default async function ReportPage({
     },
   ];
 
-  // Fetch team members for this report
-  const reportTeamMembers = report.teamMemberIds
-    ? teamMembers.filter((tm) => report.teamMemberIds!.includes(tm.id))
-    : [];
-
   // Fetch related reports
   // TODO: Fetch related reports from API when relatedReportIds are provided
   // const relatedReports: Report[] = [];
@@ -238,6 +243,7 @@ export default async function ReportPage({
           fullReportTOC={report.fullReportTOC}
           hasFullContent={hasFullContent}
           price={report.price}
+          discounted_price={report.discounted_price}
           reportTitle={report.title}
         >
           <article>
@@ -400,7 +406,7 @@ export default async function ReportPage({
                   </section> */}
 
                   {/* NEW SECTIONS */}
-                  <MeetTheTeam teamMembers={reportTeamMembers} />
+                  <MeetTheTeam teamMembers={report.authors} />
 
                   {/* FAQ Section */}
                   {report.faqs && <FAQ faqs={report.faqs} />}

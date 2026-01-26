@@ -1,6 +1,6 @@
 // Press Release types for API integration
 import type { ApiCategory } from './categories.types';
-import type { ApiAuthor } from './blogs.types';
+import type { ApiAuthor } from './common.types';
 
 /**
  * Press Release status from API

@@ -220,6 +220,9 @@ export function mapApiReportToReport(apiReport: ApiReport): Report {
 
   // Format price
   const price = formatPrice(apiReport.price, apiReport.currency);
+  const discounted_price = apiReport.discounted_price
+    ? formatPrice(apiReport.discounted_price, apiReport.currency)
+    : undefined;
 
   // Parse key findings from JSON string
   let keyFindings: string[] | undefined;
@@ -273,13 +276,14 @@ export function mapApiReportToReport(apiReport: ApiReport): Report {
     category: apiReport.category_name || 'Uncategorized',
     date: formatDate(apiReport.publish_date || apiReport.created_at),
     price,
+    discounted_price,
     region,
     year,
     reportType,
     pages: apiReport.page_count || 150,
 
     // Extended fields for detail page
-    reportCode: `HC-${apiReport.id}`,
+    reportCode: `HF${apiReport.id}`,
     baseYear,
     forecastPeriod,
     marketSize2024,
@@ -289,6 +293,7 @@ export function mapApiReportToReport(apiReport: ApiReport): Report {
     keyFindings,
     keyPlayers,
     faqs: apiReport.faqs,
+    authors: apiReport.authors,
     fullReportTOC,
 
     // Additional metadata
