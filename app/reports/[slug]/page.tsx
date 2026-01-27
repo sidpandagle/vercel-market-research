@@ -8,6 +8,8 @@ import { ReportContentWrapper } from "@/components/reports/ReportContentWrapper"
 import { StyledReportContent } from "@/components/reports/StyledReportContent";
 import MeetTheTeam from "@/components/reports/MeetTheTeam";
 import FAQ from "@/components/reports/FAQ";
+import { parseHTMLAndGenerateTOC, addStaticSectionsToTOC } from "@/lib/html-toc-utils";
+import type { SidebarTOCItem } from "@/lib/toc-utils";
 
 // Enable ISR with 10-minute revalidation
 export const revalidate = 600;
@@ -97,6 +99,39 @@ export default async function ReportPage({
   ];
 
   const hasFullContent = !!(report.fullReportTOC && report.marketDetails);
+
+  // Parse marketDetails HTML and generate TOC with IDs
+  let sidebarTOC: SidebarTOCItem[] = [];
+  let marketDetailsWithIds = report.marketDetails || '';
+
+  if (hasFullContent && report.marketDetails) {
+    const { toc, htmlWithIds } = parseHTMLAndGenerateTOC(report.marketDetails);
+    marketDetailsWithIds = htmlWithIds;
+
+    // Add static sections from the page to TOC
+    const staticSections: SidebarTOCItem[] = [];
+
+    // Add Competitive Landscape section if key players exist
+    if (report.keyPlayers && report.keyPlayers.length > 0) {
+      staticSections.push(
+        { id: 'competitive', title: 'Competitive Landscape', level: 2 },
+        { id: 'key-players', title: 'Key Market Players', level: 3 }
+      );
+    }
+
+    // Add Team and FAQ sections
+    const allSections: SidebarTOCItem[] = [
+      ...toc,
+      ...staticSections,
+      ...addStaticSectionsToTOC(
+        [],
+        !!(report.authors && report.authors.length > 0),
+        !!(report.faqs && report.faqs.length > 0)
+      )
+    ];
+
+    sidebarTOC = allSections;
+  }
 
   const baseYearLabel = report.baseYear || '2024';
   const forecastEndYear = report.forecastPeriod?.split('-')[1] || '2032';
@@ -240,6 +275,7 @@ export default async function ReportPage({
 
       <div className="px-4 py-8 md:px-6">
         <ReportContentWrapper
+          tableOfContents={sidebarTOC}
           fullReportTOC={report.fullReportTOC}
           hasFullContent={hasFullContent}
           price={report.price}
@@ -265,7 +301,7 @@ export default async function ReportPage({
                   <div>
                     <p className="text-[var(--muted-foreground)] mb-1">Report Code</p>
                     <p className="font-semibold text-[var(--foreground)]">
-                      {report.reportCode || `HC-${report.id}`}
+                      {report.reportCode || `HF${report.id}`}
                     </p>
                   </div>
                   <div>
@@ -306,7 +342,7 @@ export default async function ReportPage({
                       Market Overview
                     </h2>
                     <StyledReportContent
-                      htmlContent={report.marketDetails ?? ''}
+                      htmlContent={marketDetailsWithIds}
                       reportSlug={report.slug}
                     />
 

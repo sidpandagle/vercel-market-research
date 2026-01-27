@@ -258,54 +258,81 @@ body {
     @apply bg-transparent p-0;
   }
 
+  /* GVR-style table styling */
   .prose table {
-    @apply w-full mb-8 border-collapse overflow-hidden;
-    border-radius: 0.75rem;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    @apply w-full mb-8;
+    border-spacing: 0;
+    border-radius: 6px;
+    background: white;
   }
 
   .prose thead {
-    background: linear-gradient(135deg, #2563A3 0%, #3B7CB8 100%);
+    background: transparent;
   }
 
   .prose th {
-    @apply text-white font-semibold text-left px-6 py-4 border-b-2 border-white/20;
+    @apply text-[var(--foreground)] font-semibold text-left;
+    padding: 6px 15px;
+    border: 1px solid #b09ad5;
     font-size: 0.875rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+    text-transform: none;
+    letter-spacing: normal;
   }
 
-  .prose th:first-child {
-    border-top-left-radius: 0.75rem;
+  /* Rounded corners for header cells */
+  .prose thead tr:first-child th:first-child {
+    border-top-left-radius: 6px;
   }
 
-  .prose th:last-child {
-    border-top-right-radius: 0.75rem;
+  .prose thead tr:first-child th:last-child {
+    border-top-right-radius: 6px;
   }
 
   .prose tbody tr {
-    @apply border-b border-[var(--border)] transition-colors;
-  }
-
-  .prose tbody tr:nth-child(even) {
-    /* @apply bg-[var(--muted)]/30; */
+    border: none;
+    transition: background-color 0.2s ease;
   }
 
   .prose tbody tr:hover {
-    /* @apply bg-[var(--primary)]/5; */
+    background-color: rgba(176, 154, 213, 0.05);
   }
 
   .prose tbody tr:last-child {
-    @apply border-b-0;
+    border: none;
   }
 
   .prose td {
-    @apply text-[var(--foreground)] px-6 py-4;
+    @apply text-[var(--foreground)];
+    padding: 6px 15px;
+    border: 1px solid #b09ad5;
     font-size: 0.9375rem;
   }
 
-  .prose td:first-child {
-    @apply font-medium;
+  /* Rounded corners for body cells */
+  .prose tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 6px;
+  }
+
+  .prose tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 6px;
+  }
+
+  /* Responsive: reduce padding on mobile */
+  @media (max-width: 640px) {
+    .prose th,
+    .prose td {
+      padding: 4px 10px;
+      font-size: 0.8125rem;
+    }
+  }
+
+  /* Responsive: horizontal scroll on small screens */
+  @media (max-width: 768px) {
+    .prose table {
+      display: block;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
   }
 
   .prose hr {
@@ -324,6 +351,12 @@ body {
 
   .prose > ul:first-of-type {
     @apply bg-[#ede9fe];
+    li {
+      @apply border-b border-gray-300;
+      p {
+        @apply ml-0 mr-2 mt-2 mb-2;
+      }
+    }
   }
   
   .prose ol {
@@ -335,7 +368,7 @@ body {
   }
 
   .prose ul li {
-    @apply text-[var(--foreground)] pb-1 pt-2 border-b border-gray-300;
+    @apply text-[var(--foreground)] pb-1 pt-2;
   }
 
   .prose ul li:last-child {
