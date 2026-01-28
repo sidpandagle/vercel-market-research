@@ -3,16 +3,22 @@
 import { useState } from "react";
 import type { Metadata } from "next";
 import { Section, Container, Card, CardHeader, CardTitle, CardDescription, CardContent, Button, Badge } from "@/components/ui";
+import { CountrySelect } from "@/components/ui/country-select";
 import { CONTACT_INFO } from "@/lib/contact";
 import { QuickContactSection, TrustedPartnersSidebar } from "@/components/contact";
 import { submitContactForm, isFormError } from "@/lib/api";
+import { getDefaultCountry, type Country } from "@/lib/data/countries";
 
 export default function ContactPage() {
+  const defaultCountry = getDefaultCountry();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     company: "",
     phone: "",
+    country: defaultCountry.name,
+    countryCode: defaultCountry.code,
+    dialCode: defaultCountry.dialCode,
     subject: "",
     message: "",
   });
@@ -27,13 +33,35 @@ export default function ContactPage() {
     });
   };
 
+  const handleCountryChange = (country: Country) => {
+    setFormData({
+      ...formData,
+      country: country.name,
+      countryCode: country.code,
+      dialCode: country.dialCode,
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
 
+    // Prepare data for API - combine dialCode with phone and only send country name
+    const apiData = {
+      fullName: formData.fullName,
+      email: formData.email,
+      company: formData.company,
+      phone: formData.phone ? `${formData.dialCode}${formData.phone}` : undefined,
+      country: formData.country,
+      countryCode: formData.countryCode,
+      dialCode: formData.dialCode,
+      subject: formData.subject,
+      message: formData.message,
+    };
+
     // Submit to API
-    const response = await submitContactForm(formData);
+    const response = await submitContactForm(apiData);
 
     setIsSubmitting(false);
 
@@ -48,11 +76,15 @@ export default function ContactPage() {
 
     // Reset form after 3 seconds
     setTimeout(() => {
+      const resetCountry = getDefaultCountry();
       setFormData({
         fullName: "",
         email: "",
         company: "",
         phone: "",
+        country: resetCountry.name,
+        countryCode: resetCountry.code,
+        dialCode: resetCountry.dialCode,
         subject: "",
         message: "",
       });
@@ -150,18 +182,13 @@ export default function ContactPage() {
 
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
-                        <label htmlFor="company" className="block text-sm font-medium mb-2">
-                          Company Name *
+                        <label htmlFor="country" className="block text-sm font-medium mb-2">
+                          Country *
                         </label>
-                        <input
-                          type="text"
-                          id="company"
-                          name="company"
+                        <CountrySelect
+                          value={formData.countryCode}
+                          onChange={handleCountryChange}
                           required
-                          value={formData.company}
-                          onChange={handleChange}
-                          className="w-full px-4 py-2 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary)] bg-[var(--background)]"
-                          placeholder="Your Company"
                         />
                       </div>
 
@@ -180,6 +207,23 @@ export default function ContactPage() {
                         />
                       </div>
                     </div>
+
+                    <div>
+                      <label htmlFor="company" className="block text-sm font-medium mb-2">
+                        Company Name *
+                      </label>
+                      <input
+                        type="text"
+                        id="company"
+                        name="company"
+                        required
+                        value={formData.company}
+                        onChange={handleChange}
+                        className="w-full px-4 py-2 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary)] bg-[var(--background)]"
+                        placeholder="Your Company"
+                      />
+                    </div>
+
 
                     <div>
                       <label htmlFor="subject" className="block text-sm font-medium mb-2">

@@ -3,19 +3,25 @@
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Section, Container, Card, CardHeader, CardTitle, CardDescription, CardContent, Button, Badge } from "@/components/ui";
+import { CountrySelect } from "@/components/ui/country-select";
 import { CONTACT_INFO } from "@/lib/contact";
 import { QuickContactSection, TrustedPartnersSidebar } from "@/components/contact";
 import { submitRequestSampleForm, isFormError } from "@/lib/api";
+import { getDefaultCountry, type Country } from "@/lib/data/countries";
 
 export default function RequestSampleForm() {
   const searchParams = useSearchParams();
   const reportTitle = searchParams.get("report") || "";
+  const defaultCountry = getDefaultCountry();
 
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     company: "",
     phone: "",
+    country: defaultCountry.name,
+    countryCode: defaultCountry.code,
+    dialCode: defaultCountry.dialCode,
     jobTitle: "",
     reportTitle: reportTitle,
     additionalInfo: "",
@@ -31,13 +37,36 @@ export default function RequestSampleForm() {
     });
   };
 
+  const handleCountryChange = (country: Country) => {
+    setFormData({
+      ...formData,
+      country: country.name,
+      countryCode: country.code,
+      dialCode: country.dialCode,
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
 
+    // Prepare data for API - combine dialCode with phone and only send country name
+    const apiData = {
+      fullName: formData.fullName,
+      email: formData.email,
+      company: formData.company,
+      jobTitle: formData.jobTitle,
+      phone: formData.phone ? `${formData.dialCode}${formData.phone}` : undefined,
+      country: formData.country,
+      countryCode: formData.countryCode,
+      dialCode: formData.dialCode,
+      reportTitle: formData.reportTitle,
+      additionalInfo: formData.additionalInfo || undefined,
+    };
+
     // Submit to API
-    const response = await submitRequestSampleForm(formData);
+    const response = await submitRequestSampleForm(apiData);
 
     setIsSubmitting(false);
 
@@ -52,11 +81,15 @@ export default function RequestSampleForm() {
 
     // Reset form after 3 seconds
     setTimeout(() => {
+      const resetCountry = getDefaultCountry();
       setFormData({
         fullName: "",
         email: "",
         company: "",
         phone: "",
+        country: resetCountry.name,
+        countryCode: resetCountry.code,
+        dialCode: resetCountry.dialCode,
         jobTitle: "",
         reportTitle: "",
         additionalInfo: "",
@@ -190,19 +223,32 @@ export default function RequestSampleForm() {
                       </div>
                     </div>
 
-                    <div>
-                      <label htmlFor="phone" className="block text-sm font-medium mb-2">
-                        Phone Number
-                      </label>
-                      <input
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary)] bg-[var(--background)]"
-                        placeholder="+1 (555) 000-0000"
-                      />
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <label htmlFor="country" className="block text-sm font-medium mb-2">
+                          Country *
+                        </label>
+                        <CountrySelect
+                          value={formData.countryCode}
+                          onChange={handleCountryChange}
+                          required
+                        />
+                      </div>
+
+                      <div>
+                        <label htmlFor="phone" className="block text-sm font-medium mb-2">
+                          Phone Number
+                        </label>
+                        <input
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleChange}
+                          className="w-full px-4 py-2 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary)] bg-[var(--background)]"
+                          placeholder="123-456-7890"
+                        />
+                      </div>
                     </div>
 
                     <div>

@@ -101,7 +101,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
                   'bg-white hover:bg-gray-50',
                   'shadow-sm hover:shadow-md',
                   activeId === item.id
-                    ? 'border-[#8b5cf6] text-[var(--foreground)] font-medium bg-[#faf5ff]'
+                    ? 'border-[#8b5cf6] text-[var(--foreground)] font-medium bg-[#f3e9ff]'
                     : 'border-[#e9d5ff] text-[var(--foreground)] hover:border-[#c084fc]'
                 )}
               >

@@ -1,6 +1,23 @@
 import { SidebarTOCItem } from './toc-utils';
 
 /**
+ * Decode HTML entities in a string
+ */
+function decodeHTMLEntities(text: string): string {
+  const entities: Record<string, string> = {
+    '&amp;': '&',
+    '&lt;': '<',
+    '&gt;': '>',
+    '&quot;': '"',
+    '&#39;': "'",
+    '&nbsp;': ' ',
+    '&apos;': "'",
+  };
+
+  return text.replace(/&[^;]+;/g, (entity) => entities[entity] || entity);
+}
+
+/**
  * Slugify a string to create URL-safe IDs
  */
 export function slugify(text: string): string {
@@ -40,8 +57,8 @@ export function parseHTMLAndGenerateTOC(htmlContent: string): {
     const [fullMatch, tag, attributes = '', content] = match;
     const level = parseInt(tag.substring(1)); // 'h2' -> 2, 'h3' -> 3
 
-    // Remove HTML tags from content to get plain text
-    const text = content.replace(/<[^>]+>/g, '').trim();
+    // Remove HTML tags from content to get plain text and decode HTML entities
+    const text = decodeHTMLEntities(content.replace(/<[^>]+>/g, '').trim());
 
     if (!text) continue;
 

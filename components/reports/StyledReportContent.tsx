@@ -20,8 +20,8 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
     const images = contentRef.current.querySelectorAll('img');
 
     images.forEach((img, i) => {
-      // Skip if already wrapped
-      if (img.parentElement?.classList.contains('image-wrapper')) return;
+      // Skip if already wrapped (check for image-container as it's the direct parent after wrapping)
+      if (img.parentElement?.classList.contains('image-container')) return;
 
       // Create wrapper div for image
       const wrapper = document.createElement('div');
@@ -36,9 +36,10 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
       imageContainer.appendChild(img);
       wrapper.appendChild(imageContainer);
 
-      if(i==0){
-        // Check if CTA section already exists to prevent duplication
-        const existingCTA = wrapper.querySelector('.image-cta-section');
+      // Only add CTA to the first image and check globally if CTA already exists
+      if (i === 0 && contentRef.current) {
+        // Check if CTA section already exists anywhere in the content to prevent duplication
+        const existingCTA = contentRef.current.querySelector('.image-cta-section');
         if (!existingCTA) {
           // Create CTA section (matching the commented code styling)
           const ctaSection = document.createElement('div');

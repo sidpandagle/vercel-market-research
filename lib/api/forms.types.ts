@@ -10,6 +10,9 @@ export interface ContactFormData {
   email: string;
   company: string;
   phone?: string;
+  country: string; // Country name (e.g., "United States", "India")
+  countryCode: string,
+  dialCode: string,
   subject: string;
   message: string;
 }
@@ -21,6 +24,9 @@ export interface RequestSampleFormData {
   company: string;
   jobTitle: string;
   phone?: string;
+  country: string; // Country name (e.g., "United States", "India")
+  countryCode: string,
+  dialCode: string,
   reportTitle: string;
   additionalInfo?: string;
 }

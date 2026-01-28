@@ -40,7 +40,11 @@ export const CTAPanel = React.forwardRef<HTMLDivElement, CTAPanelProps>(
               </Button>
             </Link>
             <Link href={`/request-sample${reportTitle ? `?report=${encodeURIComponent(reportTitle)}` : ''}`}>
-              <Button variant="outline" className="w-full mt-4" size="lg">
+              <Button
+                variant="outline"
+                className="w-full mt-4 bg-[#E3F2FD] text-[#1565C0] hover:bg-[#BBDEFB] hover:text-[#0D47A1] border-[#90CAF9] hover:border-[#64B5F6] focus:ring-[#2196F3]"
+                size="lg"
+              >
                 Request Sample
               </Button>
             </Link>
