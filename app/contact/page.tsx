@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import type { Metadata } from "next";
-import { Section, Container, Card, CardHeader, CardTitle, CardDescription, CardContent, Button, Badge } from "@/components/ui";
+import { Section, Container, Card, CardHeader, CardTitle, CardDescription, CardContent, Button, Badge, Captcha, type CaptchaRef } from "@/components/ui";
 import { CountrySelect } from "@/components/ui/country-select";
 import { CONTACT_INFO } from "@/lib/contact";
 import { QuickContactSection, TrustedPartnersSidebar } from "@/components/contact";
@@ -11,6 +11,7 @@ import { getDefaultCountry, type Country } from "@/lib/data/countries";
 
 export default function ContactPage() {
   const defaultCountry = getDefaultCountry();
+  const captchaRef = useRef<CaptchaRef>(null);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -22,6 +23,7 @@ export default function ContactPage() {
     subject: "",
     message: "",
   });
+  const [captchaValid, setCaptchaValid] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -44,8 +46,15 @@ export default function ContactPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
     setError(null);
+
+    // Validate CAPTCHA
+    if (!captchaRef.current?.validate()) {
+      setError("Please solve the security check correctly.");
+      return;
+    }
+
+    setIsSubmitting(true);
 
     // Prepare data for API - combine dialCode with phone and only send country name
     const apiData = {
@@ -88,6 +97,8 @@ export default function ContactPage() {
         subject: "",
         message: "",
       });
+      setCaptchaValid(false);
+      captchaRef.current?.reset();
       setSubmitted(false);
       setError(null);
     }, 3000);
@@ -262,6 +273,11 @@ export default function ContactPage() {
                         placeholder="Tell us how we can help..."
                       />
                     </div>
+
+                    <Captcha
+                      ref={captchaRef}
+                      onValidationChange={setCaptchaValid}
+                    />
 
                     <Button
                       type="submit"

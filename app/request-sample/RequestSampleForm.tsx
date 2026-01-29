@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useSearchParams } from "next/navigation";
-import { Section, Container, Card, CardHeader, CardTitle, CardDescription, CardContent, Button, Badge } from "@/components/ui";
+import { Section, Container, Card, CardHeader, CardTitle, CardDescription, CardContent, Button, Badge, Captcha, type CaptchaRef } from "@/components/ui";
 import { CountrySelect } from "@/components/ui/country-select";
 import { CONTACT_INFO } from "@/lib/contact";
 import { QuickContactSection, TrustedPartnersSidebar } from "@/components/contact";
@@ -13,6 +13,7 @@ export default function RequestSampleForm() {
   const searchParams = useSearchParams();
   const reportTitle = searchParams.get("report") || "";
   const defaultCountry = getDefaultCountry();
+  const captchaRef = useRef<CaptchaRef>(null);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -26,6 +27,7 @@ export default function RequestSampleForm() {
     reportTitle: reportTitle,
     additionalInfo: "",
   });
+  const [captchaValid, setCaptchaValid] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -48,8 +50,15 @@ export default function RequestSampleForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
     setError(null);
+
+    // Validate CAPTCHA
+    if (!captchaRef.current?.validate()) {
+      setError("Please solve the security check correctly.");
+      return;
+    }
+
+    setIsSubmitting(true);
 
     // Prepare data for API - combine dialCode with phone and only send country name
     const apiData = {
@@ -94,6 +103,8 @@ export default function RequestSampleForm() {
         reportTitle: "",
         additionalInfo: "",
       });
+      setCaptchaValid(false);
+      captchaRef.current?.reset();
       setSubmitted(false);
       setError(null);
     }, 3000);
@@ -284,6 +295,11 @@ export default function RequestSampleForm() {
                         placeholder="Any specific sections or questions you'd like addressed in the sample..."
                       />
                     </div>
+
+                    <Captcha
+                      ref={captchaRef}
+                      onValidationChange={setCaptchaValid}
+                    />
 
                     <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                       <p className="text-sm text-blue-800">

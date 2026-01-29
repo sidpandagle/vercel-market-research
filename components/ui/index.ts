@@ -22,3 +22,6 @@ export type { SkeletonProps, SkeletonTextProps, SkeletonCardProps } from './Skel
 export { Breadcrumb } from './Breadcrumb';
 
 export { default as SearchBar } from './SearchBar';
+
+export { Captcha } from './captcha';
+export type { CaptchaProps, CaptchaRef } from './captcha';
