@@ -21,11 +21,12 @@ export const CTAPanel = React.forwardRef<HTMLDivElement, CTAPanelProps>(
               Single User License
             </p>
             <div className="mb-2">
-              <p className="text-lg text-[var(--muted-foreground)] line-through">
-                {price}/-
-              </p>
+              {discounted_price &&
+                <p className="text-lg text-[var(--muted-foreground)] line-through">
+                  {price}/-
+                </p>}
               <p className="text-4xl font-bold text-[var(--foreground)]">
-                {discounted_price}/-
+                {discounted_price ? discounted_price : price}/-
               </p>
             </div>
             <p className="text-xs text-[var(--muted-foreground)] mt-2">

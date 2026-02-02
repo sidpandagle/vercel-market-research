@@ -310,7 +310,7 @@ export default async function ReportPage({
                   </div>
                   <div>
                     <p className="text-[var(--muted-foreground)] mb-1">Pages</p>
-                    <p className="font-semibold text-[var(--foreground)]">{report.pages}</p>
+                    <p className="font-semibold text-[var(--foreground)]">{report.pages}+</p>
                   </div>
                   <div>
                     <p className="text-[var(--muted-foreground)] mb-1">Format</p>

@@ -2,20 +2,7 @@
 
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Badge, Button } from '@/components/ui';
-
-interface Report {
-  id: number;
-  slug: string;
-  title: string;
-  description: string;
-  category: string;
-  date: string;
-  price: string;
-  region: string;
-  year: string;
-  reportType: string;
-  pages: number;
-}
+import type { Report } from '@/lib/api/reports.types';
 
 interface ReportCardProps {
   report: Report;
@@ -32,11 +19,13 @@ export default function ReportCard({ report }: ReportCardProps) {
               {report.category}
             </Badge>
             <div className="text-right">
-              <div className="text-sm text-slate-500 line-through">
-                $3490/-
-              </div>
+              {report.discounted_price &&
+                <div className="text-sm text-slate-500 line-through">
+                  {report.price}/-
+                </div>
+              }
               <div className="text-lg font-bold bg-gradient-to-r from-ocean-700 via-ocean-600 to-bright-500 bg-clip-text text-transparent">
-                $3090/-
+                {report.discounted_price ? report.discounted_price : report.price}/-
               </div>
             </div>
           </div>
@@ -74,7 +63,7 @@ export default function ReportCard({ report }: ReportCardProps) {
               {report.pages} pages
             </span>
             <span className="text-sm font-medium text-ocean-600 group-hover:text-ocean-700 flex items-center gap-1">
-              View Details 
+              View Details
               <span className="transition-transform group-hover:translate-x-1">→</span>
             </span>
           </div>
