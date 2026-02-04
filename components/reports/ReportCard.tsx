@@ -36,7 +36,7 @@ export default function ReportCard({ report }: ReportCardProps) {
         </CardHeader>
 
         <CardContent className="flex-grow" style={{ paddingTop: '0px', paddingBottom: '0px' }}>
-          <CardDescription className="line-clamp-3 mb-4 text-slate-600">
+          <CardDescription className="line-clamp-4 mb-4 text-slate-600">
             {report.description}
           </CardDescription>
 

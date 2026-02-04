@@ -50,7 +50,7 @@ export default function ContactPage() {
 
     // Validate CAPTCHA
     if (!captchaRef.current?.validate()) {
-      setError("Please solve the security check correctly.");
+      setError("Please enter the captcha correctly.");
       return;
     }
 
