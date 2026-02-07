@@ -2,17 +2,15 @@ import React from 'react';
 import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui';
 import { Button } from '@/components/ui';
-import { cn } from '@/lib/utils';
 
 interface CTAPanelProps {
   price: string;
   discounted_price: string;
   reportTitle?: string;
-  className?: string;
 }
 
 export const CTAPanel = React.forwardRef<HTMLDivElement, CTAPanelProps>(
-  ({ price, discounted_price, reportTitle, className }, ref) => {
+  ({ price, discounted_price, reportTitle }, ref) => {
     return (
       <Card ref={ref}>
         <CardContent className="space-y-4">

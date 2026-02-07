@@ -3,8 +3,9 @@ import Link from "next/link";
 import { Section, Container, Grid, Card, CardContent, CardHeader, CardTitle, CardDescription, Badge, Button } from "@/components/ui";
 
 export const metadata: Metadata = {
-  title: "Services | Healthcare Foresights",
-  description: "Explore our comprehensive range of healthcare market research services including syndicated reports, custom research, consulting, and advisory services.",
+  title: "Healthcare Research & Consulting Services | Healthcare Foresights",
+  description: "Explore healthcare research services including market analysis, custom reports, consulting, forecasting, and strategic insights.",
+  keywords: ["healthcare research services", "healthcare consulting", "custom healthcare reports", "market analysis services"],
 };
 
 export default function ServicesPage() {

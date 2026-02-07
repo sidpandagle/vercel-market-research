@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
+// import Image from "next/image";
+// import Link from "next/link";
+import type { Metadata } from "next";
 import { getReports, getReportBySlug, isApiError } from "@/lib/api";
-import { Breadcrumb, Badge, Card, CardContent, Button } from "@/components/ui";
-import { Download } from "lucide-react";
+import { Breadcrumb, Badge, Card, CardContent } from "@/components/ui";
+// import { Download } from "lucide-react";
 import { ReportContentWrapper } from "@/components/reports/ReportContentWrapper";
 import { StyledReportContent } from "@/components/reports/StyledReportContent";
 import MeetTheTeam from "@/components/reports/MeetTheTeam";
@@ -25,6 +26,35 @@ export async function generateStaticParams() {
   return response.data.map((report) => ({
     slug: report.slug,
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const response = await getReportBySlug(slug);
+
+  if (isApiError(response)) {
+    return {
+      title: "Report Not Found",
+    };
+  }
+
+  const report = response.data;
+
+  return {
+    title: report.title,
+    description: report.description,
+    keywords: ["healthcare market research", "healthcare industry analysis", report.category, report.region],
+    openGraph: {
+      title: report.title,
+      description: report.description,
+      type: "article",
+      publishedTime: report.date,
+    },
+  };
 }
 
 interface Report {
@@ -141,34 +171,34 @@ export default async function ReportPage({
     {
       label: `Revenue, ${baseYearLabel}`,
       value: report.marketSize2024 || '—',
-      bg: 'bg-gradient-to-br from-[#E3F2FD] to-[#BBDEFB]',
-      labelColor: 'text-[#1565C0]',
-      valueColor: 'text-[#0D47A1]',
+      bg: 'bg-gradient-to-br from-[#E0F2F1] to-[#B2DFDB]',
+      labelColor: 'text-[#00897B]',
+      valueColor: 'text-[#00695C]',
       icon: (
         <svg
           aria-hidden
-          className="w-10 h-10 text-[#2196F3]"
+          className="w-10 h-10 text-[#26A69A]"
           viewBox="0 0 64 64"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
             d="M16 44c0-6.627 5.373-12 12-12s12 5.373 12 12"
-            stroke="#2196F3"
+            stroke="#26A69A"
             strokeWidth="3"
             strokeLinecap="round"
           />
-          <path d="M12 48h40" stroke="#2196F3" strokeWidth="3" strokeLinecap="round" />
+          <path d="M12 48h40" stroke="#26A69A" strokeWidth="3" strokeLinecap="round" />
           <path
             d="M28 28V18c0-3.314 2.686-6 6-6s6 2.686 6 6v2"
-            stroke="#2196F3"
+            stroke="#26A69A"
             strokeWidth="3"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
-          <path d="M24 36v-6" stroke="#2196F3" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M38 32v-4" stroke="#2196F3" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-          <circle cx="34" cy="20" r="2" fill="#2196F3" />
+          <path d="M24 36v-6" stroke="#26A69A" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M38 32v-4" stroke="#26A69A" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+          <circle cx="34" cy="20" r="2" fill="#26A69A" />
         </svg>
       ),
     },
@@ -204,33 +234,33 @@ export default async function ReportPage({
     {
       label: `CAGR, ${forecastRangeLabel}`,
       value: report.cagr || '—',
-      bg: 'bg-gradient-to-br from-[#E8F5E9] to-[#C8E6C9]',
-      labelColor: 'text-[#43A047]',
-      valueColor: 'text-[#2E7D32]',
+      bg: 'bg-gradient-to-br from-[#E0F2F1] to-[#B2DFDB]',
+      labelColor: 'text-[#00897B]',
+      valueColor: 'text-[#00695C]',
       icon: (
         <svg
           aria-hidden
-          className="w-10 h-10 text-[#66BB6A]"
+          className="w-10 h-10 text-[#26A69A]"
           viewBox="0 0 64 64"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
             d="M14 40h6v-8h-6v8zm12 0h6V20h-6v20zm12 0h6V28h-6v12zm12 0h6V16h-6v24z"
-            fill="#66BB6A"
+            fill="#26A69A"
             opacity="0.3"
           />
-          <path d="M12 44h40" stroke="#66BB6A" strokeWidth="3" strokeLinecap="round" />
+          <path d="M12 44h40" stroke="#26A69A" strokeWidth="3" strokeLinecap="round" />
           <path
             d="M12 34c6-4 10-6 16-6s10 2 16 6 10 6 16 6"
-            stroke="#66BB6A"
+            stroke="#26A69A"
             strokeWidth="3"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
           <path
             d="M40 18l4-4 4 4"
-            stroke="#66BB6A"
+            stroke="#26A69A"
             strokeWidth="3"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -241,21 +271,21 @@ export default async function ReportPage({
     {
       label: 'Report Coverage',
       value: report.region,
-      bg: 'bg-gradient-to-br from-[#F3E5F5] to-[#E1BEE7]',
-      labelColor: 'text-[#8E24AA]',
-      valueColor: 'text-[#6A1B9A]',
+      bg: 'bg-gradient-to-br from-[#E0F2F1] to-[#B2DFDB]',
+      labelColor: 'text-[#00897B]',
+      valueColor: 'text-[#00695C]',
       icon: (
         <svg
           aria-hidden
-          className="w-10 h-10 text-[#AB47BC]"
+          className="w-10 h-10 text-[#26A69A]"
           viewBox="0 0 64 64"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <circle cx="32" cy="28" r="14" stroke="#AB47BC" strokeWidth="3" />
-          <path d="M32 14v4m0 28v4m14-14h4M14 32h4" stroke="#AB47BC" strokeWidth="3" strokeLinecap="round" />
-          <path d="M24 44l-6 6" stroke="#AB47BC" strokeWidth="3" strokeLinecap="round" />
-          <path d="M40 44l6 6" stroke="#AB47BC" strokeWidth="3" strokeLinecap="round" />
+          <circle cx="32" cy="28" r="14" stroke="#26A69A" strokeWidth="3" />
+          <path d="M32 14v4m0 28v4m14-14h4M14 32h4" stroke="#26A69A" strokeWidth="3" strokeLinecap="round" />
+          <path d="M24 44l-6 6" stroke="#26A69A" strokeWidth="3" strokeLinecap="round" />
+          <path d="M40 44l6 6" stroke="#26A69A" strokeWidth="3" strokeLinecap="round" />
         </svg>
       ),
     },
@@ -338,7 +368,7 @@ export default async function ReportPage({
               {hasFullContent ? (
                 <>
                   <section className="mb-12">
-                    <h2 id="overview" className="text-3xl font-bold text-[var(--foreground)] mb-6 scroll-mt-24">
+                    <h2 id="overview" className="text-3xl font-bold text-[var(--teal-deep)] mb-6 scroll-mt-24">
                       Market Overview
                     </h2>
                     <StyledReportContent
@@ -348,13 +378,13 @@ export default async function ReportPage({
 
                     {report.keyFindings && report.keyFindings.length > 0 && (
                       <div className="mt-8">
-                        <h3 className="text-3xl font-bold text-[var(--foreground)] mb-6">
+                        <h3 className="text-3xl font-bold text-[#000000] mb-6">
                           Key Findings
                         </h3>
                         <div className="bg-[#ede9fe] rounded-lg py-4 px-6">
                           <ul className="list-disc list-outside ml-5 space-y-0">
                             {report.keyFindings.map((finding, index) => (
-                              <li key={index} className="text-[var(--foreground)] py-4 border-b border-gray-300 last:border-b-0">
+                              <li key={index} className="text-[#333333] py-4 border-b border-gray-300 last:border-b-0">
                                 {finding}
                               </li>
                             ))}
@@ -367,10 +397,10 @@ export default async function ReportPage({
                   {/* Images (Refer Below) */}
 
                   <section className="mb-12">
-                    <h2 id="competitive" className="text-3xl font-bold text-[var(--foreground)] mb-6 scroll-mt-24">
+                    <h2 id="competitive" className="text-3xl font-bold text-[var(--teal-deep)] mb-6 scroll-mt-24">
                       Competitive Landscape
                     </h2>
-                    <p className="text-[var(--muted-foreground)] mb-8">
+                    <p className="text-[#333333] mb-8 leading-relaxed">
                       The market is characterized by intense competition among established players
                       and emerging companies. Strategic partnerships, mergers and acquisitions, and
                       product innovation are key strategies employed by market participants.
@@ -378,10 +408,10 @@ export default async function ReportPage({
 
                     {report.keyPlayers && report.keyPlayers.length > 0 && (
                       <div id="key-players" className="scroll-mt-24">
-                        <h3 className="text-xl font-semibold text-[var(--foreground)] mb-6">
+                        <h3 className="text-xl font-semibold text-[#000000] mb-6">
                           Key Market Players
                         </h3>
-                        <div className="grid gap-4 px-44">
+                        <div className="grid gap-4 px-40">
                           {report.keyPlayers.map((player, index) => (
                             <Card key={index} className="hover:shadow-md transition-shadow">
                               <CardContent className="">

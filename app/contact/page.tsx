@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef } from "react";
-import type { Metadata } from "next";
 import { Section, Container, Card, CardHeader, CardTitle, CardDescription, CardContent, Button, Badge, Captcha, type CaptchaRef } from "@/components/ui";
 import { CountrySelect } from "@/components/ui/country-select";
 import { CONTACT_INFO } from "@/lib/contact";
@@ -23,7 +22,7 @@ export default function ContactPage() {
     subject: "",
     message: "",
   });
-  const [captchaValid, setCaptchaValid] = useState(false);
+  const [, setCaptchaValid] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);

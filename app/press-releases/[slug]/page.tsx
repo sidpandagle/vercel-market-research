@@ -36,8 +36,9 @@ export async function generateMetadata({ params }: PressReleasePageProps): Promi
   const pressRelease = response.data;
 
   return {
-    title: `${pressRelease.title} | Press Releases`,
+    title: pressRelease.title,
     description: pressRelease.excerpt,
+    keywords: ["healthcare press releases", "healthcare news", "industry announcements", "healthcare market updates"],
     openGraph: {
       title: pressRelease.title,
       description: pressRelease.excerpt,

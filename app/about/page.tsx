@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Section, Container, Grid, Card, CardContent, CardHeader, CardTitle, CardDescription, Badge, Button } from "@/components/ui";
+import { Section, Container, Grid, Card, CardContent, Badge, Button } from "@/components/ui";
 
 export const metadata: Metadata = {
-  title: "About Us | Healthcare Foresights",
-  description: "Learn about Healthcare Foresights - your trusted partner for comprehensive healthcare market intelligence and research reports.",
+  title: "About Healthcare Foresights | Healthcare Research Experts",
+  description: "Learn about Healthcare Foresights, our expertise in healthcare market research, industry analysis, and data-driven intelligence.",
+  keywords: ["about healthcare foresights", "healthcare research company", "healthcare market experts", "healthcare consulting"],
 };
 
 export default function AboutPage() {

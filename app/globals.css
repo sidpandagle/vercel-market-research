@@ -29,6 +29,14 @@
   --gradient-primary: linear-gradient(135deg, #0F2D52 0%, #2563A3 50%, #3B7CB8 100%);
   --gradient-accent: linear-gradient(135deg, #2563A3 0%, #00D4FF 100%);
   --gradient-warm: linear-gradient(135deg, #f59e0b 0%, #ec4899 100%);
+
+  /* Teal accent colors for report content theming */
+  --teal-bright: #22E1B0;       /* Bright teal-cyan for H2 */
+  --teal-primary: #29ADA4;      /* Muted professional teal for H3 */
+  --teal-steel: #307898;        /* Steel blue for H4 */
+  --teal-deep: #37448C;         /* Deep blue for H5/H6 */
+  --teal-subtle: #E0F5F3;       /* Very light teal for hover backgrounds */
+  --teal-border: #B0D9D5;       /* Soft teal for accents */
 }
 
 body {
@@ -164,6 +172,14 @@ body {
     --chart-3: 160 84% 39%; /* Emerald-600 */
     --chart-4: 262 83% 58%; /* Violet-500 */
     --chart-5: 25 95% 53%; /* Orange-500 */
+
+    /* Teal colors for dark mode - brighter for visibility */
+    --teal-bright: #33E1B8;
+    --teal-primary: #3BC5BC;
+    --teal-steel: #4A8FA8;
+    --teal-deep: #5B6FC0;
+    --teal-subtle: #1A3F3C;
+    --teal-border: #2A5F5C;
   }
 }
 
@@ -187,43 +203,43 @@ body {
   }
 
   .prose p {
-    @apply text-[var(--muted-foreground)] leading-relaxed mb-4;
+    @apply text-[var(--muted-foreground)] leading-relaxed;
     font-size: 1.125rem;
     line-height: 1.75rem;
   }
 
   .prose h1 {
-    @apply text-[var(--foreground)] font-bold mb-6 mt-8;
+    @apply text-[var(--foreground)] font-bold;
     font-size: 2.25rem;
     line-height: 2.5rem;
   }
 
   .prose h2 {
-    @apply text-[var(--foreground)] font-bold mb-4 mt-8;
+    @apply text-[var(--foreground)] font-bold;
     font-size: 1.875rem;
     line-height: 2.25rem;
   }
 
   .prose h3 {
-    @apply text-[var(--foreground)] font-semibold mb-3 mt-6;
+    @apply text-[var(--foreground)] font-semibold;
     font-size: 1.5rem;
     line-height: 2rem;
   }
 
   .prose h4 {
-    @apply text-[var(--foreground)] font-semibold mb-3 mt-4;
+    @apply text-[var(--foreground)] font-semibold;
     font-size: 1.25rem;
     line-height: 1.75rem;
   }
 
   .prose h5 {
-    @apply text-[var(--foreground)] font-semibold mb-2 mt-4;
+    @apply text-[var(--foreground)] font-semibold;
     font-size: 1.125rem;
     line-height: 1.75rem;
   }
 
   .prose h6 {
-    @apply text-[var(--foreground)] font-semibold mb-2 mt-4;
+    @apply text-[var(--foreground)] font-semibold;
     font-size: 1rem;
     line-height: 1.5rem;
   }
@@ -251,7 +267,7 @@ body {
   }
 
   .prose pre {
-    @apply bg-[var(--muted)] text-[var(--foreground)] p-4 rounded-lg overflow-x-auto mb-4 font-mono text-sm;
+    @apply bg-[var(--muted)] text-[var(--foreground)] p-4 rounded-lg overflow-x-auto font-mono text-sm;
   }
 
   .prose pre code {
@@ -260,7 +276,7 @@ body {
 
   /* GVR-style table styling */
   .prose table {
-    @apply w-full mb-8;
+    @apply w-full;
     border-spacing: 0;
     border-radius: 6px;
     background: white;
@@ -346,7 +362,7 @@ body {
   /* Market Highlight section styling (matches Key Findings) */
   /* Target any h2/h3 followed by a ul (like Market Highlight section) */
   .prose ul {
-    @apply rounded-lg pb-1 pt-2 px-12 space-y-0 list-disc list-outside mb-4;
+    @apply rounded-lg pb-1 pt-1 px-8 space-y-0 list-disc list-outside;
   }
 
   .prose > ul:first-of-type {
@@ -354,13 +370,13 @@ body {
     li {
       @apply border-b border-gray-300;
       p {
-        @apply ml-0 mr-2 mt-2 mb-2;
+        @apply ml-0 mr-2;
       }
     }
   }
   
   .prose ol {
-    @apply list-decimal list-outside ml-6 mb-4 space-y-2;
+    @apply list-decimal list-outside ml-6 space-y-2;
   }
 
   .prose li {
@@ -368,7 +384,7 @@ body {
   }
 
   .prose ul li {
-    @apply text-[var(--foreground)] pb-1 pt-2;
+    @apply text-[var(--foreground)] pb-1 pt-1;
   }
 
   .prose ul li:last-child {

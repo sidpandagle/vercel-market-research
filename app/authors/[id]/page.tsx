@@ -43,11 +43,12 @@ export async function generateMetadata({
   const author = response.data;
 
   return {
-    title: `${author.name} - Healthcare Market Research Author`,
-    description: author.bio || `View research reports authored by ${author.name}`,
+    title: `Healthcare Articles by ${author.name}`,
+    description: `Browse healthcare market articles, insights, and research content published by ${author.name}.`,
+    keywords: ["healthcare articles", "healthcare research blogs", "market insights", "medical industry content"],
     openGraph: {
-      title: `${author.name} - Healthcare Market Research Author`,
-      description: author.bio || `View research reports authored by ${author.name}`,
+      title: `Healthcare Articles by ${author.name}`,
+      description: `Browse healthcare market articles, insights, and research content published by ${author.name}.`,
       images: author.imageUrl ? [{ url: author.imageUrl }] : [],
     },
   };

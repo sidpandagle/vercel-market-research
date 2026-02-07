@@ -4,8 +4,9 @@ import { getPressReleases, isApiError } from "@/lib/api";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Press Releases | Healthcare Foresights",
-  description: "Latest news and announcements from Healthcare Foresights. Stay informed about our research publications, industry insights, and company developments.",
+  title: "Healthcare Press Releases & Industry News",
+  description: "Stay updated with the latest healthcare press releases, research announcements, and industry developments.",
+  keywords: ["healthcare press releases", "healthcare news", "industry announcements", "healthcare market updates"],
 };
 
 // Enable ISR with 5-minute revalidation

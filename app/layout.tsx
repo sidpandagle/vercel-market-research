@@ -13,11 +13,11 @@ const geistSans = Geist({
 
 export const metadata: Metadata = {
   title: {
-    default: "Healthcare Foresights | Industry Reports & Insights",
+    default: "Healthcare Foresights | Healthcare Market Insights & Research Reports",
     template: "%s | Healthcare Foresights",
   },
-  description: "Access comprehensive healthcare research reports, industry analysis, and expert insights on digital health, pharmaceuticals, medical devices, and emerging healthcare technologies.",
-  keywords: ["healthcare research", "medical industry reports", "healthcare analytics", "pharmaceutical research", "digital health trends", "medical devices market"],
+  description: "Healthcare Foresights delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.",
+  keywords: ["healthcare foresights", "healthcare market research", "healthcare insights", "healthcare industry trends", "medical market analysis", "healthcare reports"],
   authors: [{ name: "Healthcare Foresights Team" }],
   icons: {
     icon: "/assets/images/favicon.png",
@@ -26,8 +26,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "Healthcare Foresights",
-    title: "Healthcare Foresights | Industry Reports & Insights",
-    description: "Access comprehensive healthcare research reports, industry analysis, and expert insights.",
+    title: "Healthcare Foresights | Healthcare Market Insights & Research Reports",
+    description: "Healthcare Foresights delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.",
   },
   robots: {
     index: false,

@@ -25,11 +25,19 @@ export function useGeneratedTOC(
         .trim();
     };
 
+    // Store observer reference so we can disconnect/reconnect when making changes
+    let observer: MutationObserver | null = null;
+
     // Function to extract TOC items from the container
     const extractTOCItems = (): SidebarTOCItem[] => {
       const container = document.querySelector(containerSelector);
       if (!container) {
         return [];
+      }
+
+      // Temporarily disconnect observer to prevent loops when we set IDs
+      if (observer) {
+        observer.disconnect();
       }
 
       // Find all specified heading elements within the container
@@ -59,6 +67,14 @@ export function useGeneratedTOC(
         });
       });
 
+      // Reconnect observer after we're done making changes
+      if (observer) {
+        observer.observe(container, {
+          childList: true,
+          subtree: true,
+        });
+      }
+
       return items;
     };
 
@@ -72,7 +88,7 @@ export function useGeneratedTOC(
       return;
     }
 
-    const observer = new MutationObserver((mutations) => {
+    observer = new MutationObserver((mutations) => {
       // Check if any mutations added heading elements
       let shouldUpdate = false;
 
@@ -113,7 +129,9 @@ export function useGeneratedTOC(
 
     // Cleanup observer on unmount
     return () => {
-      observer.disconnect();
+      if (observer) {
+        observer.disconnect();
+      }
     };
   }, [containerSelector, headingLevels]);
 

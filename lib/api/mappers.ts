@@ -154,7 +154,7 @@ function formatPrice(price: number, currency: string = 'USD'): string {
  * Format revenue with billions/millions suffix
  * Handles both plain numbers and already-formatted strings from API
  */
-function formatRevenue(revenue: string, currency: string = 'USD'): string {
+function formatRevenue(revenue: string): string {
   if (!revenue) return '';
 
   // If revenue already contains "Billion" or "Million" or currency symbols, return as-is
@@ -184,7 +184,7 @@ function extractYear(dateString?: string | null): string {
   try {
     const date = new Date(dateString);
     return date.getFullYear().toString();
-  } catch (error) {
+  } catch {
     return new Date().getFullYear().toString();
   }
 }
@@ -255,11 +255,11 @@ export function mapApiReportToReport(apiReport: ApiReport): Report {
 
   // Format market size values
   const marketSize2024 = metrics?.currentRevenue
-    ? formatRevenue(metrics.currentRevenue, apiReport.currency)
+    ? formatRevenue(metrics.currentRevenue)
     : undefined;
 
   const marketSize2032 = metrics?.forecastRevenue
-    ? formatRevenue(metrics.forecastRevenue, apiReport.currency)
+    ? formatRevenue(metrics.forecastRevenue)
     : undefined;
 
   // Format CAGR (check if % is already included)
@@ -352,7 +352,7 @@ function formatDate(dateString?: string | null): string {
       day: 'numeric',
       year: 'numeric',
     });
-  } catch (error) {
+  } catch {
     return dateString;
   }
 }

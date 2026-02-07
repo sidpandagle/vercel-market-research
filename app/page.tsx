@@ -13,8 +13,9 @@ import {
 } from '@/components/home';
 
 export const metadata: Metadata = {
-  title: "Home",
-  description: "Access comprehensive healthcare research reports covering digital health, pharmaceuticals, medical devices, biotechnology, and emerging healthcare technologies. Data-driven insights for strategic decision-making.",
+  title: "Healthcare Foresights | Healthcare Market Insights & Research Reports",
+  description: "Healthcare Foresights delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.",
+  keywords: ["healthcare foresights", "healthcare market research", "healthcare insights", "healthcare industry trends", "medical market analysis", "healthcare reports"],
 };
 
 export default function HomePage() {

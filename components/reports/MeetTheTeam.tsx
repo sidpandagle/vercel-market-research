@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+// import { useState } from 'react';
 import Link from 'next/link';
 import { Grid, Card, CardContent, CardTitle, CardDescription } from '@/components/ui';
 
@@ -20,7 +20,7 @@ interface MeetTheTeamProps {
 }
 
 function TeamMemberCard({ member }: { member: TeamMember }) {
-  const [isExpanded, setIsExpanded] = useState(false);
+  // const [isExpanded, setIsExpanded] = useState(false);
 
   const getInitials = (name: string) => {
     return name
@@ -191,7 +191,7 @@ export default function MeetTheTeam({ teamMembers }: MeetTheTeamProps) {
 
   return (
     <section id="meet-the-team" className="mb-12 scroll-mt-24">
-      <h2 className="text-3xl font-bold text-[var(--foreground)] mb-3">
+      <h2 className="text-3xl font-bold text-[var(--teal-deep)] mb-3">
         Meet the Team
       </h2>
       <p className="text-[var(--muted-foreground)] mb-8">

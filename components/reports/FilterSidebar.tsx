@@ -27,21 +27,22 @@ const REGIONS = [
   'Middle East & Africa'
 ];
 
-const REPORT_TYPES = [
-  'Market Analysis',
-  'Industry Report',
-  'Competitive Landscape',
-  'Strategic Outlook',
-  'Technology Assessment',
-  'Regulatory Analysis'
-];
+// Reserved for future use
+// const REPORT_TYPES = [
+//   'Market Analysis',
+//   'Industry Report',
+//   'Competitive Landscape',
+//   'Strategic Outlook',
+//   'Technology Assessment',
+//   'Regulatory Analysis'
+// ];
 
-const PRICE_RANGES = [
-  'Under $2,000',
-  '$2,000 - $3,000',
-  '$3,000 - $4,000',
-  '$4,000+'
-];
+// const PRICE_RANGES = [
+//   'Under $2,000',
+//   '$2,000 - $3,000',
+//   '$3,000 - $4,000',
+//   '$4,000+'
+// ];
 
 export default function FilterSidebar({ filters, onFilterChange, totalCount }: FilterSidebarProps) {
   const handleCheckboxChange = (filterType: keyof Omit<FilterState, 'searchQuery'>, value: string) => {

@@ -6,8 +6,9 @@ import { ReportsListingClient } from '@/components/reports';
 import ReportsSkeleton from '@/components/reports/ReportsSkeleton';
 
 export const metadata: Metadata = {
-  title: "Research Reports",
-  description: "Browse our comprehensive collection of healthcare research reports covering telemedicine, pharmaceuticals, medical devices, AI in healthcare, biotechnology, and digital health innovations.",
+  title: "Healthcare Market Research Reports & Industry Analysis",
+  description: "Browse in-depth healthcare market research reports covering industry trends, competitive analysis, forecasts, and strategic insights.",
+  keywords: ["healthcare reports", "healthcare market research", "medical industry reports", "healthcare forecast", "healthcare industry analysis"],
 };
 
 // Enable ISR with 5-minute revalidation

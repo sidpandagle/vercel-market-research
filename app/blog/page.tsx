@@ -4,8 +4,9 @@ import { getBlogs, isApiError } from "@/lib/api";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Healthcare Insights & Analysis | Blog",
-  description: "Expert insights, analysis, and updates on healthcare market trends, innovations, and industry developments from our team of healthcare specialists.",
+  title: "Healthcare Insights Blog | Trends, News & Analysis",
+  description: "Read expert blogs on healthcare trends, innovations, policy updates, market developments, and industry insights.",
+  keywords: ["healthcare blog", "healthcare insights", "healthcare trends", "medical industry news", "healthcare analysis"],
 };
 
 // Enable ISR with 5-minute revalidation

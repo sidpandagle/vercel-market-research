@@ -27,7 +27,7 @@ export default function RequestSampleForm() {
     reportTitle: reportTitle,
     additionalInfo: "",
   });
-  const [captchaValid, setCaptchaValid] = useState(false);
+  const [, setCaptchaValid] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);

@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, CardContent, CardTitle, CardDescription, Badge } from '@/components/ui';
+import { Card, CardContent, Badge } from '@/components/ui';
 import type { ApiAuthor } from '@/lib/api';
 
 interface AuthorProfileProps {
