@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: "Learn about Healthcare Foresights, our expertise in healthcare market research, industry analysis, and data-driven intelligence.",
   keywords: ["about healthcare foresights", "healthcare research company", "healthcare market experts", "healthcare consulting"],
   alternates: {
-    canonical: 'https://www.healthcareforesights.com/about',
+    canonical: '/about',
   },
 };
 

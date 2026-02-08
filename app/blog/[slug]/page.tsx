@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
       description,
     },
     alternates: {
-      canonical: `https://www.healthcareforesights.com/blog/${slug}`,
+      canonical: `/blog/${slug}`,
     },
   };
 }

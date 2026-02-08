@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "Read expert blogs on healthcare trends, innovations, policy updates, market developments, and industry insights.",
   keywords: ["healthcare blog", "healthcare insights", "healthcare trends", "medical industry news", "healthcare analysis"],
   alternates: {
-    canonical: 'https://www.healthcareforesights.com/blog',
+    canonical: '/blog',
   },
 };
 

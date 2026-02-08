@@ -13,6 +13,7 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://healthcareforesights.com'),
   title: {
     default: "Healthcare Foresights | Healthcare Market Insights & Research Reports",
     template: "%s | Healthcare Foresights",
@@ -43,6 +44,9 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@HealthcareForesights',
     creator: '@HealthcareForesights',
+  },
+  alternates: {
+    canonical: '/',
   },
 };
 

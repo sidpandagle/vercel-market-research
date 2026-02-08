@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: PressReleasePageProps): Promi
       description,
     },
     alternates: {
-      canonical: `https://www.healthcareforesights.com/press-releases/${slug}`,
+      canonical: `/press-releases/${slug}`,
     },
   };
 }

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "Stay updated with the latest healthcare press releases, research announcements, and industry developments.",
   keywords: ["healthcare press releases", "healthcare news", "industry announcements", "healthcare market updates"],
   alternates: {
-    canonical: 'https://www.healthcareforesights.com/press-releases',
+    canonical: '/press-releases',
   },
 };
 

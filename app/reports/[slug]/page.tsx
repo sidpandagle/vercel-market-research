@@ -70,7 +70,7 @@ export async function generateMetadata({
       description,
     },
     alternates: {
-      canonical: `https://www.healthcareforesights.com/reports/${slug}`,
+      canonical: `/reports/${slug}`,
     },
   };
 }
