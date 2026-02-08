@@ -77,6 +77,9 @@ export interface ApiReport {
   market_metrics?: ApiMarketMetrics;
   sections?: ApiReportSections;
   faqs?: ApiFaq[];
+  meta_title?: string;
+  meta_description?: string;
+  meta_keywords?: string;
   author_ids?: number[];
   authors?: ApiAuthor[];
   created_by?: number;
@@ -112,6 +115,11 @@ export interface Report {
   overview?: string;
   marketDetails?: string;
   keyFindings?: string[];
+
+  // SEO meta fields
+  meta_title?: string;
+  meta_description?: string;
+  meta_keywords?: string;
   segmentation?: {
     byType?: Array<{ name: string; share: string; description?: string }>;
     byApplication?: Array<{ name: string; share: string }>;

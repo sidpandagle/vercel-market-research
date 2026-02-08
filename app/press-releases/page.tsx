@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "Healthcare Press Releases & Industry News",
   description: "Stay updated with the latest healthcare press releases, research announcements, and industry developments.",
   keywords: ["healthcare press releases", "healthcare news", "industry announcements", "healthcare market updates"],
+  alternates: {
+    canonical: 'https://www.healthcareforesights.com/press-releases',
+  },
 };
 
 // Enable ISR with 5-minute revalidation

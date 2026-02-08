@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "Healthcare Research & Consulting Services | Healthcare Foresights",
   description: "Explore healthcare research services including market analysis, custom reports, consulting, forecasting, and strategic insights.",
   keywords: ["healthcare research services", "healthcare consulting", "custom healthcare reports", "market analysis services"],
+  alternates: {
+    canonical: 'https://www.healthcareforesights.com/services',
+  },
 };
 
 export default function ServicesPage() {

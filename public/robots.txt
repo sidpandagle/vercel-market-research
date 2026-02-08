@@ -1,3 +1,5 @@
-# Block all search engines from crawling this demo site
 User-agent: *
-Disallow: /
+Allow: /
+
+# Sitemap location
+Sitemap: https://www.healthcareforesights.com/sitemap.xml

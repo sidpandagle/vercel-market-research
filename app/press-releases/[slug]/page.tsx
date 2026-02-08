@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Section, Container, Badge } from "@/components/ui";
 import { getPressReleases, getPressReleaseBySlug, isApiError } from "@/lib/api";
 import type { Metadata } from "next";
+import { StructuredData, generateArticleSchema, generateBreadcrumbSchema } from "@/components/seo/StructuredData";
 
 interface PressReleasePageProps {
   params: Promise<{
@@ -35,16 +36,29 @@ export async function generateMetadata({ params }: PressReleasePageProps): Promi
 
   const pressRelease = response.data;
 
+  // Use metadata fields if available, otherwise fallback to defaults
+  const title = pressRelease.metadata?.metaTitle || pressRelease.title;
+  const description = pressRelease.metadata?.metaDescription || pressRelease.excerpt;
+  const keywords = pressRelease.metadata?.keywords || ["healthcare press releases", "healthcare news", "industry announcements", "healthcare market updates"];
+
   return {
-    title: pressRelease.title,
-    description: pressRelease.excerpt,
-    keywords: ["healthcare press releases", "healthcare news", "industry announcements", "healthcare market updates"],
+    title,
+    description,
+    keywords,
     openGraph: {
-      title: pressRelease.title,
-      description: pressRelease.excerpt,
+      title: pressRelease.metadata?.metaTitle || pressRelease.title,
+      description,
       type: "article",
-      publishedTime: pressRelease.date,
-      authors: [pressRelease.author],
+      publishedTime: pressRelease.publishDate || pressRelease.createdAt,
+      authors: pressRelease.authorDetails ? [pressRelease.authorDetails.name] : [pressRelease.author],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+    alternates: {
+      canonical: `https://www.healthcareforesights.com/press-releases/${slug}`,
     },
   };
 }
@@ -61,8 +75,28 @@ export default async function PressReleaseDetailPage({ params }: PressReleasePag
 
   const paragraphs = pressRelease.content.split("\n\n");
 
+  // Generate structured data schemas
+  const articleSchema = generateArticleSchema({
+    type: 'NewsArticle',
+    title: pressRelease.title,
+    description: pressRelease.excerpt,
+    url: `https://www.healthcareforesights.com/press-releases/${pressRelease.slug}`,
+    datePublished: pressRelease.publishDate || pressRelease.createdAt || pressRelease.date,
+    dateModified: pressRelease.updatedAt,
+    author: pressRelease.authorDetails?.name || pressRelease.author,
+    keywords: pressRelease.metadata?.keywords,
+  });
+
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', url: 'https://www.healthcareforesights.com' },
+    { name: 'Press Releases', url: 'https://www.healthcareforesights.com/press-releases' },
+    { name: pressRelease.title, url: `https://www.healthcareforesights.com/press-releases/${pressRelease.slug}` },
+  ]);
+
   return (
     <>
+      <StructuredData data={articleSchema} />
+      <StructuredData data={breadcrumbSchema} />
       <Section className="bg-[var(--muted)]">
         <Container size="sm">
           <div className="mb-6">

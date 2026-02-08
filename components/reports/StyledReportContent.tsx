@@ -243,11 +243,8 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
         }
 
         .image-container {
-          background: white;
           border-radius: 0.5rem;
-          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-          border: 1px solid var(--border);
-          padding: 0.75rem;
+          padding: 0.5rem;
         }
 
         .image-container img {
@@ -256,6 +253,8 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
           max-width: 26rem;
           margin: 0 auto !important;
           display: block;
+          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+          border: 1px solid var(--border);
         }
 
         .image-cta-section {
@@ -318,7 +317,7 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
           }
 
           .image-container {
-            padding: 1rem;
+            padding: 0.625rem;
           }
 
           .image-cta-text {
@@ -342,7 +341,7 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
           }
 
           .image-container {
-            padding: 1.5rem;
+            padding: 0.75rem;
           }
 
           .image-cta-section {

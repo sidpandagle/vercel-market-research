@@ -11,6 +11,7 @@ import MeetTheTeam from "@/components/reports/MeetTheTeam";
 import FAQ from "@/components/reports/FAQ";
 import { parseHTMLAndGenerateTOC, addStaticSectionsToTOC } from "@/lib/html-toc-utils";
 import type { SidebarTOCItem } from "@/lib/toc-utils";
+import { StructuredData, generateArticleSchema, generateBreadcrumbSchema, generateFAQSchema } from "@/components/seo/StructuredData";
 
 // Enable ISR with 10-minute revalidation
 export const revalidate = 600;
@@ -44,15 +45,32 @@ export async function generateMetadata({
 
   const report = response.data;
 
+  // Use meta fields if available, fallback to regular fields
+  const title = report.meta_title || report.title;
+  const description = report.meta_description || report.description;
+
+  // Parse meta_keywords if available, otherwise use default keywords
+  const keywords = report.meta_keywords
+    ? report.meta_keywords.split(',').map(k => k.trim()).filter(Boolean)
+    : ["healthcare market research", "healthcare industry analysis", report.category, report.region];
+
   return {
-    title: report.title,
-    description: report.description,
-    keywords: ["healthcare market research", "healthcare industry analysis", report.category, report.region],
+    title,
+    description,
+    keywords,
     openGraph: {
-      title: report.title,
-      description: report.description,
+      title,
+      description,
       type: "article",
       publishedTime: report.date,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+    alternates: {
+      canonical: `https://www.healthcareforesights.com/reports/${slug}`,
     },
   };
 }
@@ -78,6 +96,9 @@ interface Report {
   cagr?: string;
   marketDetails?: string;
   keyFindings?: string[];
+  meta_title?: string;
+  meta_description?: string;
+  meta_keywords?: string;
   segmentation?: {
     byType?: Array<{ name: string; share: string; description?: string }>;
     byApplication?: Array<{ name: string; share: string }>;
@@ -295,11 +316,35 @@ export default async function ReportPage({
   // TODO: Fetch related reports from API when relatedReportIds are provided
   // const relatedReports: Report[] = [];
 
+  // Generate structured data schemas
+  const articleSchema = generateArticleSchema({
+    type: 'Report',
+    title: report.title,
+    description: report.description,
+    url: `https://www.healthcareforesights.com/reports/${report.slug}`,
+    datePublished: report.date,
+    author: report.authors && report.authors.length > 0 ? report.authors.map((author) => author.name) : undefined,
+    keywords: report.meta_keywords?.split(',').map(k => k.trim()).filter(Boolean),
+  });
+
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', url: 'https://www.healthcareforesights.com' },
+    { name: 'Reports', url: 'https://www.healthcareforesights.com/reports' },
+    { name: report.title, url: `https://www.healthcareforesights.com/reports/${report.slug}` },
+  ]);
+
+  const faqSchema = report.faqs && report.faqs.length > 0 ? generateFAQSchema(report.faqs) : null;
+
   return (
-    <div className="bg-[var(--background)]">
-      <div className="border-b border-[var(--border)] bg-[var(--card)]">
-        <div className="px-4 py-4 md:px-6">
-          <Breadcrumb items={breadcrumbItems} />
+    <>
+      <StructuredData data={articleSchema} />
+      <StructuredData data={breadcrumbSchema} />
+      {faqSchema && <StructuredData data={faqSchema} />}
+
+      <div className="bg-[var(--background)]">
+        <div className="border-b border-[var(--border)] bg-[var(--card)]">
+          <div className="px-4 py-4 md:px-6">
+            <Breadcrumb items={breadcrumbItems} />
         </div>
       </div>
 
@@ -505,7 +550,8 @@ export default async function ReportPage({
             </article>
         </ReportContentWrapper>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 

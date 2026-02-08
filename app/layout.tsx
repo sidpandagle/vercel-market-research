@@ -3,6 +3,7 @@ import { Geist } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { StructuredData, generateOrganizationSchema, generateWebSiteSchema } from "@/components/seo/StructuredData";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,9 +31,18 @@ export const metadata: Metadata = {
     description: "Healthcare Foresights delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.",
   },
   robots: {
-    index: false,
-    follow: false,
-    nocache: true,
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+    },
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@HealthcareForesights',
+    creator: '@HealthcareForesights',
   },
 };
 
@@ -43,6 +53,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <StructuredData data={generateOrganizationSchema()} />
+        <StructuredData data={generateWebSiteSchema()} />
+      </head>
       <body className={`${geistSans.variable} antialiased`}>
         <Header />
         <main className="min-h-screen">{children}</main>

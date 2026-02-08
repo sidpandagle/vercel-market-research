@@ -110,6 +110,7 @@ export async function getBlogBySlug(slug: string): Promise<ApiResponse<Blog>> {
       message: 'API returned unexpected response structure',
     };
   }
+  console.log(apiBlog);
 
   // Map API blog to UI format
   const mappedBlog = mapApiBlogToBlog(apiBlog);

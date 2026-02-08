@@ -11,9 +11,9 @@ export type PressReleaseStatus = 'draft' | 'review' | 'published';
  * Press Release metadata from API
  */
 export interface ApiPressReleaseMetadata {
+  metaTitle?: string;
+  metaDescription?: string;
   keywords?: string[];
-  description?: string;
-  author?: string;
   [key: string]: string | string[] | undefined;
 }
 
@@ -33,6 +33,7 @@ export interface ApiPressRelease {
   tags?: string;
   status: PressReleaseStatus;
   publishDate?: string | null;
+  scheduledPublishEnabled?: boolean;
   location?: string;
   metadata?: ApiPressReleaseMetadata;
   createdAt: string;
@@ -58,6 +59,26 @@ export interface PressRelease {
   // Extended fields for detail page
   tags?: string[];
   location?: string;
+
+  // Full nested objects from API
+  authorId?: number;
+  categoryId?: number;
+  authorDetails?: ApiAuthor;
+  categoryDetails?: ApiCategory;
+
+  // Metadata fields
+  metadata?: {
+    metaTitle?: string;
+    metaDescription?: string;
+    keywords?: string[];
+  };
+
+  // Publishing fields
+  status?: PressReleaseStatus;
+  publishDate?: string | null;
+  scheduledPublishEnabled?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 /**

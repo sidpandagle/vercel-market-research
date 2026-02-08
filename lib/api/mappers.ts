@@ -296,6 +296,11 @@ export function mapApiReportToReport(apiReport: ApiReport): Report {
     authors: apiReport.authors,
     fullReportTOC,
 
+    // SEO meta fields
+    meta_title: apiReport.meta_title,
+    meta_description: apiReport.meta_description,
+    meta_keywords: apiReport.meta_keywords,
+
     // Additional metadata
     // Note: teamMemberIds and relatedReportIds would need to come from the API
     // if they're available in a different endpoint or field
@@ -378,9 +383,7 @@ export function mapApiBlogToBlog(apiBlog: ApiBlog): Blog {
   const category = apiBlog.category?.name || 'Healthcare Insights';
 
   // Use populated author from API or fallback
-  const author = apiBlog.author?.name
-    || apiBlog.metadata?.author
-    || 'Healthcare Foresights';
+  const author = apiBlog.author?.name || 'Healthcare Foresights';
 
   // Format date
   const date = formatDate(apiBlog.publishDate || apiBlog.createdAt);
@@ -403,6 +406,22 @@ export function mapApiBlogToBlog(apiBlog: ApiBlog): Blog {
     content: apiBlog.content,
     tags,
     location: apiBlog.location,
+
+    // Include nested objects
+    authorId: apiBlog.authorId,
+    categoryId: apiBlog.categoryId,
+    authorDetails: apiBlog.author,
+    categoryDetails: apiBlog.category,
+
+    // Include metadata
+    metadata: apiBlog.metadata,
+
+    // Include publishing fields
+    status: apiBlog.status,
+    publishDate: apiBlog.publishDate,
+    scheduledPublishEnabled: apiBlog.scheduledPublishEnabled,
+    createdAt: apiBlog.createdAt,
+    updatedAt: apiBlog.updatedAt,
   };
 }
 
@@ -433,9 +452,7 @@ export function mapApiPressReleaseToPressRelease(apiPressRelease: ApiPressReleas
   const category = apiPressRelease.category?.name || 'Press Release';
 
   // Use populated author from API or fallback
-  const author = apiPressRelease.author?.name
-    || apiPressRelease.metadata?.author
-    || 'Media Relations';
+  const author = apiPressRelease.author?.name || 'Media Relations';
 
   // Format date
   const date = formatDate(apiPressRelease.publishDate || apiPressRelease.createdAt);
@@ -458,6 +475,22 @@ export function mapApiPressReleaseToPressRelease(apiPressRelease: ApiPressReleas
     content: apiPressRelease.content,
     tags,
     location: apiPressRelease.location,
+
+    // Include nested objects
+    authorId: apiPressRelease.authorId,
+    categoryId: apiPressRelease.categoryId,
+    authorDetails: apiPressRelease.author,
+    categoryDetails: apiPressRelease.category,
+
+    // Include metadata
+    metadata: apiPressRelease.metadata,
+
+    // Include publishing fields
+    status: apiPressRelease.status,
+    publishDate: apiPressRelease.publishDate,
+    scheduledPublishEnabled: apiPressRelease.scheduledPublishEnabled,
+    createdAt: apiPressRelease.createdAt,
+    updatedAt: apiPressRelease.updatedAt,
   };
 }
 

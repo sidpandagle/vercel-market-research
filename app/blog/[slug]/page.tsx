@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Section, Container, Badge } from "@/components/ui";
 import { getBlogs, getBlogBySlug, isApiError } from "@/lib/api";
 import type { Metadata } from "next";
+import { StructuredData, generateArticleSchema, generateBreadcrumbSchema } from "@/components/seo/StructuredData";
 
 interface BlogPageProps {
   params: Promise<{
@@ -35,15 +36,29 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
 
   const blog = response.data;
 
+  // Use metadata fields if available, otherwise fallback to defaults
+  const title = blog.metadata?.metaTitle || `${blog.title} | Healthcare Insights`;
+  const description = blog.metadata?.metaDescription || blog.excerpt;
+  const keywords = blog.metadata?.keywords || [];
+
   return {
-    title: `${blog.title} | Healthcare Insights`,
-    description: blog.excerpt,
+    title,
+    description,
+    keywords,
     openGraph: {
-      title: blog.title,
-      description: blog.excerpt,
+      title: blog.metadata?.metaTitle || blog.title,
+      description,
       type: "article",
-      publishedTime: blog.date,
-      authors: [blog.author],
+      publishedTime: blog.publishDate || blog.createdAt,
+      authors: blog.authorDetails ? [blog.authorDetails.name] : [blog.author],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+    alternates: {
+      canonical: `https://www.healthcareforesights.com/blog/${slug}`,
     },
   };
 }
@@ -60,8 +75,28 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
 
   const paragraphs = blog.content.split("\n\n");
 
+  // Generate structured data schemas
+  const articleSchema = generateArticleSchema({
+    type: 'Article',
+    title: blog.title,
+    description: blog.excerpt,
+    url: `https://www.healthcareforesights.com/blog/${blog.slug}`,
+    datePublished: blog.publishDate || blog.createdAt || blog.date,
+    dateModified: blog.updatedAt,
+    author: blog.authorDetails?.name || blog.author,
+    keywords: blog.metadata?.keywords,
+  });
+
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', url: 'https://www.healthcareforesights.com' },
+    { name: 'Blog', url: 'https://www.healthcareforesights.com/blog' },
+    { name: blog.title, url: `https://www.healthcareforesights.com/blog/${blog.slug}` },
+  ]);
+
   return (
     <>
+      <StructuredData data={articleSchema} />
+      <StructuredData data={breadcrumbSchema} />
       <Section className="bg-[var(--muted)]">
         <Container size="sm">
           <div className="mb-6">

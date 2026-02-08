@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "Healthcare Insights Blog | Trends, News & Analysis",
   description: "Read expert blogs on healthcare trends, innovations, policy updates, market developments, and industry insights.",
   keywords: ["healthcare blog", "healthcare insights", "healthcare trends", "medical industry news", "healthcare analysis"],
+  alternates: {
+    canonical: 'https://www.healthcareforesights.com/blog',
+  },
 };
 
 // Enable ISR with 5-minute revalidation

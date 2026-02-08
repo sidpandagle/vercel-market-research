@@ -11,9 +11,9 @@ export type BlogStatus = 'draft' | 'review' | 'published';
  * Blog metadata from API
  */
 export interface ApiBlogMetadata {
+  metaTitle?: string;
+  metaDescription?: string;
   keywords?: string[];
-  description?: string;
-  author?: string;
   [key: string]: string | string[] | undefined;
 }
 
@@ -33,6 +33,7 @@ export interface ApiBlog {
   tags?: string;
   status: BlogStatus;
   publishDate?: string | null;
+  scheduledPublishEnabled?: boolean;
   location?: string;
   metadata?: ApiBlogMetadata;
   createdAt: string;
@@ -58,6 +59,26 @@ export interface Blog {
   // Extended fields for detail page
   tags?: string[];
   location?: string;
+
+  // Full nested objects from API
+  authorId?: number;
+  categoryId?: number;
+  authorDetails?: ApiAuthor;
+  categoryDetails?: ApiCategory;
+
+  // Metadata fields
+  metadata?: {
+    metaTitle?: string;
+    metaDescription?: string;
+    keywords?: string[];
+  };
+
+  // Publishing fields
+  status?: BlogStatus;
+  publishDate?: string | null;
+  scheduledPublishEnabled?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 /**

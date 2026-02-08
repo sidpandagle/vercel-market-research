@@ -1,5 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { SidebarTOCItem } from '@/lib/toc-utils';
+
+// Default heading levels array - defined outside to maintain stable reference
+const DEFAULT_HEADING_LEVELS = ['h2', 'h3'];
 
 /**
  * Custom hook to automatically generate a Table of Contents from headings in the DOM
@@ -10,9 +13,15 @@ import { SidebarTOCItem } from '@/lib/toc-utils';
  */
 export function useGeneratedTOC(
   containerSelector: string = 'article',
-  headingLevels: string[] = ['h2', 'h3']
+  headingLevels?: string[]
 ): SidebarTOCItem[] {
   const [tocItems, setTocItems] = useState<SidebarTOCItem[]>([]);
+
+  // Use stable reference for heading levels
+  const levels = headingLevels || DEFAULT_HEADING_LEVELS;
+
+  // Create a stable key from levels array to use in dependency array
+  const levelsKey = useMemo(() => levels.join(','), [levels]);
 
   useEffect(() => {
     // Function to generate a URL-safe ID from heading text
@@ -41,7 +50,7 @@ export function useGeneratedTOC(
       }
 
       // Find all specified heading elements within the container
-      const headingSelector = headingLevels.join(', ');
+      const headingSelector = levels.join(', ');
       const headings = container.querySelectorAll(headingSelector);
       const items: SidebarTOCItem[] = [];
 
@@ -98,11 +107,11 @@ export function useGeneratedTOC(
           mutation.addedNodes.forEach((node) => {
             if (node.nodeType === Node.ELEMENT_NODE) {
               const element = node as Element;
-              const headingSelector = headingLevels.join(', ');
+              const headingSelector = levels.join(', ');
 
               // Check if the node itself is a heading or contains headings
               if (
-                headingLevels.includes(element.tagName.toLowerCase()) ||
+                levels.includes(element.tagName.toLowerCase()) ||
                 element.querySelector(headingSelector)
               ) {
                 shouldUpdate = true;
@@ -133,7 +142,7 @@ export function useGeneratedTOC(
         observer.disconnect();
       }
     };
-  }, [containerSelector, headingLevels]);
+  }, [containerSelector, levelsKey]);
 
   return tocItems;
 }
