@@ -11,10 +11,10 @@ const nextConfig: NextConfig = {
         has: [
           {
             type: 'host',
-            value: 'www.healthcareforesights.com',
+            value: 'healthcareforesights.com',
           },
         ],
-        destination: 'https://healthcareforesights.com/:path*',
+        destination: 'https://www.healthcareforesights.com/:path*',
         permanent: true,
       },
     ];

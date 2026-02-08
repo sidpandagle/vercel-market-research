@@ -13,7 +13,7 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://healthcareforesights.com'),
+  metadataBase: new URL('https://www.healthcareforesights.com'),
   title: {
     default: "Healthcare Foresights | Healthcare Market Insights & Research Reports",
     template: "%s | Healthcare Foresights",
