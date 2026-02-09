@@ -25,7 +25,7 @@ export default function FAQ({ faqs }: FAQProps) {
 
   return (
     <section id="faq" className="mb-12 scroll-mt-24">
-      <h2 className="text-3xl font-bold text-[var(--foreground)] mb-6">
+      <h2 className="text-3xl font-bold text-[var(--teal-deep)] mb-6">
         Frequently Asked Questions
       </h2>
       <div className="space-y-4">

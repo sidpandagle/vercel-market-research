@@ -456,7 +456,7 @@ export default async function ReportPage({
                         <h3 className="text-xl font-semibold text-[#000000] mb-6">
                           Key Market Players
                         </h3>
-                        <div className="grid gap-4 px-40">
+                        <div className="grid gap-4 md:px-40">
                           {report.keyPlayers.map((player, index) => (
                             <Card key={index} className="hover:shadow-md transition-shadow">
                               <CardContent className="">

@@ -39,10 +39,15 @@
   --teal-border: #B0D9D5;       /* Soft teal for accents */
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   font-family: var(--font-geist-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 @layer utilities {
