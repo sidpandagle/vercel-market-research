@@ -29,5 +29,9 @@ export * from './blogs.types';
 export * from './press-releases';
 export * from './press-releases.types';
 
+// Legal Pages API
+export * from './legal-pages';
+export * from './legal-pages.types';
+
 // Data mappers
 export * from './mappers';

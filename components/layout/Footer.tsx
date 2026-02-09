@@ -85,6 +85,36 @@ export default function Footer() {
                   Blog
                 </Link>
               </li>
+              <li className="pt-2 mt-2 border-t border-slate-200">
+                <span className="text-xs uppercase text-slate-500 font-semibold">Legal</span>
+              </li>
+              <li>
+                <Link
+                  href="/legal/privacy-policy"
+                  className="text-slate-600 hover:text-ocean-600 transition-colors flex items-center gap-2 group"
+                >
+                  <ChevronRight className="w-4 h-4 text-ocean-600 group-hover:translate-x-1 transition-transform" />
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/legal/refund-policy"
+                  className="text-slate-600 hover:text-ocean-600 transition-colors flex items-center gap-2 group"
+                >
+                  <ChevronRight className="w-4 h-4 text-ocean-600 group-hover:translate-x-1 transition-transform" />
+                  Refund Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/legal/cancellation-policy"
+                  className="text-slate-600 hover:text-ocean-600 transition-colors flex items-center gap-2 group"
+                >
+                  <ChevronRight className="w-4 h-4 text-ocean-600 group-hover:translate-x-1 transition-transform" />
+                  Cancellation Policy
+                </Link>
+              </li>
             </ul>
           </div>
 

@@ -14,6 +14,7 @@ interface Report {
   slug: string;
   title: string;
   description: string;
+  summary: string;
   category: string;
   date: string;
   price: string;

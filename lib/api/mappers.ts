@@ -273,6 +273,7 @@ export function mapApiReportToReport(apiReport: ApiReport): Report {
     slug: apiReport.slug,
     title: apiReport.title,
     description: apiReport.description,
+    summary: apiReport.summary || apiReport.description,
     category: apiReport.category_name || 'Uncategorized',
     date: formatDate(apiReport.publish_date || apiReport.created_at),
     price,

@@ -47,7 +47,7 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
           ctaSection.innerHTML = `
             <div class="image-cta-content">
               <div class="image-cta-text">To learn more about this report,</div>
-              <a href="/request-sample${reportSlug ? `?report=${reportSlug}` : ''}" class="image-cta-button">
+              <a href="/request-sample${reportSlug ? `?report=${reportSlug}` : ''}"  target="_blank" class="image-cta-button">
                 <svg class="download-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                   <polyline points="7 10 12 15 17 10"></polyline>
@@ -98,7 +98,7 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
           color: #29ADA4;
           color: var(--teal-primary, #29ADA4);
           font-weight: 600;
-          margin-top: 2rem;
+          margin-top: 1rem;
           margin-bottom: 1rem;
         }
 
@@ -250,7 +250,7 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
         .image-container img {
           width: 100%;
           height: auto;
-          max-width: 26rem;
+          max-width: 48rem;
           margin: 0 auto !important;
           display: block;
           box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);

@@ -86,14 +86,16 @@ export const ReportContentWrapper: React.FC<ReportContentWrapperProps> = ({
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
       {/* Left Sidebar - TOC Navigation */}
       <aside className="hidden lg:block lg:col-span-3 2xl:col-span-2">
-        {hasFullContent && activeTOC && activeTOC.length > 0 && (
-          <TableOfContents
-            items={activeTOC}
-            onShowFullTOC={() => setShowFullTOC(true)}
-            showFullTOC={showFullTOC}
-            onNavigateToSection={handleNavigateToSection}
-          />
-        )}
+        <div className="sticky top-24">
+          {hasFullContent && activeTOC && activeTOC.length > 0 && (
+            <TableOfContents
+              items={activeTOC}
+              onShowFullTOC={() => setShowFullTOC(true)}
+              showFullTOC={showFullTOC}
+              onNavigateToSection={handleNavigateToSection}
+            />
+          )}
+        </div>
       </aside>
 
       {/* Main Content Area */}

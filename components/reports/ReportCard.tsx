@@ -37,7 +37,7 @@ export default function ReportCard({ report }: ReportCardProps) {
 
         <CardContent className="flex-grow" style={{ paddingTop: '0px', paddingBottom: '0px' }}>
           <CardDescription className="line-clamp-4 mb-4 text-slate-600">
-            {report.description}
+            {report.summary}
           </CardDescription>
 
           {/* Metadata Row with Icons */}

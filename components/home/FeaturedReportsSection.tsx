@@ -63,7 +63,7 @@ export default async function FeaturedReportsSection() {
                     <CardTitle className="text-lg">{report.title}</CardTitle>
                   </CardHeader>
                   <CardContent style={{ paddingTop: 0, paddingBottom: 0 }}>
-                    <CardDescription>{report.description}</CardDescription>
+                    <CardDescription>{report.summary}</CardDescription>
                   </CardContent>
                   <CardFooter>
                     <Button variant="ghost" size="sm">

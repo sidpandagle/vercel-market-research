@@ -77,7 +77,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
   return (
     <nav
       className={cn(
-        'sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto',
+        'max-h-[calc(100vh-8rem)] overflow-y-auto',
         className
       )}
     >
