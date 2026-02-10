@@ -103,13 +103,13 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
         }
 
         /* H4 - Minor sections with steel blue */
-        .styled-report-content h4 {
-          color: #307898;
-          color: var(--teal-steel, #307898);
-          font-weight: 600;
-          margin-top: 1.5rem;
-          margin-bottom: 0.75rem;
-        }
+        // .styled-report-content h4 {
+        //   color: #307898;
+        //   color: var(--teal-steel, #307898);
+        //   font-weight: 600;
+        //   margin-top: 1.5rem;
+        //   margin-bottom: 0.75rem;
+        // }
 
         /* H5/H6 - Smallest headings with deep blue */
         .styled-report-content h5,

@@ -24,49 +24,59 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: LegalPageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const response = await getLegalPageBySlug(slug);
+  try {
+    const { slug } = await params;
+    const response = await getLegalPageBySlug(slug);
 
-  if (isApiError(response)) {
+    if (isApiError(response)) {
+      return {
+        title: "Legal Page Not Found",
+      };
+    }
+
+    const page = response.data;
+
+    // Use metadata fields if available, otherwise fallback to defaults
+    const title = page.metadata?.metaTitle || `${page.title} | Healthcare Foresights`;
+    const description = page.metadata?.metaDescription || page.excerpt;
+    const keywords = page.metadata?.keywords || ["healthcare legal", "policies"];
+
     return {
-      title: "Legal Page Not Found",
-    };
-  }
-
-  const page = response.data;
-
-  // Use metadata fields if available, otherwise fallback to defaults
-  const title = page.metadata?.metaTitle || `${page.title} | Healthcare Foresights`;
-  const description = page.metadata?.metaDescription || page.excerpt;
-  const keywords = page.metadata?.keywords || ["healthcare legal", "policies"];
-
-  return {
-    title,
-    description,
-    keywords,
-    openGraph: {
-      title: page.metadata?.metaTitle || page.title,
-      description,
-      type: "article",
-    },
-    twitter: {
-      card: 'summary_large_image',
       title,
       description,
-    },
-    alternates: {
-      canonical: `/legal/${slug}`,
-    },
-    robots: {
-      index: true,
-      follow: true,
-    },
-  };
+      keywords,
+      openGraph: {
+        title: page.metadata?.metaTitle || page.title,
+        description,
+        type: "article",
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title,
+        description,
+      },
+      alternates: {
+        canonical: `/legal/${slug}`,
+      },
+      robots: {
+        index: true,
+        follow: true,
+      },
+    };
+  } catch {
+    return { title: "Legal Page Not Found" };
+  }
 }
 
 export default async function LegalDetailPage({ params }: LegalPageProps) {
   const { slug } = await params;
-  const response = await getLegalPageBySlug(slug);
+
+  let response;
+  try {
+    response = await getLegalPageBySlug(slug);
+  } catch {
+    notFound();
+  }
 
   if (isApiError(response)) {
     notFound();

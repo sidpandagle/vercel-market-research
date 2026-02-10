@@ -25,47 +25,57 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PressReleasePageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const response = await getPressReleaseBySlug(slug);
+  try {
+    const { slug } = await params;
+    const response = await getPressReleaseBySlug(slug);
 
-  if (isApiError(response)) {
+    if (isApiError(response)) {
+      return {
+        title: "Press Release Not Found",
+      };
+    }
+
+    const pressRelease = response.data;
+
+    // Use metadata fields if available, otherwise fallback to defaults
+    const title = pressRelease.metadata?.metaTitle || pressRelease.title;
+    const description = pressRelease.metadata?.metaDescription || pressRelease.excerpt;
+    const keywords = pressRelease.metadata?.keywords || ["healthcare press releases", "healthcare news", "industry announcements", "healthcare market updates"];
+
     return {
-      title: "Press Release Not Found",
-    };
-  }
-
-  const pressRelease = response.data;
-
-  // Use metadata fields if available, otherwise fallback to defaults
-  const title = pressRelease.metadata?.metaTitle || pressRelease.title;
-  const description = pressRelease.metadata?.metaDescription || pressRelease.excerpt;
-  const keywords = pressRelease.metadata?.keywords || ["healthcare press releases", "healthcare news", "industry announcements", "healthcare market updates"];
-
-  return {
-    title,
-    description,
-    keywords,
-    openGraph: {
-      title: pressRelease.metadata?.metaTitle || pressRelease.title,
-      description,
-      type: "article",
-      publishedTime: pressRelease.publishDate || pressRelease.createdAt,
-      authors: pressRelease.authorDetails ? [pressRelease.authorDetails.name] : [pressRelease.author],
-    },
-    twitter: {
-      card: 'summary_large_image',
       title,
       description,
-    },
-    alternates: {
-      canonical: `/press-releases/${slug}`,
-    },
-  };
+      keywords,
+      openGraph: {
+        title: pressRelease.metadata?.metaTitle || pressRelease.title,
+        description,
+        type: "article",
+        publishedTime: pressRelease.publishDate || pressRelease.createdAt,
+        authors: pressRelease.authorDetails ? [pressRelease.authorDetails.name] : [pressRelease.author],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title,
+        description,
+      },
+      alternates: {
+        canonical: `/press-releases/${slug}`,
+      },
+    };
+  } catch {
+    return { title: "Press Release Not Found" };
+  }
 }
 
 export default async function PressReleaseDetailPage({ params }: PressReleasePageProps) {
   const { slug } = await params;
-  const response = await getPressReleaseBySlug(slug);
+
+  let response;
+  try {
+    response = await getPressReleaseBySlug(slug);
+  } catch {
+    notFound();
+  }
 
   if (isApiError(response)) {
     notFound();

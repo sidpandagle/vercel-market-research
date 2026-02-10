@@ -23,35 +23,39 @@ export async function generateMetadata({
 }: {
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  const { id } = await params;
-  const authorId = parseInt(id);
+  try {
+    const { id } = await params;
+    const authorId = parseInt(id);
 
-  if (isNaN(authorId)) {
+    if (isNaN(authorId)) {
+      return {
+        title: 'Author Not Found',
+      };
+    }
+
+    const response = await getAuthorById(authorId);
+
+    if (isApiError(response)) {
+      return {
+        title: 'Author Not Found',
+      };
+    }
+
+    const author = response.data;
+
     return {
-      title: 'Author Not Found',
-    };
-  }
-
-  const response = await getAuthorById(authorId);
-
-  if (isApiError(response)) {
-    return {
-      title: 'Author Not Found',
-    };
-  }
-
-  const author = response.data;
-
-  return {
-    title: `Healthcare Articles by ${author.name}`,
-    description: `Browse healthcare market articles, insights, and research content published by ${author.name}.`,
-    keywords: ["healthcare articles", "healthcare research blogs", "market insights", "medical industry content"],
-    openGraph: {
       title: `Healthcare Articles by ${author.name}`,
       description: `Browse healthcare market articles, insights, and research content published by ${author.name}.`,
-      images: author.imageUrl ? [{ url: author.imageUrl }] : [],
-    },
-  };
+      keywords: ["healthcare articles", "healthcare research blogs", "market insights", "medical industry content"],
+      openGraph: {
+        title: `Healthcare Articles by ${author.name}`,
+        description: `Browse healthcare market articles, insights, and research content published by ${author.name}.`,
+        images: author.imageUrl ? [{ url: author.imageUrl }] : [],
+      },
+    };
+  } catch {
+    return { title: 'Author Not Found' };
+  }
 }
 
 export default async function AuthorPage({
@@ -68,10 +72,16 @@ export default async function AuthorPage({
   }
 
   // Parallel fetch: author + reports
-  const [authorResponse, reportsResponse] = await Promise.all([
-    getAuthorById(authorId),
-    getReportsByAuthorId(authorId, { status: 'published', limit: 1000 }),
-  ]);
+  let authorResponse;
+  let reportsResponse;
+  try {
+    [authorResponse, reportsResponse] = await Promise.all([
+      getAuthorById(authorId),
+      getReportsByAuthorId(authorId, { status: 'published', limit: 1000 }),
+    ]);
+  } catch {
+    notFound();
+  }
 
   // Error handling
   if (isApiError(authorResponse)) {

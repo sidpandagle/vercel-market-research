@@ -34,45 +34,49 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
-  const response = await getReportBySlug(slug);
+  try {
+    const { slug } = await params;
+    const response = await getReportBySlug(slug);
 
-  if (isApiError(response)) {
+    if (isApiError(response)) {
+      return {
+        title: "Report Not Found",
+      };
+    }
+
+    const report = response.data;
+
+    // Use meta fields if available, fallback to regular fields
+    const title = report.meta_title || report.title;
+    const description = report.meta_description || report.description;
+
+    // Parse meta_keywords if available, otherwise use default keywords
+    const keywords = report.meta_keywords
+      ? report.meta_keywords.split(',').map(k => k.trim()).filter(Boolean)
+      : ["healthcare market research", "healthcare industry analysis", report.category, report.region];
+
     return {
-      title: "Report Not Found",
+      title,
+      description,
+      keywords,
+      openGraph: {
+        title,
+        description,
+        type: "article",
+        publishedTime: report.date,
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title,
+        description,
+      },
+      alternates: {
+        canonical: `/reports/${slug}`,
+      },
     };
+  } catch {
+    return { title: "Report Not Found" };
   }
-
-  const report = response.data;
-
-  // Use meta fields if available, fallback to regular fields
-  const title = report.meta_title || report.title;
-  const description = report.meta_description || report.description;
-
-  // Parse meta_keywords if available, otherwise use default keywords
-  const keywords = report.meta_keywords
-    ? report.meta_keywords.split(',').map(k => k.trim()).filter(Boolean)
-    : ["healthcare market research", "healthcare industry analysis", report.category, report.region];
-
-  return {
-    title,
-    description,
-    keywords,
-    openGraph: {
-      title,
-      description,
-      type: "article",
-      publishedTime: report.date,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-    },
-    alternates: {
-      canonical: `/reports/${slug}`,
-    },
-  };
 }
 
 interface Report {
@@ -134,7 +138,12 @@ export default async function ReportPage({
   const { slug } = await params;
 
   // Fetch report from API
-  const response = await getReportBySlug(slug);
+  let response;
+  try {
+    response = await getReportBySlug(slug);
+  } catch {
+    notFound();
+  }
 
   if (isApiError(response)) {
     console.error('Failed to fetch report:', response.message);

@@ -25,47 +25,57 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: BlogPageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const response = await getBlogBySlug(slug);
+  try {
+    const { slug } = await params;
+    const response = await getBlogBySlug(slug);
 
-  if (isApiError(response)) {
+    if (isApiError(response)) {
+      return {
+        title: "Blog Not Found",
+      };
+    }
+
+    const blog = response.data;
+
+    // Use metadata fields if available, otherwise fallback to defaults
+    const title = blog.metadata?.metaTitle || `${blog.title} | Healthcare Insights`;
+    const description = blog.metadata?.metaDescription || blog.excerpt;
+    const keywords = blog.metadata?.keywords || [];
+
     return {
-      title: "Blog Not Found",
-    };
-  }
-
-  const blog = response.data;
-
-  // Use metadata fields if available, otherwise fallback to defaults
-  const title = blog.metadata?.metaTitle || `${blog.title} | Healthcare Insights`;
-  const description = blog.metadata?.metaDescription || blog.excerpt;
-  const keywords = blog.metadata?.keywords || [];
-
-  return {
-    title,
-    description,
-    keywords,
-    openGraph: {
-      title: blog.metadata?.metaTitle || blog.title,
-      description,
-      type: "article",
-      publishedTime: blog.publishDate || blog.createdAt,
-      authors: blog.authorDetails ? [blog.authorDetails.name] : [blog.author],
-    },
-    twitter: {
-      card: 'summary_large_image',
       title,
       description,
-    },
-    alternates: {
-      canonical: `/blog/${slug}`,
-    },
-  };
+      keywords,
+      openGraph: {
+        title: blog.metadata?.metaTitle || blog.title,
+        description,
+        type: "article",
+        publishedTime: blog.publishDate || blog.createdAt,
+        authors: blog.authorDetails ? [blog.authorDetails.name] : [blog.author],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title,
+        description,
+      },
+      alternates: {
+        canonical: `/blog/${slug}`,
+      },
+    };
+  } catch {
+    return { title: "Blog Not Found" };
+  }
 }
 
 export default async function BlogDetailPage({ params }: BlogPageProps) {
   const { slug } = await params;
-  const response = await getBlogBySlug(slug);
+
+  let response;
+  try {
+    response = await getBlogBySlug(slug);
+  } catch {
+    notFound();
+  }
 
   if (isApiError(response)) {
     notFound();
