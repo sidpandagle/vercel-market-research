@@ -59,8 +59,8 @@ export async function generateMetadata({ params }: LegalPageProps): Promise<Meta
         canonical: `/legal/${slug}`,
       },
       robots: {
-        index: true,
-        follow: true,
+        index: false,
+        follow: false,
       },
     };
   } catch {
