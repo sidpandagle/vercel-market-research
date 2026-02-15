@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Section, Container, Grid } from '@/components/ui';
 import ReportCard from './ReportCard';
@@ -70,11 +70,11 @@ export default function ReportsListingClient({ reports }: ReportsListingClientPr
   }, [searchParams]);
 
   // Handle search results from SearchBar
-  const handleSearchResults = (results: Report[] | null, loading: boolean) => {
+  const handleSearchResults = useCallback((results: Report[] | null, loading: boolean) => {
     setSearchResults(results);
     setIsSearching(loading);
     setCurrentPage(1); // Reset to first page when search changes
-  };
+  }, []);
 
   // Helper function to check if price is in range
   const isPriceInRange = (price: string, range: string): boolean => {

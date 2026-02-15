@@ -40,14 +40,14 @@
 }
 
 html {
-  overflow-x: hidden;
+  /* overflow-x removed - was breaking position: sticky */
 }
 
 body {
   font-family: var(--font-geist-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  /* overflow-x removed - was breaking position: sticky */
 }
 
 @layer utilities {
