@@ -1,0 +1,274 @@
+[
+  {
+    "id": 1,
+    "title": "Market Assessment",
+    "slug": "market-assessment",
+    "category": "Market Intelligence",
+    "description": "Complete market analysis for healthcare services, pharmaceuticals, medical devices, diagnostics, life sciences, and digital health markets with 10-year forecasts.",
+    "overview": "The market assessment package delivers complete market analysis for healthcare services, pharmaceuticals, medical devices, diagnostics, life sciences, and digital health markets. Our team begins the process by creating precise market size estimates and market forecasts, which use epidemiology data, usage patterns, pricing standards, reimbursement information, and economic indicators to determine present market worth and upcoming growth potential.",
+    "keyHighlights": [
+      "The competitive landscape study serves as an essential element of our service offerings because it enables us to conduct thorough analysis of competing companies through their product offerings, service quality, upcoming projects, business collaborations, and internal strengths and weaknesses.",
+      "We provide our services through several main areas, which include customer and stakeholder analysis, identification of key decision-makers, referral patterns, procurement models, and demand drivers across provider networks, payers, distributors, and end-users.",
+      "Our portfolio contains regulatory and reimbursement assessment as an essential element. We assess compliance requirements, approval procedures, price restrictions, and payer coverage landscapes to ensure customers fully understand market access difficulties.",
+      "We provide scenario modeling and strategic recommendations that use both quantitative and qualitative research results."
+    ],
+    "servicesInclude": [
+      "10 Year Forecast Period",
+      "Assessment of competition in the market",
+      "Detailed historical and forecasted market covering across region",
+      "Adding modification for more geographical regions, as requested by the client",
+      "Expertise in making predictions for new markets",
+      "Assessment of drug uptake and market size by therapy"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Healthcare Competitive Intelligence",
+    "slug": "healthcare-competitive-intelligence",
+    "category": "Market Intelligence",
+    "description": "Strategic data-based insights to forecast competitor behavior, track market changes, and make informed strategic decisions in regulated healthcare industries.",
+    "overview": "The Healthcare Competitive Intelligence (CI) Services deliver strategic data-based insights, which help healthcare and life sciences organizations to forecast competitor behavior and track market changes while making strategic decisions for upcoming years. In regulated pharmaceutical, medical device, diagnostic healthcare service, and digital health industries, companies use competitive intelligence as their main tool for gaining market power.",
+    "keyHighlights": [
+      "Our Healthcare Competitive Intelligence portfolio delivers comprehensive competitor landscape assessments across local, regional, and global markets with in-depth competitor analyses.",
+      "Our portfolio features pipeline and innovation intelligence as its core element, which serves as essential support for pharmaceutical, biotechnology, and medical device enterprises.",
+      "The organization provides market access intelligence together with pricing information while they study reimbursement systems, payer approaches, tender execution methods, and value-based healthcare delivery systems.",
+      "Our organization delivers continuous intelligence tracking and notification systems, which provide clients with instant updates about their competitors, new regulations, product recalls, partnership news, and major operational changes."
+    ],
+    "servicesInclude": [
+      "Competitor profiling and company benchmarking",
+      "Product and service portfolio analysis",
+      "Pipeline tracking and innovation monitoring",
+      "Clinical trial intelligence and regulatory milestone tracking",
+      "Market share and positioning assessment",
+      "Pricing strategy and reimbursement intelligence",
+      "SWOT and strategic positioning analysis",
+      "Patent landscape and IP monitoring",
+      "Partnership, alliance, and M&A tracking",
+      "Go-to-market strategy evaluation",
+      "Brand positioning and messaging analysis",
+      "Technology trend and disruption monitoring",
+      "New entrant and substitute threat assessment",
+      "Tender and procurement intelligence",
+      "Key opinion leader (KOL) and stakeholder mapping",
+      "Scenario analysis and competitive response modeling",
+      "Early warning alerts and ongoing competitor monitoring",
+      "Custom executive briefing reports and dashboards"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "R&D Analysis",
+    "slug": "rd-analysis",
+    "category": "R&D & Innovation",
+    "description": "Enhance research productivity, develop innovation pipelines, and maximize R&D investment returns from early discovery to commercialization readiness.",
+    "overview": "R&D Analysis Services assist healthcare and life sciences organizations through research productivity improvements, innovation pipeline development and R&D investment return enhancements. The research and development activities of pharmaceuticals, biotechnology, medical devices, diagnostics, and digital health industries require substantial financial investments and operate under considerable risks.",
+    "keyHighlights": [
+      "Our R&D Analysis portfolio begins with pipeline evaluation and portfolio optimization. We assess therapeutic focus areas, product candidates, technology platforms, and stage-gate progression.",
+      "A core element of our services includes clinical development analysis. We evaluate trial design, patient recruitment strategies, endpoint selection, regulatory pathways and competitive trial landscapes.",
+      "Our portfolio also includes assessments of research and development productivity together with assessments of cost optimization to identify workflow bottlenecks and operational inefficiencies.",
+      "The second essential component consists of technology and research innovation intelligence. We track technological advancements together with patent developments, scientific research publications, and funding patterns."
+    ],
+    "servicesInclude": [
+      "R&D strategy development and innovation roadmap design",
+      "Pipeline assessment and portfolio prioritization",
+      "Therapeutic area and technology opportunity analysis",
+      "Target identification and validation assessment",
+      "Preclinical research evaluation and optimization",
+      "Clinical trial strategy and protocol design advisory",
+      "Regulatory pathway analysis and approval strategy support",
+      "Clinical data analytics and real-world evidence integration",
+      "R&D cost benchmarking and productivity analysis",
+      "Stage-gate review and go/no-go decision support",
+      "Technology scouting and innovation landscape mapping",
+      "Patent landscape and intellectual property assessment",
+      "CRO/vendor evaluation and outsourcing strategy",
+      "Partnership, licensing, and M&A due diligence support"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Regulatory Analysis",
+    "slug": "regulatory-analysis",
+    "category": "Regulatory & Compliance",
+    "description": "Navigate complex regulatory environments with complete regulatory strategy advisory from approval pathway assessment to post-market compliance.",
+    "overview": "Our Regulatory Analysis Services portfolio exists to assist healthcare organizations and life sciences organizations in their efforts to navigate complex regulatory environments that continuously evolve. Our team offers complete regulatory strategy advisory services that support the approval process for pharmaceuticals and biotechnology products, medical devices, diagnostics and healthcare service organizations.",
+    "keyHighlights": [
+      "Our expertise includes monitoring regulatory intelligence, reviewing clinical and technical documents, aligning quality systems, assessing labeling and claims, and developing post-market compliance strategies.",
+      "Our company helps clients achieve faster approval times, decreased compliance risks, and sustained market access in multiple international markets.",
+      "We provide services that combine regulatory needs with business goals and development plans to ensure comprehensive compliance and market readiness.",
+      "Our approach ensures alignment with local and global regulatory standards through gap analysis and strategic planning."
+    ],
+    "servicesInclude": [
+      "Regulatory pathway assessment and approval strategy development",
+      "Gap analysis against local and global regulatory standards",
+      "Regulatory intelligence monitoring and policy tracking",
+      "Submission strategy planning (IND, NDA, ANDA, 510(k), CE, etc.)",
+      "Technical documentation and dossier review",
+      "Clinical and non-clinical data compliance evaluation",
+      "Quality Management System (QMS) alignment and advisory",
+      "GMP, GLP, and GCP compliance assessment",
+      "Labeling, claims, and promotional material review",
+      "Risk assessment and mitigation planning",
+      "Audit readiness and inspection support"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Primary Market Research",
+    "slug": "primary-market-research",
+    "category": "Primary Research",
+    "description": "Direct, high-quality insights from key stakeholders across healthcare through structured qualitative and quantitative research programs.",
+    "overview": "Our Primary Market Research Services portfolio delivers direct, high-quality insights from key stakeholders across the healthcare and life sciences ecosystem. We design and execute structured qualitative and quantitative research programs, which include in-depth interviews, surveys, focus groups and expert consultations with physicians, payers, hospital administrators, distributors, patients, and industry experts.",
+    "keyHighlights": [
+      "Our approach ensures the development of rigorous questionnaire design together with targeted respondent recruitment and the implementation of robust data validation and advanced analytical interpretation.",
+      "By transforming real-world stakeholder perspectives into strategic intelligence, we enable clients to refine product positioning, validate market opportunities, and optimize pricing strategies.",
+      "We conduct comprehensive research across all stakeholder groups including physicians, payers, hospital administrators, distributors, patients, and industry experts.",
+      "Our methodology combines qualitative insights with quantitative validation to strengthen go-to-market decisions with confidence and precision."
+    ],
+    "servicesInclude": [
+      "In-depth interviews (IDIs) with physicians, specialists, and KOLs",
+      "Payer and reimbursement stakeholder interviews",
+      "Hospital administrator and procurement discussions",
+      "Patient and caregiver interviews",
+      "Focus group discussions (FGDs)",
+      "Structured quantitative surveys (online/telephonic/field)",
+      "Concept testing and product validation studies",
+      "Pricing sensitivity and willingness-to-pay analysis",
+      "Brand perception and positioning research",
+      "Customer journey and referral pathway mapping",
+      "Treatment pattern and prescribing behavior analysis",
+      "Market demand validation and opportunity assessment",
+      "Competitive perception and benchmarking research",
+      "Distributor and channel partner interviews"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Pipeline Assessment",
+    "slug": "pipeline-assessment",
+    "category": "R&D & Innovation",
+    "description": "Comprehensive evaluation of product and innovation pipelines from therapeutic positioning to commercial viability assessment.",
+    "overview": "Our Pipeline Assessment Services portfolio provides comprehensive, data-driven evaluation of product and innovation pipelines across pharmaceuticals, biotechnology, medical devices, diagnostics, and digital health. Our team conducts detailed examinations of development-stage assets through their therapeutic positioning and clinical progress and regulatory pathways and competitive benchmarking and commercial viability.",
+    "keyHighlights": [
+      "By combining scientific validation, market forecasting, and competitive intelligence, we assist our clients in selecting their investment priorities and achieving optimal portfolio distribution.",
+      "We help clients reduce development risks and align R&D pipelines with their long-term strategic and commercial goals.",
+      "Our assessment covers all stages from preclinical to post-market, providing comprehensive visibility into pipeline potential.",
+      "We provide innovation landscape tracking and emerging technology monitoring to identify future opportunities and threats."
+    ],
+    "servicesInclude": [
+      "Comprehensive pipeline mapping and asset tracking",
+      "Therapeutic area and indication attractiveness analysis",
+      "Stage-wise development assessment (preclinical to post-market)",
+      "Clinical trial progress and milestone evaluation",
+      "Regulatory pathway and approval feasibility analysis",
+      "Scientific and technical validation review",
+      "Competitive pipeline benchmarking and gap analysis",
+      "Innovation landscape and emerging technology tracking",
+      "Market potential and revenue forecasting per asset",
+      "Risk assessment (clinical, regulatory, commercial, technical)"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Mergers & Acquisitions",
+    "slug": "mergers-acquisitions",
+    "category": "Strategic Advisory",
+    "description": "Full strategic advisory for healthcare M&A from target identification to post-merger integration and long-term strategy alignment.",
+    "overview": "Our Mergers and Acquisitions (M&A) Services portfolio offers full strategic advice to healthcare and life sciences companies that seek to expand through their mergers, acquisitions, partnerships, and divestitures. Our service delivery encompasses everything from identifying potential targets and assessing their alignment with your business strategy to conducting due diligence on commercial operations.",
+    "keyHighlights": [
+      "Our services in market intelligence, financial research, pipeline evaluation, and competitive benchmarking help clients make decisions about transactions while lowering operational risks and raising value creation.",
+      "Our approach goes beyond just closing deals. It also includes planning for integration, optimizing performance after the merger, and aligning long-term strategies.",
+      "We provide comprehensive due diligence across commercial, financial, regulatory, and operational dimensions to ensure informed decision-making.",
+      "Our strategic growth roadmaps help clients identify the right targets and develop synergy assessments that maximize value creation."
+    ],
+    "servicesInclude": [
+      "Strategic growth and acquisition roadmap development",
+      "Target identification and longlist/shortlist creation",
+      "Strategic fit and synergy assessment",
+      "Commercial due diligence and market validation",
+      "Financial modeling and valuation analysis",
+      "Pipeline and product portfolio assessment",
+      "Regulatory and compliance risk evaluation",
+      "Operational and supply chain due diligence",
+      "Competitive landscape and market positioning analysis"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Oncology Consulting",
+    "slug": "oncology-consulting",
+    "category": "Therapeutic Expertise",
+    "description": "Specialized advisory for oncology stakeholders covering therapeutic assessment, clinical development, and market access planning.",
+    "overview": "The Oncology Consulting portfolio offers full, specialized advising services to healthcare providers, pharmaceutical firms, biotech businesses, cancer centers, and medical device manufacturers that engage in the oncology field. We offer strategic advice services in six primary areas: evaluating therapeutic areas, oncology pipelines, clinical development strategies, biomarker and precision medicine integration, market access planning, and competitive intelligence.",
+    "keyHighlights": [
+      "We help our clients improve their oncology portfolios by using our extensive clinical and commercial knowledge, as well as our understanding of regulations and ability to analyze data.",
+      "Our services focus on shortening the time it takes to get to market, improving treatment pathway positioning, and coming up with better reimbursement strategies.",
+      "The organization provides three main services: optimizing the operations of cancer centers, planning for the adoption of new technologies, and aligning value-based care.",
+      "All services are designed to help oncology practices improve patient outcomes, keep their businesses growing, and gain unique competitive advantages in their field."
+    ],
+    "servicesInclude": [
+      "Therapeutic area assessment and opportunity analysis",
+      "Oncology pipeline evaluation and prioritization",
+      "Clinical development strategy and trial design",
+      "Biomarker and precision medicine integration",
+      "Market access and reimbursement planning",
+      "Competitive intelligence and landscape analysis",
+      "Cancer center operations optimization",
+      "Technology adoption planning",
+      "Value-based care alignment",
+      "Treatment pathway mapping and positioning"
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Rare Diseases Consulting",
+    "slug": "rare-diseases-consulting",
+    "category": "Therapeutic Expertise",
+    "description": "Specialized strategic advisory for orphan and ultra-rare diseases from drug development to market access and patient engagement.",
+    "overview": "The Rare Diseases Consulting portfolio offers specialized strategic advising services to help pharmaceutical, biotechnology, and healthcare companies deal with the difficult needs of treating orphan and ultra-rare diseases. Our team helps customers in every manner possible, including through rare illness market research, epidemiological modeling, orphan drug development, regulatory pathway assessments, and pricing and reimbursement development.",
+    "keyHighlights": [
+      "We help companies optimize their pipeline selection process and gain faster regulatory approvals and better market access results through patient path mapping and stakeholder engagement methods.",
+      "Our expertise includes advocacy landscape assessments and real-world proof data integration to support market access and reimbursement strategies.",
+      "We know how to make gene and cell therapies, run specialist distribution systems, and build value-based contracting models.",
+      "Our services help companies stay successful in the market while serving important patient needs in advanced therapy areas."
+    ],
+    "servicesInclude": [
+      "Rare disease market research and opportunity assessment",
+      "Epidemiological modeling and patient population analysis",
+      "Orphan drug development strategy",
+      "Regulatory pathway assessment and optimization",
+      "Pricing and reimbursement strategy development",
+      "Patient pathway mapping and journey analysis",
+      "Stakeholder engagement and advocacy landscape assessment",
+      "Real-world evidence integration and outcomes research",
+      "Gene and cell therapy commercialization strategy",
+      "Specialty distribution and access program design",
+      "Value-based contracting model development"
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Licensing Services",
+    "slug": "licensing-services",
+    "category": "Strategic Advisory",
+    "description": "Strategic guidance for in-licensing, out-licensing, and co-development of products, technologies, and intellectual property.",
+    "overview": "Our Licensing Services portfolio gives healthcare and life sciences organizations who wish to in-license, out-license, or co-develop products, technologies, and intellectual property strategic guidance and helps them carry out their objectives. We help pharmaceutical, biotechnology, medical device, and diagnostics firms uncover excellent licensing opportunities.",
+    "keyHighlights": [
+      "We help our clients get strategic alignment and long-term value by using pipeline assessment, valuation modeling, competitive benchmarking, regulatory feasibility analysis, and risk assessments all together.",
+      "Our companies may extend their portfolios, acquire better access to new ideas, and become more competitive in international markets with structured licensing strategies.",
+      "We provide comprehensive partner scouting, term sheet formulation and negotiating support, and post-deal governance structures.",
+      "Our services include scientific and business due diligence to ensure licensing agreements deliver maximum value and strategic fit."
+    ],
+    "servicesInclude": [
+      "In-licensing and out-licensing strategy development",
+      "Target/partner identification and scouting",
+      "Asset screening and scientific evaluation",
+      "Commercial due diligence and market potential analysis",
+      "Financial valuation and deal modeling",
+      "Intellectual property (IP) assessment and patent landscape review",
+      "Regulatory feasibility and approval pathway evaluation",
+      "Competitive benchmarking and portfolio fit analysis",
+      "Term sheet development and deal structuring advisory"
+    ]
+  }
+]

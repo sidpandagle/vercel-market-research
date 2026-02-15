@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "quote": "Healthcare Foresights delivered exactly what we needed, not just data, but clear, actionable recommendations that helped us refine our market entry strategy.",
+    "name": "Head of Marketing",
+    "role": "Head of Marketing",
+    "company": "Berumen",
+    "location": "United States",
+    "rating": 5
+  },
+  {
+    "id": 2,
+    "quote": "Their grasp of the pharmaceutical and healthcare landscape was impressive. The regulatory and competitive insights were particularly valuable.",
+    "name": "Research Associate",
+    "role": "Research Associate",
+    "company": "Mitsubishi",
+    "location": "Japan",
+    "rating": 5
+  },
+  {
+    "id": 3,
+    "quote": "The market models were well-structured and transparent, giving our leadership confidence in the numbers for investment planning.",
+    "name": "Principal Engineer",
+    "role": "Principal Engineer – Vehicle Engineering",
+    "company": "Mitsubishi Motors R&D of America",
+    "location": "United States",
+    "rating": 5
+  },
+  {
+    "id": 4,
+    "quote": "CMI's ability to connect with the right industry experts gave us real on-ground perspectives that we couldn't access internally.",
+    "name": "Business Head",
+    "role": "Business Head",
+    "company": "SMS Elotherm",
+    "location": "United States",
+    "rating": 5
+  },
+  {
+    "id": 5,
+    "quote": "Communication was smooth throughout the project. Their team was flexible and quick to incorporate our feedback at every stage.",
+    "name": "Marketing Manager",
+    "role": "Marketing Manager",
+    "company": "Beeline",
+    "location": "Russia",
+    "rating": 5
+  },
+  {
+    "id": 6,
+    "quote": "The competitive benchmarking went far beyond surface-level information and helped us identify clear market gaps.",
+    "name": "Strategy Lead",
+    "role": "Strategy Lead",
+    "company": "Exact Sciences",
+    "location": "Switzerland",
+    "rating": 5
+  },
+  {
+    "id": 7,
+    "quote": "The depth of analysis and practical insights delivered far exceeded our expectations relative to the investment.",
+    "name": "Director",
+    "role": "Director",
+    "company": "West Ham United",
+    "location": "United Kingdom",
+    "rating": 5
+  },
+  {
+    "id": 8,
+    "quote": "Their knowledge of the Indian and Southeast Asian markets helped us localize our strategy with confidence.",
+    "name": "Regional Head",
+    "role": "Regional Head",
+    "company": "Nissan Chemical Corporation",
+    "location": "Japan",
+    "rating": 5
+  },
+  {
+    "id": 9,
+    "quote": "The final report was structured for decision-making — opportunity maps and strategic takeaways made it easy for our leadership team.",
+    "name": "Corporate Strategy Manager",
+    "role": "Corporate Strategy Manager",
+    "company": "The Clorox Company",
+    "location": "United States",
+    "rating": 5
+  },
+  {
+    "id": 10,
+    "quote": "What stood out was their post-sales support. They helped us interpret findings and even supported internal presentations.",
+    "name": "Business Unit Head",
+    "role": "Business Unit Head",
+    "company": "Singapore Tourism Board",
+    "location": "Singapore",
+    "rating": 5
+  }
+]

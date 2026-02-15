@@ -9,7 +9,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-slate-200 bg-gradient-to-b from-white to-slate-50">
       <div className="container mx-auto px-4 py-12 md:px-6">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div>
             <Link href="/" className="inline-block">
               <Image
@@ -113,6 +113,66 @@ export default function Footer() {
                 >
                   <ChevronRight className="w-4 h-4 text-ocean-600 group-hover:translate-x-1 transition-transform" />
                   Cancellation Policy
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="mb-4 text-lg font-semibold text-slate-900">Consulting Services</h3>
+            <ul className="space-y-3 text-sm">
+              <li>
+                <Link
+                  href="/consulting"
+                  className="text-slate-600 hover:text-ocean-600 transition-colors flex items-center gap-2 group"
+                >
+                  <ChevronRight className="w-4 h-4 text-ocean-600 group-hover:translate-x-1 transition-transform" />
+                  All Services
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/consulting/market-assessment"
+                  className="text-slate-600 hover:text-ocean-600 transition-colors flex items-center gap-2 group"
+                >
+                  <ChevronRight className="w-4 h-4 text-ocean-600 group-hover:translate-x-1 transition-transform" />
+                  Market Assessment
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/consulting/healthcare-competitive-intelligence"
+                  className="text-slate-600 hover:text-ocean-600 transition-colors flex items-center gap-2 group"
+                >
+                  <ChevronRight className="w-4 h-4 text-ocean-600 group-hover:translate-x-1 transition-transform" />
+                  Competitive Intelligence
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/consulting/rd-analysis"
+                  className="text-slate-600 hover:text-ocean-600 transition-colors flex items-center gap-2 group"
+                >
+                  <ChevronRight className="w-4 h-4 text-ocean-600 group-hover:translate-x-1 transition-transform" />
+                  R&D Analysis
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/consulting/primary-market-research"
+                  className="text-slate-600 hover:text-ocean-600 transition-colors flex items-center gap-2 group"
+                >
+                  <ChevronRight className="w-4 h-4 text-ocean-600 group-hover:translate-x-1 transition-transform" />
+                  Primary Research
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/consulting/mergers-acquisitions"
+                  className="text-slate-600 hover:text-ocean-600 transition-colors flex items-center gap-2 group"
+                >
+                  <ChevronRight className="w-4 h-4 text-ocean-600 group-hover:translate-x-1 transition-transform" />
+                  M&A Advisory
                 </Link>
               </li>
             </ul>
