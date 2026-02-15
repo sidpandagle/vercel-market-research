@@ -32,17 +32,23 @@ export default function Navigation() {
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isMobileAboutOpen, setIsMobileAboutOpen] = useState(false);
   const aboutRef = useRef<HTMLDivElement>(null);
+  const aboutTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const consultingServices = consultingServicesData as ConsultingService[];
 
-  // Close about dropdown on outside click
+  const handleAboutMouseEnter = () => {
+    if (aboutTimeoutRef.current) clearTimeout(aboutTimeoutRef.current);
+    aboutTimeoutRef.current = setTimeout(() => setIsAboutOpen(true), 150);
+  };
+
+  const handleAboutMouseLeave = () => {
+    if (aboutTimeoutRef.current) clearTimeout(aboutTimeoutRef.current);
+    aboutTimeoutRef.current = setTimeout(() => setIsAboutOpen(false), 200);
+  };
+
   useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (aboutRef.current && !aboutRef.current.contains(e.target as Node)) {
-        setIsAboutOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () => {
+      if (aboutTimeoutRef.current) clearTimeout(aboutTimeoutRef.current);
+    };
   }, []);
 
   // Close mobile menu on route change
@@ -80,8 +86,22 @@ export default function Navigation() {
           </Link>
         ))}
 
+        <MegaMenu
+          categories={categories}
+          isActive={pathname.startsWith("/reports")}
+        />
+        <ConsultingMenu
+          services={consultingServices}
+          isActive={pathname.startsWith("/consulting")}
+        />
+
         {/* About Dropdown */}
-        <div className="relative" ref={aboutRef}>
+        <div
+          className="relative"
+          ref={aboutRef}
+          onMouseEnter={handleAboutMouseEnter}
+          onMouseLeave={handleAboutMouseLeave}
+        >
           <button
             onClick={() => setIsAboutOpen(!isAboutOpen)}
             className={cn(
@@ -92,42 +112,49 @@ export default function Navigation() {
             )}
           >
             About
-            <ChevronDown
+            <svg
               className={cn(
-                "w-3.5 h-3.5 transition-transform duration-200",
+                "w-4 h-4 transition-transform duration-200",
                 isAboutOpen && "rotate-180"
               )}
-            />
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
           </button>
-          {isAboutOpen && (
-            <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-slate-200 py-1 z-50">
-              {aboutDropdownItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setIsAboutOpen(false)}
-                  className={cn(
-                    "block px-4 py-2 text-sm transition-colors hover:bg-slate-50 hover:text-[var(--primary)]",
-                    pathname === item.href
-                      ? "text-[var(--primary)] bg-slate-50"
-                      : "text-slate-700"
-                  )}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </div>
-          )}
+          <div
+            className={cn(
+              "absolute top-full right-0 mt-2 w-48 bg-[var(--card)] rounded-lg shadow-lg border border-[var(--border)] py-1 z-50",
+              "transition-all duration-300 ease-out",
+              isAboutOpen
+                ? "opacity-100 visible translate-y-0"
+                : "opacity-0 invisible -translate-y-2 pointer-events-none"
+            )}
+          >
+            {aboutDropdownItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setIsAboutOpen(false)}
+                className={cn(
+                  "block px-4 py-2 text-sm text-right transition-colors hover:bg-slate-50 hover:text-[var(--primary)]",
+                  pathname === item.href
+                    ? "text-[var(--primary)] bg-slate-50"
+                    : "text-slate-700"
+                )}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
         </div>
-
-        <ConsultingMenu
-          services={consultingServices}
-          isActive={pathname.startsWith("/consulting")}
-        />
-        <MegaMenu
-          categories={categories}
-          isActive={pathname.startsWith("/reports")}
-        />
       </nav>
 
       {/* Mobile Menu Button */}
