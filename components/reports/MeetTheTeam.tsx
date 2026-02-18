@@ -80,7 +80,7 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
 
         {/* Bio - short or full depending on state */}
         <div className="text-[var(--muted-foreground)]">
-          <p className="text-sm leading-relaxed">
+          <p className="text-sm leading-relaxed line-clamp-4">
             {member.bio}
           </p>
         </div>

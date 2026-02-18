@@ -37,7 +37,7 @@ export const generateOrganizationSchema = () => ({
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'Customer Service',
-    email: 'info@healthcareforesights.com',
+    email: 'support@healthcareforesights.com',
   },
   sameAs: [
     'https://twitter.com/HealthcareForesights',
