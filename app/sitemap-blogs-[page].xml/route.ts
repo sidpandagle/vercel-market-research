@@ -6,10 +6,10 @@ const ITEMS_PER_SITEMAP = 500;
 
 export async function GET(
   request: Request,
-  { params }: { params: Promise<{ page: string }> }
+  { params }: { params: Promise<{ page?: string }> }
 ) {
   const { page: pageParam } = await params;
-  const page = parseInt(pageParam, 10);
+  const page = parseInt(pageParam ?? '', 10);
 
   if (isNaN(page) || page < 1) {
     return new NextResponse('Not Found', { status: 404 });
