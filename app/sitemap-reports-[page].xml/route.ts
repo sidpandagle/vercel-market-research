@@ -2,17 +2,33 @@ import { NextResponse } from 'next/server';
 import { getReports } from '@/lib/api/reports';
 
 const BASE_URL = 'https://www.healthcareforesights.com';
+const ITEMS_PER_SITEMAP = 500;
 
-export async function GET() {
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ page: string }> }
+) {
+  const { page: pageParam } = await params;
+  const page = parseInt(pageParam, 10);
+
+  if (isNaN(page) || page < 1) {
+    return new NextResponse('Not Found', { status: 404 });
+  }
+
   try {
     const reportsResponse = await getReports({
       status: 'published',
-      limit: 10000, // Get all published reports
+      page,
+      limit: ITEMS_PER_SITEMAP,
     });
 
     if (!reportsResponse.success || !reportsResponse.data) {
       console.error('Error fetching reports for sitemap');
       return new NextResponse('Error generating sitemap', { status: 500 });
+    }
+
+    if (reportsResponse.data.length === 0) {
+      return new NextResponse('Not Found', { status: 404 });
     }
 
     const reportUrls = reportsResponse.data.map((report) => ({
@@ -26,11 +42,11 @@ export async function GET() {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${reportUrls
   .map(
-    (page) => `  <url>
-    <loc>${page.url}</loc>
-    <lastmod>${page.lastModified}</lastmod>
-    <changefreq>${page.changeFrequency}</changefreq>
-    <priority>${page.priority}</priority>
+    (item) => `  <url>
+    <loc>${item.url}</loc>
+    <lastmod>${item.lastModified}</lastmod>
+    <changefreq>${item.changeFrequency}</changefreq>
+    <priority>${item.priority}</priority>
   </url>`
   )
   .join('\n')}

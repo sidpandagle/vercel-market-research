@@ -25,3 +25,5 @@ export { default as SearchBar } from './SearchBar';
 
 export { Captcha } from './captcha';
 export type { CaptchaProps, CaptchaRef } from './captcha';
+
+export { StyledArticleContent } from './StyledArticleContent';

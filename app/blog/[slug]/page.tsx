@@ -1,9 +1,11 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Section, Container, Badge } from "@/components/ui";
+import { Section, Container, Badge, StyledArticleContent } from "@/components/ui";
 import { getBlogs, getBlogBySlug, isApiError } from "@/lib/api";
 import type { Metadata } from "next";
 import { StructuredData, generateArticleSchema, generateBreadcrumbSchema } from "@/components/seo/StructuredData";
+import BlogSidebarForm from "@/components/blog/BlogSidebarForm";
+import { QuickContactSection } from "@/components/contact";
 
 interface BlogPageProps {
   params: Promise<{
@@ -83,8 +85,6 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
 
   const blog = response.data;
 
-  const paragraphs = blog.content.split("\n\n");
-
   // Generate structured data schemas
   const articleSchema = generateArticleSchema({
     type: 'Article',
@@ -107,8 +107,8 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
     <>
       <StructuredData data={articleSchema} />
       <StructuredData data={breadcrumbSchema} />
-      <Section className="bg-[var(--muted)]">
-        <Container size="sm">
+      <Section className="bg-[var(--muted)] pb-0">
+        <Container size="lg">
           <div className="mb-6">
             <Link
               href="/blog"
@@ -143,7 +143,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
             {blog.excerpt}
           </p>
 
-          <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--muted-foreground)] pb-8 border-b border-[var(--border)]">
+          <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--muted-foreground)] pb-8">
             <div className="flex items-center gap-2">
               <div className="w-10 h-10 rounded-full bg-[var(--primary)] flex items-center justify-center text-white font-semibold">
                 {blog.author.split(" ").map(n => n[0]).join("")}
@@ -165,38 +165,42 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
       </Section>
 
       <Section>
-        <Container size="sm">
-          <article className="prose prose-lg max-w-none">
-            {paragraphs.map((paragraph, index) => (
-              <p
-                key={index}
-                className="mb-6 text-[var(--foreground)] leading-relaxed text-lg"
-                dangerouslySetInnerHTML={{ __html: paragraph }}
-              >
-              </p>
-            ))}
-          </article>
+        <Container size="lg">
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Left – article (2/3 width) */}
+            <div className="lg:col-span-2">
+              <article>
+                <StyledArticleContent htmlContent={blog.content} />
+              </article>
 
-          <div className="mt-12 pt-8 border-t border-[var(--border)]">
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-2 text-[var(--primary)] hover:underline font-medium"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="m15 18-6-6 6-6"/>
-              </svg>
-              View all insights
-            </Link>
+              <div className="mt-12 pt-8 border-t border-[var(--border)]">
+                <Link
+                  href="/blog"
+                  className="inline-flex items-center gap-2 text-[var(--primary)] hover:underline font-medium"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="m15 18-6-6 6-6"/>
+                  </svg>
+                  View all insights
+                </Link>
+              </div>
+            </div>
+
+            {/* Right – sidebar (1/3 width) */}
+            <div className="space-y-6">
+              <BlogSidebarForm />
+              <QuickContactSection />
+            </div>
           </div>
         </Container>
       </Section>

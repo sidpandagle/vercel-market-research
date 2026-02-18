@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Facebook, Instagram, Linkedin, Twitter, ChevronDown } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import categories from "@/data/categories.json";
 import consultingServicesData from "@/data/consulting-services.json";
 import MegaMenu from "./MegaMenu";
@@ -15,41 +15,12 @@ const navItems = [
   { name: "Home", href: "/" },
   { name: "Blog", href: "/blog" },
   { name: "Press Releases", href: "/press-releases" },
-  { name: "Services", href: "/services" },
-];
-
-const aboutDropdownItems = [
-  { name: "About Us", href: "/about" },
-  { name: "Contact", href: "/contact" },
-  { name: "Privacy Policy", href: "/legal/privacy-policy" },
-  { name: "Refund Policy", href: "/legal/refund-policy" },
-  { name: "Cancellation Policy", href: "/legal/cancellation-policy" },
 ];
 
 export default function Navigation() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isAboutOpen, setIsAboutOpen] = useState(false);
-  const [isMobileAboutOpen, setIsMobileAboutOpen] = useState(false);
-  const aboutRef = useRef<HTMLDivElement>(null);
-  const aboutTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const consultingServices = consultingServicesData as ConsultingService[];
-
-  const handleAboutMouseEnter = () => {
-    if (aboutTimeoutRef.current) clearTimeout(aboutTimeoutRef.current);
-    aboutTimeoutRef.current = setTimeout(() => setIsAboutOpen(true), 150);
-  };
-
-  const handleAboutMouseLeave = () => {
-    if (aboutTimeoutRef.current) clearTimeout(aboutTimeoutRef.current);
-    aboutTimeoutRef.current = setTimeout(() => setIsAboutOpen(false), 200);
-  };
-
-  useEffect(() => {
-    return () => {
-      if (aboutTimeoutRef.current) clearTimeout(aboutTimeoutRef.current);
-    };
-  }, []);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -95,66 +66,27 @@ export default function Navigation() {
           isActive={pathname.startsWith("/consulting")}
         />
 
-        {/* About Dropdown */}
-        <div
-          className="relative"
-          ref={aboutRef}
-          onMouseEnter={handleAboutMouseEnter}
-          onMouseLeave={handleAboutMouseLeave}
+        <Link
+          href="/about"
+          className={`text-sm font-medium transition-colors hover:text-[var(--primary)] whitespace-nowrap ${
+            pathname === "/about"
+              ? "text-[var(--primary)]"
+              : "text-[var(--muted-foreground)]"
+          }`}
         >
-          <button
-            onClick={() => setIsAboutOpen(!isAboutOpen)}
-            className={cn(
-              "flex items-center gap-1 text-sm font-medium transition-colors hover:text-[var(--primary)] whitespace-nowrap",
-              aboutDropdownItems.some((i) => pathname === i.href)
-                ? "text-[var(--primary)]"
-                : "text-[var(--muted-foreground)]"
-            )}
-          >
-            About
-            <svg
-              className={cn(
-                "w-4 h-4 transition-transform duration-200",
-                isAboutOpen && "rotate-180"
-              )}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </button>
-          <div
-            className={cn(
-              "absolute top-full right-0 mt-2 w-48 bg-[var(--card)] rounded-lg shadow-lg border border-[var(--border)] py-1 z-50",
-              "transition-all duration-300 ease-out",
-              isAboutOpen
-                ? "opacity-100 visible translate-y-0"
-                : "opacity-0 invisible -translate-y-2 pointer-events-none"
-            )}
-          >
-            {aboutDropdownItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setIsAboutOpen(false)}
-                className={cn(
-                  "block px-4 py-2 text-sm text-right transition-colors hover:bg-slate-50 hover:text-[var(--primary)]",
-                  pathname === item.href
-                    ? "text-[var(--primary)] bg-slate-50"
-                    : "text-slate-700"
-                )}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
-        </div>
+          About Us
+        </Link>
+
+        <Link
+          href="/contact"
+          className={`text-sm font-medium transition-colors hover:text-[var(--primary)] whitespace-nowrap ${
+            pathname === "/contact"
+              ? "text-[var(--primary)]"
+              : "text-[var(--muted-foreground)]"
+          }`}
+        >
+          Contact
+        </Link>
       </nav>
 
       {/* Mobile Menu Button */}
@@ -227,52 +159,52 @@ export default function Navigation() {
             </Link>
           ))}
 
-          {/* About Section in Mobile */}
-          <div>
-            <button
-              onClick={() => setIsMobileAboutOpen(!isMobileAboutOpen)}
-              className={cn(
-                "w-full flex items-center justify-between py-3 px-4 text-base font-medium rounded-lg transition-colors hover:bg-slate-100",
-                aboutDropdownItems.some((i) => pathname === i.href)
-                  ? "text-[var(--primary)] bg-slate-50"
-                  : "text-slate-700"
-              )}
-            >
-              About
-              <ChevronDown
-                className={cn(
-                  "w-4 h-4 transition-transform duration-200",
-                  isMobileAboutOpen && "rotate-180"
-                )}
-              />
-            </button>
-            {isMobileAboutOpen && (
-              <div className="flex flex-col pl-4">
-                {aboutDropdownItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={cn(
-                      "py-2 px-4 text-sm rounded-lg transition-colors hover:bg-slate-100",
-                      pathname === item.href
-                        ? "text-[var(--primary)] bg-slate-50"
-                        : "text-slate-600"
-                    )}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
+          <Link
+            href="/about"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={cn(
+              "py-3 px-4 text-base font-medium rounded-lg transition-colors",
+              "hover:bg-slate-100",
+              pathname === "/about"
+                ? "text-[var(--primary)] bg-slate-50"
+                : "text-slate-700"
             )}
-          </div>
+          >
+            About Us
+          </Link>
+
+          <Link
+            href="/contact"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={cn(
+              "py-3 px-4 text-base font-medium rounded-lg transition-colors",
+              "hover:bg-slate-100",
+              pathname === "/contact"
+                ? "text-[var(--primary)] bg-slate-50"
+                : "text-slate-700"
+            )}
+          >
+            Contact
+          </Link>
 
           {/* Consulting Section in Mobile */}
           <div className="mt-4 pt-4 border-t border-slate-200">
             <span className="px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-              Consulting
+              Consulting &amp; Services
             </span>
             <div className="mt-2 flex flex-col">
+              <Link
+                href="/services"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={cn(
+                  "py-2 px-4 text-sm font-medium rounded-lg transition-colors hover:bg-slate-100",
+                  pathname === "/services"
+                    ? "text-[var(--primary)] bg-slate-50"
+                    : "text-slate-700"
+                )}
+              >
+                All Services
+              </Link>
               {consultingServices.map((service) => (
                 <Link
                   key={service.id}

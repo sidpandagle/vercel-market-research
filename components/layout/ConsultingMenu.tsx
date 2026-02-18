@@ -135,6 +135,25 @@ export default function ConsultingMenu({ services, isActive }: ConsultingMenuPro
         }}
       >
         <div className="p-6 max-w-7xl mx-auto">
+          {/* Services overview link */}
+          <div className="mb-5 pb-4 border-b border-[var(--border)]">
+            <Link
+              href="/services"
+              onClick={() => setIsOpen(false)}
+              className={cn(
+                "inline-flex items-center gap-2 text-sm font-semibold text-[var(--primary)]",
+                "hover:underline underline-offset-4"
+              )}
+              role="menuitem"
+              tabIndex={isOpen ? 0 : -1}
+            >
+              View All Services
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+
           {/* Services by Category */}
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             {Object.entries(servicesByCategory).map(([category, categoryServices]) => (

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Section, Container, Badge } from "@/components/ui";
+import { Section, Container, Badge, StyledArticleContent } from "@/components/ui";
 import { getPressReleases, getPressReleaseBySlug, isApiError } from "@/lib/api";
 import type { Metadata } from "next";
 import { StructuredData, generateArticleSchema, generateBreadcrumbSchema } from "@/components/seo/StructuredData";
@@ -83,8 +83,6 @@ export default async function PressReleaseDetailPage({ params }: PressReleasePag
 
   const pressRelease = response.data;
 
-  const paragraphs = pressRelease.content.split("\n\n");
-
   // Generate structured data schemas
   const articleSchema = generateArticleSchema({
     type: 'NewsArticle',
@@ -107,8 +105,8 @@ export default async function PressReleaseDetailPage({ params }: PressReleasePag
     <>
       <StructuredData data={articleSchema} />
       <StructuredData data={breadcrumbSchema} />
-      <Section className="bg-[var(--muted)]">
-        <Container size="sm">
+      <Section className="bg-[var(--muted)] pb-0">
+        <Container size="lg">
           <div className="mb-6">
             <Link
               href="/press-releases"
@@ -143,7 +141,7 @@ export default async function PressReleaseDetailPage({ params }: PressReleasePag
             {pressRelease.excerpt}
           </p>
 
-          <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--muted-foreground)] pb-8 border-b border-[var(--border)]">
+          <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--muted-foreground)] pb-8">
             <div className="flex items-center gap-2">
               <div className="w-10 h-10 rounded-full bg-[var(--primary)] flex items-center justify-center text-white font-semibold">
                 {pressRelease.author.split(" ").map(n => n[0]).join("")}
@@ -165,16 +163,9 @@ export default async function PressReleaseDetailPage({ params }: PressReleasePag
       </Section>
 
       <Section>
-        <Container size="sm">
-          <article className="prose prose-lg max-w-none">
-            {paragraphs.map((paragraph, index) => (
-              <p
-                key={index}
-                className="mb-6 text-[var(--foreground)] leading-relaxed text-lg"
-                dangerouslySetInnerHTML={{ __html: paragraph }}
-              >
-              </p>
-            ))}
+        <Container size="lg">
+          <article>
+            <StyledArticleContent htmlContent={pressRelease.content} />
           </article>
 
           <div className="mt-12 pt-8 border-t border-[var(--border)]">

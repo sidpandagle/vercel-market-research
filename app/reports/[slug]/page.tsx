@@ -373,7 +373,7 @@ export default async function ReportPage({
                   <Badge variant="outline">{report.region}</Badge>
                 </div>
 
-                <h1 className="text-4xl md:text-5xl font-bold text-[var(--foreground)] mb-4">
+                <h1 className="text-4xl font-bold text-[var(--foreground)] mb-4">
                   {report.title}
                 </h1>
 

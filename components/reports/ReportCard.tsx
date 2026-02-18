@@ -18,7 +18,7 @@ export default function ReportCard({ report }: ReportCardProps) {
             <Badge variant="primary" size="sm" className="shadow-sm">
               {report.category}
             </Badge>
-            <div className="text-right">
+            {/* <div className="text-right">
               {report.discounted_price &&
                 <div className="text-sm text-slate-500 line-through">
                   {report.price}/-
@@ -27,7 +27,7 @@ export default function ReportCard({ report }: ReportCardProps) {
               <div className="text-lg font-bold bg-gradient-to-r from-ocean-700 via-ocean-600 to-bright-500 bg-clip-text text-transparent">
                 {report.discounted_price ? report.discounted_price : report.price}/-
               </div>
-            </div>
+            </div> */}
           </div>
 
           <CardTitle className="mb-2 text-lg group-hover:text-ocean-700 transition-colors">
@@ -41,23 +41,25 @@ export default function ReportCard({ report }: ReportCardProps) {
           </CardDescription>
 
           {/* Metadata Row with Icons */}
-          <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-slate-500">
-            <div className="flex items-center gap-1.5">
-              <span className="text-base">🌍</span>
-              <span>{report.region}</span>
+          <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-sm mb-6 text-slate-500">
+            <div className="flex flex-wrap gap-x-4 gap-y-2">
+              <div className="flex items-center gap-1.5">
+                <span className="text-base">🌍</span>
+                <span>{report.region}</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-base">📄</span>
+                <span>{report.reportType}</span>
+              </div>
             </div>
-            <div className="flex items-center gap-1.5">
-              <span className="text-base">📄</span>
-              <span>{report.reportType}</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <span className="text-base">📅</span>
-              <span>{report.year}</span>
-            </div>
+            <span className="text-sm font-medium text-ocean-600 group-hover:text-ocean-700 flex items-center gap-1 ml-auto">
+              Read More
+              <span className="transition-transform group-hover:translate-x-1">→</span>
+            </span>
           </div>
         </CardContent>
 
-        <CardFooter className="border-t border-slate-200 pt-4 mt-4">
+        {/* <CardFooter className="border-t border-slate-200 pt-4 mt-4">
           <div className="flex items-center justify-between w-full">
             <span className="text-sm text-slate-500">
               {report.pages} pages
@@ -67,7 +69,7 @@ export default function ReportCard({ report }: ReportCardProps) {
               <span className="transition-transform group-hover:translate-x-1">→</span>
             </span>
           </div>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     </Link>
   );

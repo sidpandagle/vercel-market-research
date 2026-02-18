@@ -8,15 +8,18 @@ interface Partner {
 }
 
 const partners: Partner[] = [
-  { id: 'abb', name: 'ABB', logo: '/assets/logos/ABB.png' },
-  { id: 'kiwa', name: 'Kiwa', logo: '/assets/logos/Kiwa.png' },
-  { id: 'ina-life', name: 'INA Life', logo: '/assets/logos/INALife.png' },
+  { id: 'agronne', name: 'Argonne', logo: '/assets/logos/Agronne.png' },
   { id: 'bcg', name: 'Boston Consulting Group', logo: '/assets/logos/BCG.png' },
+  { id: 'cdc', name: 'CDC', logo: '/assets/logos/CDC.png' },
+  { id: 'championx', name: 'ChampionX', logo: '/assets/logos/ChampionX.png' },
+  { id: 'kawasaki', name: 'Kawasaki', logo: '/assets/logos/Kawasaki.png' },
+  { id: 'meta', name: 'Meta', logo: '/assets/logos/Meta.png' },
+  { id: 'mitsubishi', name: 'Mitsubishi', logo: '/assets/logos/Mitsubishi.png' },
+  { id: 'nestle', name: 'Nestlé Professional', logo: '/assets/logos/Nestle Professional.png' },
   { id: 'pwc', name: 'PwC', logo: '/assets/logos/PWC.png' },
-  { id: 'honeywell', name: 'Honeywell', logo: '/assets/logos/Honeywell.png' },
-  { id: 'sk-inc', name: 'SK Inc', logo: '/assets/logos/Sk-Inc-2.png' },
-  { id: 'nestle', name: 'Nestlé Professional', logo: '/assets/logos/Nestle-Professional.png' },
-  { id: 'amd', name: 'AMD', logo: '/assets/logos/AMD.png' },
+  { id: 'sk', name: 'SK', logo: '/assets/logos/SK.png' },
+  { id: 'suzuki', name: 'Suzuki', logo: '/assets/logos/Suzuki.png' },
+  { id: 'trivago', name: 'Trivago', logo: '/assets/logos/Trivago.png' },
 ];
 
 export default function TrustedPartnersSection() {

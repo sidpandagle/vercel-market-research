@@ -8,12 +8,12 @@ interface Partner {
 
 // Using a subset of partners for sidebar display
 const partners: Partner[] = [
-  { id: 'abb', name: 'ABB', logo: '/assets/logos/ABB.png' },
   { id: 'bcg', name: 'Boston Consulting Group', logo: '/assets/logos/BCG.png' },
   { id: 'pwc', name: 'PwC', logo: '/assets/logos/PWC.png' },
-  { id: 'honeywell', name: 'Honeywell', logo: '/assets/logos/Honeywell.png' },
-  { id: 'nestle', name: 'Nestlé Professional', logo: '/assets/logos/Nestle-Professional.png' },
-  { id: 'amd', name: 'AMD', logo: '/assets/logos/AMD.png' },
+  { id: 'meta', name: 'Meta', logo: '/assets/logos/Meta.png' },
+  { id: 'mitsubishi', name: 'Mitsubishi', logo: '/assets/logos/Mitsubishi.png' },
+  { id: 'kawasaki', name: 'Kawasaki', logo: '/assets/logos/Kawasaki.png' },
+  { id: 'trivago', name: 'Trivago', logo: '/assets/logos/Trivago.png' },
 ];
 
 export default function TrustedPartnersSidebar() {
