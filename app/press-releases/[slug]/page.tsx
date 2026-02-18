@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Section, Container, Badge, StyledArticleContent } from "@/components/ui";
+import { Section, Container, Badge, StyledArticleContent, Button, Card, CardContent } from "@/components/ui";
 import { getPressReleases, getPressReleaseBySlug, isApiError } from "@/lib/api";
 import type { Metadata } from "next";
 import { StructuredData, generateArticleSchema, generateBreadcrumbSchema } from "@/components/seo/StructuredData";
+import { TrustedPartnersSidebar } from "@/components/contact";
 
 interface PressReleasePageProps {
   params: Promise<{
@@ -164,30 +165,73 @@ export default async function PressReleaseDetailPage({ params }: PressReleasePag
 
       <Section>
         <Container size="lg">
-          <article>
-            <StyledArticleContent htmlContent={pressRelease.content} />
-          </article>
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Left – article (2/3 width) */}
+            <div className="lg:col-span-2">
+              <article>
+                <StyledArticleContent htmlContent={pressRelease.content} />
+              </article>
 
-          <div className="mt-12 pt-8 border-t border-[var(--border)]">
-            <Link
-              href="/press-releases"
-              className="inline-flex items-center gap-2 text-[var(--primary)] hover:underline font-medium"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="m15 18-6-6 6-6"/>
-              </svg>
-              View all press releases
-            </Link>
+              <div className="mt-12 pt-8 border-t border-[var(--border)]">
+                <Link
+                  href="/press-releases"
+                  className="inline-flex items-center gap-2 text-[var(--primary)] hover:underline font-medium"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="m15 18-6-6 6-6"/>
+                  </svg>
+                  View all press releases
+                </Link>
+              </div>
+            </div>
+
+            {/* Right – sidebar (1/3 width) */}
+            <div className="space-y-6">
+              {/* Action Buttons */}
+              <Card>
+                <CardContent className="space-y-3 pt-4">
+                  <Link href={`/request-sample?report=${encodeURIComponent(pressRelease.title)}`}>
+                    <Button
+                      className="w-full bg-[#E3F2FD] text-[#1565C0] hover:bg-[#BBDEFB] hover:text-[#0D47A1] border-[#90CAF9] hover:border-[#64B5F6]"
+                      variant="outline"
+                      size="lg"
+                    >
+                      Request Sample
+                    </Button>
+                  </Link>
+                  <Link href={`/request-sample?report=${encodeURIComponent(pressRelease.title)}&customize=true`}>
+                    <Button
+                      className="w-full mt-3 bg-green-50 text-green-700 hover:bg-green-100 hover:text-green-800 border-green-200 hover:border-green-300"
+                      variant="outline"
+                      size="lg"
+                    >
+                      Customization
+                    </Button>
+                  </Link>
+                  <Link href="/reports">
+                    <Button
+                      className="w-full mt-3"
+                      size="lg"
+                    >
+                      Read Report
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
+
+              {/* Trusted Clients */}
+              <TrustedPartnersSidebar />
+            </div>
           </div>
         </Container>
       </Section>
