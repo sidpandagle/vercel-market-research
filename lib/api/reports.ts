@@ -101,11 +101,11 @@ export async function getReportBySlug(slug: string): Promise<ApiResponse<Report>
     // Check if data is nested or direct
     if ('data' in response.data) {
       apiReport = (response.data as { data: ApiReport }).data;
-      console.log(apiReport);
+      // console.log(apiReport);
     } else {
       // Assume response.data is the report itself
       apiReport = response.data;
-      console.log(apiReport);
+      // console.log(apiReport);
     }
   } else {
     console.error('Unexpected response structure for getReportBySlug:', response.data);

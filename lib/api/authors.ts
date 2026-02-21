@@ -96,9 +96,9 @@ export async function getReportsByAuthorId(
   };
 
   const queryString = buildQueryString(params);
-  console.log(`/api/v1/reports/author/${authorId}${queryString}`);
+  // console.log(`/api/v1/reports/author/${authorId}${queryString}`);
   const response = await apiFetch<AuthorReportsData>(`/api/v1/reports/author/${authorId}${queryString}`);
-  console.log('getReportsByAuthorId response:', response);
+  // console.log('getReportsByAuthorId response:', response);
 
   // If error, return as-is
   if (!response.success) {

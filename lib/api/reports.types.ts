@@ -60,6 +60,7 @@ export interface ApiReport {
   description: string;
   summary?: string;
   thumbnail_url?: string;
+  category_image_url?: string;
   price: number;
   discounted_price?: number;
   currency?: string;
@@ -105,6 +106,7 @@ export interface Report {
   year: string;
   reportType: string;
   pages: number;
+  categoryImageUrl?: string;
 
   // Extended fields for detail page
   reportCode?: string;

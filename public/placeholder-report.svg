@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="176" height="220" viewBox="0 0 176 220" fill="none">
+  <rect width="176" height="220" fill="#F1F5F9"/>
+  <!-- Document icon -->
+  <rect x="52" y="48" width="72" height="90" rx="4" fill="#CBD5E1"/>
+  <rect x="52" y="48" width="72" height="90" rx="4" stroke="#94A3B8" stroke-width="1.5"/>
+  <!-- Folded corner -->
+  <path d="M100 48 L124 72 L100 72 Z" fill="#94A3B8"/>
+  <rect x="100" y="48" width="24" height="24" rx="0" fill="#E2E8F0"/>
+  <path d="M100 48 L124 72 L100 72 Z" fill="#94A3B8" opacity="0.5"/>
+  <!-- Lines on document -->
+  <rect x="63" y="84" width="50" height="4" rx="2" fill="#94A3B8"/>
+  <rect x="63" y="96" width="38" height="4" rx="2" fill="#94A3B8"/>
+  <rect x="63" y="108" width="44" height="4" rx="2" fill="#94A3B8"/>
+  <!-- Bar chart at bottom -->
+  <rect x="56" y="156" width="10" height="28" rx="2" fill="#94A3B8"/>
+  <rect x="72" y="144" width="10" height="40" rx="2" fill="#64748B"/>
+  <rect x="88" y="150" width="10" height="34" rx="2" fill="#94A3B8"/>
+  <rect x="104" y="138" width="10" height="46" rx="2" fill="#64748B"/>
+  <line x1="52" y1="184" x2="124" y2="184" stroke="#94A3B8" stroke-width="1.5"/>
+</svg>

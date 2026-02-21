@@ -282,6 +282,7 @@ export function mapApiReportToReport(apiReport: ApiReport): Report {
     year,
     reportType,
     pages: apiReport.page_count || 150,
+    categoryImageUrl: apiReport.category_image_url || undefined,
 
     // Extended fields for detail page
     reportCode: `HF${apiReport.id}`,
