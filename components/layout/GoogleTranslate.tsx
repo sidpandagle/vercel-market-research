@@ -5,6 +5,8 @@ import { Globe, ChevronDown, Check } from "lucide-react";
 
 const LANGUAGES = [
   { label: "English", code: "en" },
+  { label: "Hindi", code: "hi" },
+  { label: "Marathi", code: "mr" },
   { label: "Spanish", code: "es" },
   { label: "French", code: "fr" },
   { label: "German", code: "de" },
@@ -23,10 +25,31 @@ function getCookie(name: string): string | null {
 function getCurrentLangFromCookie(): string {
   const cookie = getCookie("googtrans");
   if (!cookie) return "en";
-  // googtrans cookie format: /en/es or /en/zh-CN
   const parts = cookie.split("/");
   if (parts.length >= 3 && parts[2]) return parts[2];
   return "en";
+}
+
+function clearGoogTransCookie() {
+  const expiry = "expires=Thu, 01 Jan 1970 00:00:00 UTC";
+  const hostname = window.location.hostname;
+  // Strip www. to get the apex domain for broad cookie clearing
+  const apexDomain = hostname.replace(/^www\./, "");
+
+  document.cookie = `googtrans=; path=/; ${expiry};`;
+  document.cookie = `googtrans=; path=/; domain=${hostname}; ${expiry};`;
+  document.cookie = `googtrans=; path=/; domain=.${apexDomain}; ${expiry};`;
+  document.cookie = `googtrans=; path=/; domain=${apexDomain}; ${expiry};`;
+}
+
+function setGoogTransCookie(code: string) {
+  const value = encodeURIComponent(`/en/${code}`);
+  const hostname = window.location.hostname;
+  const apexDomain = hostname.replace(/^www\./, "");
+
+  document.cookie = `googtrans=${value}; path=/;`;
+  document.cookie = `googtrans=${value}; path=/; domain=${hostname};`;
+  document.cookie = `googtrans=${value}; path=/; domain=.${apexDomain};`;
 }
 
 export default function GoogleTranslate() {
@@ -35,53 +58,66 @@ export default function GoogleTranslate() {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const lang = getCurrentLangFromCookie();
-    setCurrentLang(lang);
+    setCurrentLang(getCurrentLangFromCookie());
   }, []);
 
+  // When a non-English language is active, Google Translate mutates the DOM with
+  // <font> wrappers. Next.js client-side navigation then tries to reconcile against
+  // that mutated DOM and throws. Fix: intercept all internal anchor clicks and
+  // convert them to full-page navigations so React never touches a translated DOM.
   useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
+    if (currentLang === "en") return;
+
+    const handleClick = (e: MouseEvent) => {
+      const anchor = (e.target as HTMLElement).closest("a");
+      if (
+        anchor &&
+        anchor.href &&
+        anchor.href.startsWith(window.location.origin) &&
+        !anchor.target &&
+        !e.ctrlKey &&
+        !e.metaKey &&
+        !e.shiftKey
+      ) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.location.href = anchor.href;
+      }
+    };
+
+    document.addEventListener("click", handleClick, true);
+    return () => document.removeEventListener("click", handleClick, true);
+  }, [currentLang]);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setIsOpen(false);
       }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    };
+    document.addEventListener("mousedown", handleOutside);
+    return () => document.removeEventListener("mousedown", handleOutside);
   }, []);
 
   function selectLanguage(code: string) {
-    setCurrentLang(code);
     setIsOpen(false);
 
     if (code === "en") {
-      // Restore original: clear cookie and reload
-      document.cookie = "googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-      document.cookie = "googtrans=; path=/; domain=" + window.location.hostname + "; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+      clearGoogTransCookie();
       window.location.reload();
       return;
     }
 
-    // Set the googtrans cookie
-    const cookieValue = `/en/${code}`;
-    document.cookie = `googtrans=${encodeURIComponent(cookieValue)}; path=/`;
-    document.cookie = `googtrans=${encodeURIComponent(cookieValue)}; path=/; domain=${window.location.hostname}`;
-
-    // Trigger the hidden Google Translate select element
-    const select = document.querySelector<HTMLSelectElement>(".goog-te-combo");
-    if (select) {
-      select.value = code;
-      select.dispatchEvent(new Event("change"));
-    } else {
-      // Widget not ready yet — reload to let it pick up the cookie
-      window.location.reload();
-    }
+    setGoogTransCookie(code);
+    // Always reload — avoids React/Google Translate DOM conflict and works
+    // consistently across environments.
+    window.location.reload();
   }
 
-  const currentLabel =
-    LANGUAGES.find((l) => l.code === currentLang)?.label ?? "Language";
+  const currentLabel = LANGUAGES.find((l) => l.code === currentLang)?.label ?? "Language";
 
   return (
-    // notranslate prevents Google Translate from localizing the widget itself
     <div className="relative notranslate" ref={dropdownRef} translate="no">
       <button
         onClick={() => setIsOpen((o) => !o)}
