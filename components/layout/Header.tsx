@@ -5,6 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import Navigation from "./Navigation";
+import GoogleTranslate from "./GoogleTranslate";
 import { SearchBar } from "@/components/ui";
 
 export default function Header() {
@@ -36,8 +37,13 @@ export default function Header() {
           </div>
         )}
 
-        <div className="flex">
+        <div className="flex items-center">
         <Navigation />
+
+        {/* Language Selector */}
+        <div className="ml-2 pl-2 border-l border-slate-200">
+          <GoogleTranslate />
+        </div>
 
         {/* Social Media Links - Desktop Only */}
         <div className="hidden lg:flex items-center gap-3 ml-4 pl-4 border-l border-slate-200">

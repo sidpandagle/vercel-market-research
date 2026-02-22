@@ -50,6 +50,17 @@ body {
   /* overflow-x removed - was breaking position: sticky */
 }
 
+/* Suppress Google Translate default toolbar */
+.goog-te-banner-frame,
+iframe.goog-te-banner-frame,
+.skiptranslate > iframe,
+.goog-te-gadget,
+.goog-logo-link,
+.goog-te-balloon-frame,
+#goog-gt-tt { display: none !important; }
+body { top: 0px !important; }
+html body { top: 0 !important; }
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
