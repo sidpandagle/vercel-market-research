@@ -18,6 +18,7 @@ function getFormMetadata(): FormMetadata {
     submittedAt: new Date().toISOString(),
     userAgent: typeof window !== 'undefined' ? window.navigator.userAgent : undefined,
     referrer: typeof window !== 'undefined' ? window.document.referrer : undefined,
+    pageURL: typeof window !== 'undefined' ? window.location.href : undefined,
   };
 }
 

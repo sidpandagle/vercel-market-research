@@ -37,6 +37,7 @@ export interface FormMetadata {
   ipAddress?: string;
   userAgent?: string;
   referrer?: string;
+  pageURL?: string;
 }
 
 // Base form submission request

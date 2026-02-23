@@ -5,8 +5,8 @@ import { Globe, ChevronDown, Check } from "lucide-react";
 
 const LANGUAGES = [
   { label: "English", code: "en" },
-  { label: "Hindi", code: "hi" },
-  { label: "Marathi", code: "mr" },
+  { label: "Italian", code: "it" },
+  { label: "Russian", code: "ru" },
   { label: "Spanish", code: "es" },
   { label: "French", code: "fr" },
   { label: "German", code: "de" },
@@ -121,16 +121,84 @@ export default function GoogleTranslate() {
     <div className="relative notranslate" ref={dropdownRef} translate="no">
       <button
         onClick={() => setIsOpen((o) => !o)}
-        className="flex items-center gap-1.5 text-slate-600 hover:text-[#2563A3] transition-colors px-2 py-1.5 rounded-md hover:bg-slate-50 text-sm font-medium"
+        className="lang-btn relative flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium overflow-hidden"
         aria-label="Select language"
         aria-expanded={isOpen}
         aria-haspopup="listbox"
       >
-        <Globe className="w-4 h-4 flex-shrink-0" />
-        <span className="hidden lg:inline whitespace-nowrap notranslate">{currentLabel}</span>
+        {/* Gradient fill — fades in on hover instead of snapping */}
+        <span className="lang-fill" aria-hidden="true" />
+        {/* Shine sweep */}
+        <span className="lang-shine" aria-hidden="true" />
+        <Globe className="w-3.5 h-3.5 flex-shrink-0 relative z-10" />
+        <span className="hidden lg:inline whitespace-nowrap notranslate relative z-10">{currentLabel}</span>
         <ChevronDown
-          className={`w-3 h-3 flex-shrink-0 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+          className={`w-3 h-3 flex-shrink-0 relative z-10 lang-chevron ${isOpen ? "rotate-180" : ""}`}
         />
+        <style>{`
+          .lang-btn {
+            color: #2563A3;
+            border: 1.5px solid #2563A3;
+            background: transparent;
+            animation: langPulse 2.4s ease-in-out infinite;
+            transition: color 0.55s ease, border-color 0.55s ease;
+          }
+          @keyframes langPulse {
+            0%   { box-shadow: 0 0 0 0 rgba(37,99,163,0.5); }
+            65%  { box-shadow: 0 0 0 6px rgba(37,99,163,0); }
+            100% { box-shadow: 0 0 0 0 rgba(37,99,163,0); }
+          }
+
+          /* Gradient fill layer — opacity-transitions smoothly */
+          .lang-fill {
+            position: absolute;
+            inset: -1px;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, #2563A3 0%, #1d4ed8 100%);
+            opacity: 0;
+            transition: opacity 0.55s ease;
+            z-index: 1;
+          }
+          .lang-btn:hover .lang-fill {
+            opacity: 1;
+          }
+
+          /* Shine sweep */
+          .lang-shine {
+            position: absolute;
+            top: 0; left: -80%;
+            width: 45%; height: 100%;
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%);
+            transform: skewX(-18deg);
+            animation: langShine 2.4s ease-in-out infinite;
+            z-index: 4;
+            pointer-events: none;
+          }
+          @keyframes langShine {
+            0%   { left: -80%; opacity: 0; }
+            18%  { opacity: 1; }
+            55%  { left: 130%; opacity: 0; }
+            100% { left: 130%; opacity: 0; }
+          }
+          .lang-btn:hover .lang-shine {
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            animation-play-state: paused;
+          }
+
+          /* Hover text/border settle */
+          .lang-btn:hover {
+            color: #fff;
+            border-color: rgba(29,78,216,0.6);
+            animation-play-state: paused;
+            box-shadow: 0 4px 16px rgba(37,99,163,0.28);
+          }
+
+          /* Chevron rotation */
+          .lang-chevron {
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+          }
+        `}</style>
       </button>
 
       {isOpen && (
