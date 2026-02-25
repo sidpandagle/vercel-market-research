@@ -274,7 +274,7 @@ To add new form types:
 ### Form submits but no data received
 - Verify backend endpoint is `/api/forms/submissions`
 - Check request payload format matches expected structure
-- Review backend logs for errors
+- Review backend logs for errors.
 
 ### Success but error shown to user
 - Check response format from backend
