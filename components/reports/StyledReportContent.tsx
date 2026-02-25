@@ -88,6 +88,7 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
         .styled-report-content h2 {
           color: #22E1B0;
           color: var(--teal-bright, #22E1B0);
+          font-size: 1.25rem;
           font-weight: 700;
           margin-top: 2.5rem;
           margin-bottom: 1.5rem;
@@ -133,6 +134,7 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
 
         .styled-report-content p {
           color: #333333;
+          font-size: 1rem;
           line-height: 1.75;
         }
 

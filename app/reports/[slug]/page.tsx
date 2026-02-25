@@ -462,29 +462,22 @@ export default async function ReportPage({
 
                     {report.keyPlayers && report.keyPlayers.length > 0 && (
                       <div id="key-players" className="scroll-mt-24">
-                        <h3 className="text-xl font-semibold text-[#000000] mb-6">
+                        <h3 className="text-base font-semibold text-[#000000] mb-3">
                           Key Market Players
                         </h3>
-                        <div className="grid gap-4">
+                        <div className="grid gap-1.5">
                           {report.keyPlayers.map((player, index) => (
-                            <Card key={index} className="hover:shadow-md transition-shadow">
-                              <CardContent className="py-1 px-2">
+                            <Card key={index} className="hover:shadow-sm transition-shadow">
+                              <CardContent className="py-2 px-4">
                                 <div className="flex items-center justify-between">
-                                  <div>
-                                    <h4 className="font-semibold text-[var(--foreground)] text-lg mb-2">
-                                      {player.name}
-                                    </h4>
-                                    {/* <p className="text-sm text-[var(--muted-foreground)]">
-                                      Headquarters: {player.headquarters}
-                                    </p> */}
-                                  </div>
-                                  <div className="text-right">
-                                    <p className="text-xs text-[var(--muted-foreground)] mb-1">
-                                      Market Share
-                                    </p>
-                                    <p className="text-2xl font-bold text-[var(--primary)]">
+                                  <h4 className="font-medium text-[var(--foreground)] text-sm">
+                                    {player.name}
+                                  </h4>
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-xs text-[var(--muted-foreground)]">Market Share</span>
+                                    <span className="text-sm font-bold text-[var(--primary)]">
                                       {player.marketShare}
-                                    </p>
+                                    </span>
                                   </div>
                                 </div>
                               </CardContent>

@@ -220,7 +220,7 @@ html body { top: 0 !important; }
 
   .prose p {
     @apply text-[var(--muted-foreground)] leading-relaxed;
-    font-size: 1.125rem;
+    font-size: 1rem;
     line-height: 1.75rem;
   }
 
@@ -381,7 +381,7 @@ html body { top: 0 !important; }
     @apply rounded-lg pb-1 pt-1 px-8 space-y-0 list-disc list-outside;
   }
 
-  .prose > ul:first-of-type {
+  .styled-report-content > ul:first-of-type {
     @apply bg-[#ede9fe];
     li {
       @apply border-b border-gray-300;

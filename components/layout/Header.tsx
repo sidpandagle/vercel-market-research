@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import Navigation from "./Navigation";
 import GoogleTranslate from "./GoogleTranslate";
 import { SearchBar } from "@/components/ui";
@@ -45,46 +44,7 @@ export default function Header() {
           <GoogleTranslate />
         </div>
 
-        {/* Social Media Links - Desktop Only */}
-        <div className="hidden lg:flex items-center gap-3 ml-4 pl-4 border-l border-slate-200">
-          <Link
-            href="https://facebook.com/healthcareforesights"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-slate-600 hover:text-ocean-600 transition-colors"
-            aria-label="Facebook"
-          >
-            <Facebook className="w-4 h-4" />
-          </Link>
-          <Link
-            href="https://instagram.com/healthcareforesights"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-slate-600 hover:text-ocean-600 transition-colors"
-            aria-label="Instagram"
-          >
-            <Instagram className="w-4 h-4" />
-          </Link>
-          <Link
-            href="https://linkedin.com/company/healthcareforesights"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-slate-600 hover:text-ocean-600 transition-colors"
-            aria-label="LinkedIn"
-          >
-            <Linkedin className="w-4 h-4" />
-          </Link>
-          <Link
-            href="https://twitter.com/healthcareforesights"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-slate-600 hover:text-ocean-600 transition-colors"
-            aria-label="X (Twitter)"
-          >
-            <Twitter className="w-4 h-4" />
-          </Link>
-        </div>
-        </div>
+</div>
 
       </div>
     </header>
