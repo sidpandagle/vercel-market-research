@@ -142,6 +142,7 @@ export default function GoogleTranslate() {
             background: transparent;
             animation: langPulse 2.4s ease-in-out infinite;
             transition: color 0.55s ease, border-color 0.55s ease;
+            will-change: box-shadow;
           }
           @keyframes langPulse {
             0%   { box-shadow: 0 0 0 0 rgba(37,99,163,0.5); }
@@ -173,6 +174,7 @@ export default function GoogleTranslate() {
             animation: langShine 2.4s ease-in-out infinite;
             z-index: 4;
             pointer-events: none;
+            will-change: transform, opacity;
           }
           @keyframes langShine {
             0%   { left: -80%; opacity: 0; }

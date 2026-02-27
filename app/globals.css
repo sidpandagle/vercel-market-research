@@ -23,7 +23,7 @@
   --card: #ffffff;
   --card-foreground: #1e293b; /* Slate-800 - softer than black */
   --muted: #f1f5f9; /* Slate-100 - warmer gray */
-  --muted-foreground: #64748b; /* Slate-500 - softer text */
+  --muted-foreground: #536073; /* Darkened for WCAG AA contrast on tinted backgrounds */
   
   /* Gradients */
   --gradient-primary: linear-gradient(135deg, #0F2D52 0%, #2563A3 50%, #3B7CB8 100%);
@@ -103,6 +103,7 @@ html body { top: 0 !important; }
 
   .animate-scroll-horizontal {
     animation: scroll-horizontal 18s linear infinite;
+    will-change: transform;
   }
 }
 
@@ -128,7 +129,7 @@ html body { top: 0 !important; }
     
     /* Muted: Warmer Gray */
     --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%; /* Slate-500 */
+    --muted-foreground: 215 16% 40%; /* Darkened for WCAG AA contrast */
     
     /* Accent: Bright Cyan */
     --accent: 193 100% 50%; /* Bright-500 */

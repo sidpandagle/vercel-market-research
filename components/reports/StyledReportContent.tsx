@@ -23,6 +23,16 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
       // Skip if already wrapped (check for image-container as it's the direct parent after wrapping)
       if (img.parentElement?.classList.contains('image-container')) return;
 
+      // Set loading/decoding attributes before wrapping
+      img.setAttribute('loading', 'lazy');
+      img.setAttribute('decoding', 'async');
+
+      // Reserve space to prevent CLS if natural dimensions are available
+      if (!img.getAttribute('width') && img.naturalWidth) {
+        img.setAttribute('width', String(img.naturalWidth));
+        img.setAttribute('height', String(img.naturalHeight));
+      }
+
       // Create wrapper div for image
       const wrapper = document.createElement('div');
       wrapper.className = 'image-wrapper';
@@ -257,6 +267,7 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
           display: block;
           box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
           border: 1px solid var(--border);
+          aspect-ratio: attr(width) / attr(height);
         }
 
         .image-cta-section {

@@ -2,7 +2,12 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    unoptimized: true, // Required for Railway deployment
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.healthcareforesights.com',
+      },
+    ],
   },
   async rewrites() {
     return {
