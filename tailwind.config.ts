@@ -9,6 +9,11 @@ export default {
   ],
   theme: {
   	extend: {
+  		fontFamily: {
+  			sans: ['var(--font-dm-sans)', 'DM Sans', 'system-ui', 'sans-serif'],
+  			display: ['var(--font-playfair)', 'Playfair Display', 'Georgia', 'serif'],
+  			mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+  		},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
@@ -17,24 +22,27 @@ export default {
   				foreground: 'hsl(var(--primary-foreground))'
   			},
   			'primary-hover': 'var(--primary-hover)',
+  			/* Deep warm near-black replaces cold navy */
   			'navy': {
-  				'950': '#020B1F',
-  				'900': '#0A1F3D',
-  				'800': '#0F2D52',
+  				'950': '#0F0E1A',
+  				'900': '#1A1830',
+  				'800': '#252249',
   			},
+  			/* Indigo spectrum replaces ocean blues */
   			'ocean': {
-  				'700': '#1B4B7F',
-  				'600': '#2563A3',
-  				'500': '#3B7CB8',
-  				'400': '#5A94C5',
-  				'300': '#7AACD2',
-  				'200': '#9AC4E0',
-  				'100': '#BADCED',
-  				'50': '#DBF0F9',
+  				'700': '#3730A3',
+  				'600': '#4338CA',
+  				'500': '#4F46E5',
+  				'400': '#6366F1',
+  				'300': '#818CF8',
+  				'200': '#A5B4FC',
+  				'100': '#C7D2FE',
+  				'50':  '#EEF2FF',
   			},
+  			/* Warm amber gold replaces bright cyan */
   			'bright': {
-  				'500': '#00D4FF',
-  				'400': '#33DDFF',
+  				'500': '#F59E0B',
+  				'400': '#FCD34D',
   			},
   			secondary: {
   				DEFAULT: 'hsl(var(--secondary))',

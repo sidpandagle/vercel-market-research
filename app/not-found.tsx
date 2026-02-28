@@ -57,22 +57,32 @@ export default function NotFoundPage() {
 
   return (
     <>
-      <Section padding="lg" background="muted">
-        <Container size="lg">
-          <div className="text-center space-y-6">
-            <div className="inline-flex items-center justify-center w-24 h-24 bg-red-100 rounded-full mb-4">
-              <svg className="w-12 h-12 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      <section className="relative overflow-hidden bg-navy-950 py-20 md:py-24">
+        <div
+          className="absolute inset-0 opacity-[0.04] pointer-events-none"
+          style={{
+            backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'28\' height=\'28\' viewBox=\'0 0 28 28\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Ccircle cx=\'1\' cy=\'1\' r=\'1\' fill=\'white\'/%3E%3C/svg%3E")',
+            backgroundSize: '28px 28px',
+          }}
+        />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-ocean-600/[0.16] rounded-full blur-3xl pointer-events-none" />
+        <div className="relative mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center">
+          <div className="space-y-5">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-ocean-600/[0.18] border border-ocean-500/30 rounded-full mb-2">
+              <svg className="w-10 h-10 text-ocean-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold">404</h1>
-            <h2 className="text-2xl md:text-3xl font-semibold">Page Not Found</h2>
-            <p className="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">
+            <p className="text-6xl font-bold text-white/20 leading-none tracking-tight">404</p>
+            <h1 className="text-[2.75rem] md:text-5xl text-white leading-[1.1] tracking-[-0.02em]">
+              Page <span className="text-bright-400">Not Found</span>
+            </h1>
+            <p className="text-lg text-white/55 max-w-2xl mx-auto leading-[1.8]">
               The report or page you are looking for does not exist or may have been moved. Let us help you find what you need.
             </p>
           </div>
-        </Container>
-      </Section>
+        </div>
+      </section>
 
       <Section padding="xl">
         <Container size="lg">
@@ -90,8 +100,8 @@ export default function NotFoundPage() {
                 <Link href="/reports">
                   <Card hover className="cursor-pointer transition-all">
                     <CardContent className="flex items-start gap-4 pt-6">
-                      <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg className="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <div className="w-10 h-10 bg-ocean-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <svg className="w-5 h-5 text-ocean-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
                       </div>
@@ -108,8 +118,8 @@ export default function NotFoundPage() {
                 <Link href="/services">
                   <Card hover className="cursor-pointer transition-all">
                     <CardContent className="flex items-start gap-4 pt-6">
-                      <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg className="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <div className="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <svg className="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
                       </div>
@@ -126,8 +136,8 @@ export default function NotFoundPage() {
                 <Link href="/contact">
                   <Card hover className="cursor-pointer transition-all">
                     <CardContent className="flex items-start gap-4 pt-6">
-                      <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg className="w-5 h-5 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <div className="w-10 h-10 bg-ocean-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <svg className="w-5 h-5 text-ocean-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
                       </div>
@@ -144,8 +154,8 @@ export default function NotFoundPage() {
                 <Link href="/">
                   <Card hover className="cursor-pointer transition-all">
                     <CardContent className="flex items-start gap-4 pt-6">
-                      <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg className="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <svg className="w-5 h-5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                         </svg>
                       </div>
@@ -257,8 +267,8 @@ export default function NotFoundPage() {
                         )}
                       </div>
 
-                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                        <p className="text-sm text-blue-800">
+                      <div className="bg-ocean-50 border border-ocean-100 rounded-lg p-4">
+                        <p className="text-sm text-ocean-800">
                           <strong>Note:</strong> Our team will review your request and send you relevant report recommendations within 24 hours.
                         </p>
                       </div>

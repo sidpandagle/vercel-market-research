@@ -91,7 +91,7 @@ export default function Navigation() {
 
       {/* Mobile Menu Button */}
       <button
-        className="md:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-slate-100 transition-colors"
+        className="md:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-stone-100 transition-colors"
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
         aria-expanded={isMobileMenuOpen}
@@ -255,7 +255,7 @@ export default function Navigation() {
             <Link
               href="/request-sample"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="block w-full py-3 px-4 text-center text-white font-medium bg-gradient-to-r from-navy-800 to-ocean-600 rounded-lg hover:from-navy-700 hover:to-ocean-500 transition-all shadow-md"
+              className="block w-full py-3 px-4 text-center text-white font-medium bg-ocean-600 rounded-lg hover:bg-ocean-700 transition-all shadow-md"
             >
               Request Sample
             </Link>
@@ -268,37 +268,37 @@ export default function Navigation() {
             </span>
             <div className="mt-3 flex gap-4">
               <Link
-                href="https://facebook.com/healthcareforesights"
+                href="https://facebook.com/synapticresearch"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-600 hover:text-ocean-600 transition-colors"
+                className="text-slate-600 hover:text-ocean-500 transition-colors"
                 aria-label="Facebook"
               >
                 <Facebook className="w-5 h-5" />
               </Link>
               <Link
-                href="https://instagram.com/healthcareforesights"
+                href="https://instagram.com/synapticresearch"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-600 hover:text-ocean-600 transition-colors"
+                className="text-slate-600 hover:text-ocean-500 transition-colors"
                 aria-label="Instagram"
               >
                 <Instagram className="w-5 h-5" />
               </Link>
               <Link
-                href="https://linkedin.com/company/healthcareforesights"
+                href="https://linkedin.com/company/synapticresearch"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-600 hover:text-ocean-600 transition-colors"
+                className="text-slate-600 hover:text-ocean-500 transition-colors"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="w-5 h-5" />
               </Link>
               <Link
-                href="https://twitter.com/healthcareforesights"
+                href="https://twitter.com/synapticresearch"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-600 hover:text-ocean-600 transition-colors"
+                className="text-slate-600 hover:text-ocean-500 transition-colors"
                 aria-label="X (Twitter)"
               >
                 <Twitter className="w-5 h-5" />

@@ -89,7 +89,7 @@ export default async function PressReleaseDetailPage({ params }: PressReleasePag
     type: 'NewsArticle',
     title: pressRelease.title,
     description: pressRelease.excerpt,
-    url: `https://www.healthcareforesights.com/press-releases/${pressRelease.slug}`,
+    url: `https://www.synapticresearch.com/press-releases/${pressRelease.slug}`,
     datePublished: pressRelease.publishDate || pressRelease.createdAt || pressRelease.date,
     dateModified: pressRelease.updatedAt,
     author: pressRelease.authorDetails?.name || pressRelease.author,
@@ -97,9 +97,9 @@ export default async function PressReleaseDetailPage({ params }: PressReleasePag
   });
 
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: 'Home', url: 'https://www.healthcareforesights.com' },
-    { name: 'Press Releases', url: 'https://www.healthcareforesights.com/press-releases' },
-    { name: pressRelease.title, url: `https://www.healthcareforesights.com/press-releases/${pressRelease.slug}` },
+    { name: 'Home', url: 'https://www.synapticresearch.com' },
+    { name: 'Press Releases', url: 'https://www.synapticresearch.com/press-releases' },
+    { name: pressRelease.title, url: `https://www.synapticresearch.com/press-releases/${pressRelease.slug}` },
   ]);
 
   return (

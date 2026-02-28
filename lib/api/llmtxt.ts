@@ -51,7 +51,7 @@ export function generateLLMTxt(): string {
   const services = consultingData as ConsultingService[];
   const categories = categoriesData as Category[];
 
-  const baseUrl = 'https://www.healthcareforesights.com';
+  const baseUrl = 'https://www.synapticresearch.com';
 
   let content = '';
 

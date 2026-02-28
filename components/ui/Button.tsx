@@ -27,7 +27,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variants = {
       primary:
-        'bg-gradient-to-r from-navy-800 via-ocean-600 to-ocean-500 text-white hover:from-navy-900 hover:via-ocean-700 hover:to-ocean-600 focus:ring-ocean-500 shadow-primary hover:shadow-primary-lg transform hover:scale-[1.02]',
+        'bg-ocean-600 text-white hover:bg-ocean-700 focus:ring-ocean-500 shadow-primary hover:shadow-primary-lg transform hover:scale-[1.02]',
       secondary:
         'bg-slate-50 text-slate-700 hover:bg-slate-100 focus:ring-slate-300 border border-slate-200 hover:border-slate-300 shadow-soft',
       outline:

@@ -5,10 +5,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: '*',
-        allow: '/',
-        disallow: ['/legal/'],
+        disallow: '/',
       },
     ],
-    sitemap: 'https://www.healthcareforesights.com/sitemap.xml',
   };
 }

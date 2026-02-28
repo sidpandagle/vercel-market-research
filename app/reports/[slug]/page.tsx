@@ -201,7 +201,7 @@ export default async function ReportPage({
     {
       label: `Revenue, ${baseYearLabel}`,
       value: report.marketSize2024 || '—',
-      bg: 'bg-gradient-to-br from-[#E0F2F1] to-[#B2DFDB]',
+      bg: 'bg-[#B2DFDB]',
       labelColor: 'text-[#00897B]',
       valueColor: 'text-[#00695C]',
       icon: (
@@ -235,7 +235,7 @@ export default async function ReportPage({
     {
       label: `Forecast, ${forecastEndYear}`,
       value: report.marketSize2032 || '—',
-      bg: 'bg-gradient-to-br from-[#E0F2F1] to-[#B2DFDB]',
+      bg: 'bg-[#B2DFDB]',
       labelColor: 'text-[#00897B]',
       valueColor: 'text-[#00695C]',
       icon: (
@@ -264,7 +264,7 @@ export default async function ReportPage({
     {
       label: `CAGR, ${forecastRangeLabel}`,
       value: report.cagr || '—',
-      bg: 'bg-gradient-to-br from-[#E0F2F1] to-[#B2DFDB]',
+      bg: 'bg-[#B2DFDB]',
       labelColor: 'text-[#00897B]',
       valueColor: 'text-[#00695C]',
       icon: (
@@ -301,7 +301,7 @@ export default async function ReportPage({
     {
       label: 'Report Coverage',
       value: report.region,
-      bg: 'bg-gradient-to-br from-[#E0F2F1] to-[#B2DFDB]',
+      bg: 'bg-[#B2DFDB]',
       labelColor: 'text-[#00897B]',
       valueColor: 'text-[#00695C]',
       icon: (
@@ -325,7 +325,7 @@ export default async function ReportPage({
   // TODO: Fetch related reports from API when relatedReportIds are provided
   // const relatedReports: Report[] = [];
 
-  const reportUrl = `https://www.healthcareforesights.com/reports/${report.slug}`;
+  const reportUrl = `https://www.synapticresearch.com/reports/${report.slug}`;
   const reportKeywords = report.meta_keywords?.split(',').map(k => k.trim()).filter(Boolean);
 
   // Generate structured data schemas
@@ -368,8 +368,8 @@ export default async function ReportPage({
   });
 
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: 'Home', url: 'https://www.healthcareforesights.com' },
-    { name: 'Reports', url: 'https://www.healthcareforesights.com/reports' },
+    { name: 'Home', url: 'https://www.synapticresearch.com' },
+    { name: 'Reports', url: 'https://www.synapticresearch.com/reports' },
     { name: report.title, url: reportUrl },
   ]);
 

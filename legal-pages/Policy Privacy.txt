@@ -1,8 +1,8 @@
 ﻿Policy Privacy
 
-Healthcare Foresights cares about its clients' trust and is dedicated to keeping their information private. This Privacy Policy tells you how we gather, use, store, and protect personal information while we run our business. We want to be open about how we handle data and follow all relevant rules and laws about privacy and data protection.
+Synaptic Research cares about its clients' trust and is dedicated to keeping their information private. This Privacy Policy tells you how we gather, use, store, and protect personal information while we run our business. We want to be open about how we handle data and follow all relevant rules and laws about privacy and data protection.
 
-This Privacy Policy covers our website, digital platforms, and all of Healthcare Foresights' products and services.
+This Privacy Policy covers our website, digital platforms, and all of Synaptic Research' products and services.
 
 What We Collect
 
@@ -56,7 +56,7 @@ We keep login IDs and passwords safe so that we can verify users when they come 
 
 Using RSS Feeds and Content
 
-Healthcare Foresights wants people to share what they learn from our website for educational and informational reasons. But:
+Synaptic Research wants people to share what they learn from our website for educational and informational reasons. But:
 
 It is important to give proper credit and recognition.
 
@@ -66,13 +66,13 @@ You need written permission in advance to use or share again.
 
 Third parties are not allowed to use RSS feeds without permission or submit them by hand.
 
-Healthcare Foresights owns all of the content that is published on the website.
+Synaptic Research owns all of the content that is published on the website.
 
-If you have questions about RSS, please email us at support@healthcareforesights.com.
+If you have questions about RSS, please email us at support@synapticresearch.com.
 
 Keeping data safe and private
 
-We take the best care of client information because it is a key part of our business. Healthcare Foresights does not sell, rent, trade, or share personal information with other companies.
+We take the best care of client information because it is a key part of our business. Synaptic Research does not sell, rent, trade, or share personal information with other companies.
 
 We only use the information we collect to provide services, send messages, and send out newsletters. We use strong security measures to keep people who shouldn't be able to access, breach, or misuse data out. All data transfers happen over secure channels that are encrypted with SSL.
 
@@ -84,10 +84,10 @@ During the transition period, you may not be able to get in touch with us as muc
 
 Changes to Policy
 
-Healthcare Foresights can change or update this Privacy Policy at any time to make sure it meets new legal, regulatory, or business needs. Users should check this page from time to time to stay up to date on any changes.
+Synaptic Research can change or update this Privacy Policy at any time to make sure it meets new legal, regulatory, or business needs. Users should check this page from time to time to stay up to date on any changes.
 
 How to Get in Touch
 
 If you have any questions, concerns, or need help with this Privacy Policy, please get in touch with us at:
 
-📧 support@healthcareforesights.com
+📧 support@synapticresearch.com

@@ -150,12 +150,12 @@ export default function GoogleTranslate() {
             100% { box-shadow: 0 0 0 0 rgba(37,99,163,0); }
           }
 
-          /* Gradient fill layer — opacity-transitions smoothly */
+          /* Solid fill layer — opacity-transitions smoothly */
           .lang-fill {
             position: absolute;
             inset: -1px;
             border-radius: 9999px;
-            background: linear-gradient(135deg, #2563A3 0%, #1d4ed8 100%);
+            background: #2563A3;
             opacity: 0;
             transition: opacity 0.55s ease;
             z-index: 1;
@@ -169,7 +169,7 @@ export default function GoogleTranslate() {
             position: absolute;
             top: 0; left: -80%;
             width: 45%; height: 100%;
-            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%);
+            background: rgba(255,255,255,0.15);
             transform: skewX(-18deg);
             animation: langShine 2.4s ease-in-out infinite;
             z-index: 4;

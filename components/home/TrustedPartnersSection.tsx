@@ -23,44 +23,42 @@ const partners: Partner[] = [
 ];
 
 export default function TrustedPartnersSection() {
-  // Duplicate partners array for seamless infinite scroll
   const duplicatedPartners = [...partners, ...partners];
 
   return (
-    <Section background="card" padding="sm">
+    <Section background="card" padding="md">
       <Container size="xl">
-        <div className="space-y-2">
-          <div className="text-center space-y-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)]">
-              Trusted Partners
-            </h2>
-            <p className="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">
-              Collaborating with industry leaders to deliver exceptional insights
-            </p>
-          </div>
+        <div className="space-y-8">
 
+          {/* Subtle label — no large h2 */}
+          <p className="text-center text-xs font-semibold uppercase tracking-widest text-slate-400">
+            Trusted by leading organizations worldwide
+          </p>
+
+          {/* Marquee */}
           <div className="relative overflow-hidden">
-            {/* Gradient fade effects on edges */}
-            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[var(--card)] to-transparent z-10 pointer-events-none"></div>
-            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[var(--card)] to-transparent z-10 pointer-events-none"></div>
+            {/* Edge masks */}
+            <div className="absolute left-0 top-0 bottom-0 w-24 bg-[var(--card)] z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-24 bg-[var(--card)] z-10 pointer-events-none" />
 
-            <div className="flex animate-scroll-horizontal gap-8">
+            <div className="flex animate-scroll-horizontal gap-6">
               {duplicatedPartners.map((partner, index) => (
                 <div
                   key={`${partner.id}-${index}`}
-                  className="flex-shrink-0 w-[180px] h-[180px] flex items-center justify-center p-6 bg-white rounded-xl"
+                  className="flex-shrink-0 w-[160px] h-[80px] flex items-center justify-center px-5 bg-white border border-slate-100 rounded-xl grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
                 >
                   <Image
                     src={partner.logo}
                     alt={`${partner.name} logo`}
-                    width={160}
-                    height={80}
+                    width={120}
+                    height={60}
                     className="object-contain max-w-full max-h-full"
                   />
                 </div>
               ))}
             </div>
           </div>
+
         </div>
       </Container>
     </Section>

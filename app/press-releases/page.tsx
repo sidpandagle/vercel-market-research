@@ -1,4 +1,4 @@
-import { Section, Container, Grid } from "@/components/ui";
+import { Container, Grid } from "@/components/ui";
 import { PressReleaseCard } from "@/components/press-releases/PressReleaseCard";
 import { getPressReleases, isApiError } from "@/lib/api";
 import type { Metadata } from "next";
@@ -12,58 +12,83 @@ export const metadata: Metadata = {
   },
 };
 
-// Enable ISR with 5-minute revalidation
 export const revalidate = 300;
 
 export default async function PressReleasesPage() {
-  // Fetch press releases from API
   const response = await getPressReleases({ status: 'published', limit: 100 });
 
-  // Handle API errors
   if (isApiError(response)) {
     console.error('Failed to fetch press releases:', response.message);
     return (
-      <Section>
-        <Container>
-          <div className="mb-12">
-            <h1 className="mb-4 text-4xl font-bold md:text-5xl">Press Releases</h1>
-            <p className="text-lg text-[var(--muted-foreground)] max-w-2xl">
-              Unable to load press releases at this time. Please try again later.
-            </p>
-          </div>
-        </Container>
-      </Section>
+      <section className="relative overflow-hidden bg-navy-950 py-20 md:py-24">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-ocean-600/[0.16] rounded-full blur-3xl pointer-events-none" />
+        <div className="relative mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center space-y-5">
+          <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-ocean-300/80 px-4 py-1.5 rounded-full border border-ocean-500/20 bg-ocean-600/[0.12]">
+            Press Releases
+          </span>
+          <h1 className="text-[2.75rem] md:text-5xl text-white leading-[1.1] tracking-[-0.02em]">Press Releases</h1>
+          <p className="text-lg text-white/55 max-w-xl mx-auto leading-[1.8]">
+            Unable to load press releases at this time. Please try again later.
+          </p>
+        </div>
+      </section>
     );
   }
 
   const pressReleases = response.data;
 
   return (
-    <Section>
-      <Container>
-        <div className="mb-12">
-          <h1 className="mb-4 text-4xl font-bold md:text-5xl">Press Releases</h1>
-          <p className="text-lg text-[var(--muted-foreground)] max-w-2xl">
-            Latest news and announcements from Healthcare Foresights. Stay informed about our research publications and industry insights.
-          </p>
+    <>
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-navy-950 py-20 md:py-24">
+        <div
+          className="absolute inset-0 opacity-[0.04] pointer-events-none"
+          style={{
+            backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'28\' height=\'28\' viewBox=\'0 0 28 28\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Ccircle cx=\'1\' cy=\'1\' r=\'1\' fill=\'white\'/%3E%3C/svg%3E")',
+            backgroundSize: '28px 28px',
+          }}
+        />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-ocean-600/[0.16] rounded-full blur-3xl pointer-events-none" />
+        <div className="relative mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center">
+          <div className="space-y-5">
+            <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-ocean-300/80 px-4 py-1.5 rounded-full border border-ocean-500/20 bg-ocean-600/[0.12]">
+              Press Releases
+            </span>
+            <h1 className="text-[2.75rem] md:text-5xl text-white leading-[1.1] tracking-[-0.02em]">
+              News &{' '}
+              <span className="text-bright-400">Announcements</span>
+            </h1>
+            <p className="text-lg text-white/55 max-w-2xl mx-auto leading-[1.8]">
+              Latest research publications, industry announcements, and developments from Synaptic Research.
+            </p>
+            <div className="flex items-center justify-center gap-2 text-sm text-white/35">
+              <div className="w-1.5 h-1.5 rounded-full bg-ocean-400 shrink-0" />
+              {pressReleases.length} announcements published
+            </div>
+          </div>
         </div>
+      </section>
 
-        <Grid cols={3}>
-          {pressReleases.map((pressRelease) => (
-            <PressReleaseCard
-              key={pressRelease.id}
-              slug={pressRelease.slug}
-              title={pressRelease.title}
-              excerpt={pressRelease.excerpt}
-              category={pressRelease.category}
-              author={pressRelease.author}
-              date={pressRelease.date}
-              readTime={pressRelease.readTime}
-              location={pressRelease.location}
-            />
-          ))}
-        </Grid>
-      </Container>
-    </Section>
+      {/* Press Releases Grid */}
+      <section className="py-14 md:py-20 bg-[var(--muted)]">
+        <Container>
+          <Grid cols={3}>
+            {pressReleases.map((pr) => (
+              <PressReleaseCard
+                key={pr.id}
+                slug={pr.slug}
+                title={pr.title}
+                excerpt={pr.excerpt}
+                category={pr.category}
+                author={pr.author}
+                date={pr.date}
+                readTime={pr.readTime}
+                location={pr.location}
+              />
+            ))}
+          </Grid>
+        </Container>
+      </section>
+    </>
   );
 }

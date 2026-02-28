@@ -15,7 +15,7 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
       default:
         'bg-slate-100 text-slate-700 hover:bg-slate-200 shadow-sm',
       primary:
-        'bg-gradient-to-r from-ocean-700 via-ocean-600 to-ocean-500 text-white shadow-primary',
+        'bg-ocean-600 text-white shadow-primary',
       success:
         'bg-emerald-100 text-emerald-700 border border-emerald-200 shadow-sm',
       warning:

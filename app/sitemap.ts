@@ -3,7 +3,7 @@ import { getReports } from '@/lib/api/reports';
 import { getBlogs } from '@/lib/api/blogs';
 import { getPressReleases } from '@/lib/api/press-releases';
 
-const BASE_URL = 'https://www.healthcareforesights.com';
+const BASE_URL = 'https://www.synapticresearch.com';
 const ITEMS_PER_SITEMAP = 500;
 
 /**

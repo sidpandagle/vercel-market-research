@@ -105,19 +105,29 @@ export default function ContactPage() {
 
   return (
     <>
-      <Section padding="lg" background="muted">
-        <Container size="lg">
-          <div className="text-center space-y-4">
-            <Badge variant="primary" size="md">
+      <section className="relative overflow-hidden bg-navy-950 py-20 md:py-24">
+        <div
+          className="absolute inset-0 opacity-[0.04] pointer-events-none"
+          style={{
+            backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'28\' height=\'28\' viewBox=\'0 0 28 28\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Ccircle cx=\'1\' cy=\'1\' r=\'1\' fill=\'white\'/%3E%3C/svg%3E")',
+            backgroundSize: '28px 28px',
+          }}
+        />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-ocean-600/[0.16] rounded-full blur-3xl pointer-events-none" />
+        <div className="relative mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center">
+          <div className="space-y-5">
+            <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-ocean-300/80 px-4 py-1.5 rounded-full border border-ocean-500/20 bg-ocean-600/[0.12]">
               Get in Touch
-            </Badge>
-            <h1 className="text-4xl md:text-5xl font-bold">Contact Us</h1>
-            <p className="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">
-              Have questions about our research? We are here to help. Reach out to our team for inquiries, demos, or custom research needs.
+            </span>
+            <h1 className="text-[2.75rem] md:text-5xl text-white leading-[1.1] tracking-[-0.02em]">
+              Contact <span className="text-bright-400">Synaptic Research</span>
+            </h1>
+            <p className="text-lg text-white/55 max-w-2xl mx-auto leading-[1.8]">
+              Have questions about our research? We are here to help. Reach out for inquiries, demos, or custom research needs.
             </p>
           </div>
-        </Container>
-      </Section>
+        </div>
+      </section>
 
       <Section>
         <Container size="lg">
@@ -304,7 +314,7 @@ export default function ContactPage() {
             {/* Email Card */}
             <Card className="text-center hover:shadow-lg transition-shadow">
               <CardContent className="pt-6">
-                <div className="w-12 h-12 bg-[var(--primary)] rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-12 h-12 bg-ocean-600 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
@@ -343,7 +353,7 @@ export default function ContactPage() {
             <Card className="text-center hover:shadow-lg transition-shadow">
               <CardContent className="pt-6">
                 <Badge variant="primary" className="mb-4">Americas HQ</Badge>
-                <div className="w-12 h-12 bg-[var(--primary)] rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-12 h-12 bg-ocean-600 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -369,7 +379,7 @@ export default function ContactPage() {
             <Card className="text-center hover:shadow-lg transition-shadow">
               <CardContent className="pt-6">
                 <Badge variant="outline" className="mb-4">APAC Operations</Badge>
-                <div className="w-12 h-12 bg-[var(--primary)] rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-12 h-12 bg-ocean-600 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -394,13 +404,13 @@ export default function ContactPage() {
           </div>
 
           {/* 24x7 Support Banner */}
-          <Card className="bg-blue-50 border-blue-200 mt-12">
+          <Card className="bg-ocean-50 border-ocean-100 mt-12">
             <CardContent className="py-4">
               <div className="flex items-center justify-center gap-3">
-                <svg className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-6 h-6 text-ocean-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <p className="font-medium text-blue-900">24×7 Sales & Support Available</p>
+                <p className="font-medium text-ocean-900">24×7 Sales &amp; Support Available</p>
               </div>
             </CardContent>
           </Card>

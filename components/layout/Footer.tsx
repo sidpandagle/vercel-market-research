@@ -1,198 +1,176 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, Phone, ChevronRight, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
+import { Mail, Phone, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import { CONTACT_INFO } from "@/lib/contact";
+
+const quickLinks = [
+  { href: "/reports", label: "Research Reports" },
+  { href: "/blog", label: "Blog" },
+  { href: "/press-releases", label: "Press Releases" },
+  { href: "/services", label: "Services" },
+  { href: "/about", label: "About Us" },
+  { href: "/contact", label: "Contact" },
+];
+
+const consultingLinks = [
+  { href: "/consulting/market-assessment", label: "Market Assessment" },
+  { href: "/consulting/healthcare-competitive-intelligence", label: "Competitive Intelligence" },
+  { href: "/consulting/rd-analysis", label: "R&D Analysis" },
+  { href: "/consulting/primary-market-research", label: "Primary Research" },
+  { href: "/consulting/mergers-acquisitions", label: "M&A Advisory" },
+];
+
+const legalLinks = [
+  { href: "/legal/privacy-policy", label: "Privacy Policy" },
+  { href: "/legal/refund-policy", label: "Refund Policy" },
+  { href: "/legal/cancellation-policy", label: "Cancellation Policy" },
+];
+
+const socialLinks = [
+  {
+    href: "https://facebook.com/synapticresearch",
+    label: "Facebook",
+    Icon: Facebook,
+  },
+  {
+    href: "https://instagram.com/synapticresearch",
+    label: "Instagram",
+    Icon: Instagram,
+  },
+  {
+    href: "https://linkedin.com/company/synapticresearch",
+    label: "LinkedIn",
+    Icon: Linkedin,
+  },
+  {
+    href: "https://twitter.com/synapticresearch",
+    label: "X (Twitter)",
+    Icon: Twitter,
+  },
+];
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-slate-200 bg-gradient-to-b from-white to-slate-50">
-      <div className="container mx-auto px-4 py-12 md:px-6">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-          <div>
+    <footer className="bg-navy-950 border-t border-white/[0.06]">
+      <div className="container mx-auto px-4 md:px-6 py-14 md:py-16">
+
+        {/* Main grid */}
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
+
+          {/* Brand column */}
+          <div className="flex flex-col gap-5">
             <Link href="/" className="inline-block">
               <Image
                 src="/assets/images/logo.png"
-                alt="Healthcare Foresights - Predict. Research. Intelligence"
-                width={180}
-                height={50}
-                className="h-16 w-auto hover:opacity-80 transition-opacity"
+                alt="Synaptic Research - Research. Insights. Intelligence."
+                width={160}
+                height={45}
+                className="h-9 w-auto brightness-0 invert opacity-90 hover:opacity-100 transition-opacity"
               />
             </Link>
-            <p className="text-sm text-slate-600 mb-4">
-              Comprehensive insights and analysis for the healthcare industry.
+            <p className="text-sm text-slate-500 leading-relaxed max-w-[220px]">
+              Comprehensive market intelligence and strategic insights for the global healthcare industry.
             </p>
-
-            <div className="flex gap-4">
-              <Link
-                href="https://facebook.com/healthcareforesights"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-slate-600 hover:text-ocean-600 transition-colors"
-                aria-label="Facebook"
-              >
-                <Facebook className="w-5 h-5" />
-              </Link>
-              <Link
-                href="https://instagram.com/healthcareforesights"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-slate-600 hover:text-ocean-600 transition-colors"
-                aria-label="Instagram"
-              >
-                <Instagram className="w-5 h-5" />
-              </Link>
-              <Link
-                href="https://linkedin.com/company/healthcareforesights"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-slate-600 hover:text-ocean-600 transition-colors"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-5 h-5" />
-              </Link>
-              <Link
-                href="https://twitter.com/healthcareforesights"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-slate-600 hover:text-ocean-600 transition-colors"
-                aria-label="X (Twitter)"
-              >
-                <Twitter className="w-5 h-5" />
-              </Link>
+            <div className="flex gap-3.5">
+              {socialLinks.map(({ href, label, Icon }) => (
+                <Link
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-slate-500 hover:bg-bright-500/15 hover:text-bright-400 transition-all duration-200"
+                >
+                  <Icon className="w-4 h-4" />
+                </Link>
+              ))}
             </div>
           </div>
 
+          {/* Quick links */}
           <div>
-            <h3 className="mb-4 text-lg font-semibold text-slate-900">Quick Links</h3>
-            <ul className="space-y-3 text-sm">
-              <li>
-                <Link
-                  href="/reports"
-                  className="text-slate-600 hover:text-ocean-600 transition-colors flex items-center gap-2 group"
-                >
-                  <ChevronRight className="w-4 h-4 text-ocean-600 group-hover:translate-x-1 transition-transform" />
-                  Research Reports
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/blog"
-                  className="text-slate-600 hover:text-ocean-600 transition-colors flex items-center gap-2 group"
-                >
-                  <ChevronRight className="w-4 h-4 text-ocean-600 group-hover:translate-x-1 transition-transform" />
-                  Blog
-                </Link>
-              </li>
-              <li className="pt-2 mt-2 border-t border-slate-200">
-                <span className="text-xs uppercase text-slate-500 font-semibold">Legal</span>
-              </li>
-              <li>
-                <Link
-                  href="/legal/privacy-policy"
-                  className="text-slate-600 hover:text-ocean-600 transition-colors flex items-center gap-2 group"
-                >
-                  <ChevronRight className="w-4 h-4 text-ocean-600 group-hover:translate-x-1 transition-transform" />
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/legal/refund-policy"
-                  className="text-slate-600 hover:text-ocean-600 transition-colors flex items-center gap-2 group"
-                >
-                  <ChevronRight className="w-4 h-4 text-ocean-600 group-hover:translate-x-1 transition-transform" />
-                  Refund Policy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/legal/cancellation-policy"
-                  className="text-slate-600 hover:text-ocean-600 transition-colors flex items-center gap-2 group"
-                >
-                  <ChevronRight className="w-4 h-4 text-ocean-600 group-hover:translate-x-1 transition-transform" />
-                  Cancellation Policy
-                </Link>
-              </li>
+            <h3 className="mb-4 text-xs font-bold uppercase tracking-widest text-slate-500">
+              Quick Links
+            </h3>
+            <ul className="space-y-2.5">
+              {quickLinks.map(({ href, label }) => (
+                <li key={label}>
+                  <Link
+                    href={href}
+                    className="text-sm text-slate-400 hover:text-white transition-colors duration-150"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
+          {/* Consulting services */}
           <div>
-            <h3 className="mb-4 text-lg font-semibold text-slate-900">Consulting Services</h3>
-            <ul className="space-y-3 text-sm">
-              <li>
-                <Link
-                  href="/consulting/market-assessment"
-                  className="text-slate-600 hover:text-ocean-600 transition-colors flex items-center gap-2 group"
-                >
-                  <ChevronRight className="w-4 h-4 text-ocean-600 group-hover:translate-x-1 transition-transform" />
-                  Market Assessment
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/consulting/healthcare-competitive-intelligence"
-                  className="text-slate-600 hover:text-ocean-600 transition-colors flex items-center gap-2 group"
-                >
-                  <ChevronRight className="w-4 h-4 text-ocean-600 group-hover:translate-x-1 transition-transform" />
-                  Competitive Intelligence
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/consulting/rd-analysis"
-                  className="text-slate-600 hover:text-ocean-600 transition-colors flex items-center gap-2 group"
-                >
-                  <ChevronRight className="w-4 h-4 text-ocean-600 group-hover:translate-x-1 transition-transform" />
-                  R&D Analysis
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/consulting/primary-market-research"
-                  className="text-slate-600 hover:text-ocean-600 transition-colors flex items-center gap-2 group"
-                >
-                  <ChevronRight className="w-4 h-4 text-ocean-600 group-hover:translate-x-1 transition-transform" />
-                  Primary Research
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/consulting/mergers-acquisitions"
-                  className="text-slate-600 hover:text-ocean-600 transition-colors flex items-center gap-2 group"
-                >
-                  <ChevronRight className="w-4 h-4 text-ocean-600 group-hover:translate-x-1 transition-transform" />
-                  M&A Advisory
-                </Link>
-              </li>
+            <h3 className="mb-4 text-xs font-bold uppercase tracking-widest text-slate-500">
+              Consulting
+            </h3>
+            <ul className="space-y-2.5">
+              {consultingLinks.map(({ href, label }) => (
+                <li key={label}>
+                  <Link
+                    href={href}
+                    className="text-sm text-slate-400 hover:text-white transition-colors duration-150"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
+          {/* Contact */}
           <div>
-            <h3 className="mb-4 text-lg font-semibold text-slate-900">Contact</h3>
-            <div className="space-y-2 text-sm text-slate-600">
-              <p className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-ocean-600" />
+            <h3 className="mb-4 text-xs font-bold uppercase tracking-widest text-slate-500">
+              Contact
+            </h3>
+            <div className="space-y-3">
+              <a
+                href={`mailto:${CONTACT_INFO.email}`}
+                className="flex items-center gap-2.5 text-sm text-slate-400 hover:text-white transition-colors duration-150"
+              >
+                <Mail className="w-4 h-4 text-bright-400 shrink-0" />
                 {CONTACT_INFO.email}
-              </p>
-              <p className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-ocean-600" />
-                USA: {CONTACT_INFO.offices.usa.phoneFormatted}
-              </p>
-              <p className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-ocean-600" />
-                India: {CONTACT_INFO.offices.india.phoneFormatted}
-              </p>
+              </a>
+              <div className="flex items-center gap-2.5 text-sm text-slate-400">
+                <Phone className="w-4 h-4 text-bright-400 shrink-0" />
+                <span>USA: {CONTACT_INFO.offices.usa.phoneFormatted}</span>
+              </div>
+              <div className="flex items-center gap-2.5 text-sm text-slate-400">
+                <Phone className="w-4 h-4 text-bright-400 shrink-0" />
+                <span>India: {CONTACT_INFO.offices.india.phoneFormatted}</span>
+              </div>
             </div>
+          </div>
+
+        </div>
+
+        {/* Bottom bar */}
+        <div className="mt-12 pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-slate-500">
+            &copy; {currentYear} Synaptic Research Pvt. Ltd. All rights reserved.
+          </p>
+          <div className="flex items-center gap-5">
+            {legalLinks.map(({ href, label }) => (
+              <Link
+                key={label}
+                href={href}
+                className="text-xs text-slate-500 hover:text-slate-300 transition-colors duration-150"
+              >
+                {label}
+              </Link>
+            ))}
           </div>
         </div>
 
-        <div className="mt-12 border-t border-slate-200 pt-8 text-center">
-          <p className="text-sm text-slate-500">
-            &copy; {currentYear} Healthcare Foresights. All rights reserved.
-          </p>
-        </div>
       </div>
     </footer>
   );

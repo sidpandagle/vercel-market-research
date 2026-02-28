@@ -30,18 +30,18 @@ export const StructuredData: FC<StructuredDataProps> = ({ data }) => {
 export const generateOrganizationSchema = () => ({
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'Healthcare Foresights',
-  url: 'https://www.healthcareforesights.com',
-  logo: 'https://www.healthcareforesights.com/assets/images/logo.png',
-  description: 'Healthcare Foresights delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.',
+  name: 'Synaptic Research',
+  url: 'https://www.synapticresearch.com',
+  logo: 'https://www.synapticresearch.com/assets/images/logo.png',
+  description: 'Synaptic Research delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.',
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'Customer Service',
-    email: 'support@healthcareforesights.com',
+    email: 'support@synapticresearch.com',
   },
   sameAs: [
-    'https://twitter.com/HealthcareForesights',
-    'https://www.linkedin.com/company/healthcare-foresights',
+    'https://twitter.com/SynapticResearch',
+    'https://www.linkedin.com/company/synaptic-research',
   ],
 });
 
@@ -51,12 +51,12 @@ export const generateOrganizationSchema = () => ({
 export const generateWebSiteSchema = () => ({
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'Healthcare Foresights',
-  url: 'https://www.healthcareforesights.com',
-  description: 'Healthcare Foresights delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.',
+  name: 'Synaptic Research',
+  url: 'https://www.synapticresearch.com',
+  description: 'Synaptic Research delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.',
   potentialAction: {
     '@type': 'SearchAction',
-    target: 'https://www.healthcareforesights.com/search?q={search_term_string}',
+    target: 'https://www.synapticresearch.com/search?q={search_term_string}',
     'query-input': 'required name=search_term_string',
   },
 });
@@ -94,14 +94,14 @@ export const generateArticleSchema = (params: {
       }
     : {
         '@type': 'Organization',
-        name: 'Healthcare Foresights',
+        name: 'Synaptic Research',
       },
   publisher: {
     '@type': 'Organization',
-    name: 'Healthcare Foresights',
+    name: 'Synaptic Research',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://www.healthcareforesights.com/assets/images/logo.png',
+      url: 'https://www.synapticresearch.com/assets/images/logo.png',
     },
   },
   ...(params.image && {
@@ -172,7 +172,7 @@ export const generateProductSchema = (params: {
     description: params.description,
     brand: {
       '@type': 'Brand',
-      name: 'Healthcare Foresights',
+      name: 'Synaptic Research',
     },
     category: params.category || 'Healthcare Market Research Report',
     ...(params.reportCode && { sku: params.reportCode }),
@@ -188,8 +188,8 @@ export const generateProductSchema = (params: {
       itemCondition: 'https://schema.org/NewCondition',
       seller: {
         '@type': 'Organization',
-        name: 'Healthcare Foresights',
-        url: 'https://www.healthcareforesights.com',
+        name: 'Synaptic Research',
+        url: 'https://www.synapticresearch.com',
       },
     },
     aggregateRating: {
@@ -222,15 +222,15 @@ export const generateDatasetSchema = (params: {
   url: params.url,
   publisher: {
     '@type': 'Organization',
-    name: 'Healthcare Foresights',
-    url: 'https://www.healthcareforesights.com',
+    name: 'Synaptic Research',
+    url: 'https://www.synapticresearch.com',
   },
   creator: {
     '@type': 'Organization',
-    name: 'Healthcare Foresights',
+    name: 'Synaptic Research',
   },
   datePublished: params.datePublished,
-  license: 'https://www.healthcareforesights.com/legal/terms-of-use',
+  license: 'https://www.synapticresearch.com/legal/terms-of-use',
   ...(params.keywords && params.keywords.length > 0 && {
     keywords: params.keywords.join(', '),
   }),
@@ -250,13 +250,13 @@ export const generateDatasetSchema = (params: {
 export const generateLocalBusinessSchema = () => ({
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
-  name: 'Healthcare Foresights',
-  url: 'https://www.healthcareforesights.com',
-  email: 'support@healthcareforesights.com',
-  description: 'Healthcare Foresights delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.',
+  name: 'Synaptic Research',
+  url: 'https://www.synapticresearch.com',
+  email: 'support@synapticresearch.com',
+  description: 'Synaptic Research delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.',
   sameAs: [
-    'https://twitter.com/HealthcareForesights',
-    'https://www.linkedin.com/company/healthcare-foresights',
+    'https://twitter.com/SynapticResearch',
+    'https://www.linkedin.com/company/synaptic-research',
   ],
   address: {
     '@type': 'PostalAddress',

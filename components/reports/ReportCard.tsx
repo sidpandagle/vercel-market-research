@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, Badge } from '@/components/ui';
+import { ArrowRight, Globe, FileText } from 'lucide-react';
 import type { Report } from '@/lib/api/reports.types';
 
 interface ReportCardProps {
@@ -8,49 +8,52 @@ interface ReportCardProps {
 
 export default function ReportCard({ report }: ReportCardProps) {
   return (
-    <Link href={`/reports/${report.slug}`} className="block h-full group">
-      <Card className="h-full hover:shadow-primary-lg hover:border-ocean-500 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+    <Link href={`/reports/${report.slug}`} className="group flex flex-col h-full">
+      <div className="flex flex-col h-full bg-white border border-slate-100 rounded-2xl overflow-hidden hover:border-ocean-200 hover:shadow-xl hover:shadow-ocean-50 hover:-translate-y-0.5 transition-all duration-200">
+        {/* Accent stripe */}
+        <div className="h-[3px] bg-ocean-600 shrink-0" />
 
-        {/* Card Content */}
-        <div className="flex flex-col flex-1 min-w-0">
-          <CardHeader>
-            {/* Badge Row */}
-            <div className="flex items-center justify-between mb-3">
-              <Badge variant="primary" size="sm" className="shadow-sm">
-                {report.category}
-              </Badge>
-            </div>
+        <div className="flex flex-col flex-1 p-6">
+          {/* Category badge */}
+          <div className="mb-4">
+            <span className="inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-full bg-ocean-50 text-ocean-700 border border-ocean-100">
+              {report.category}
+            </span>
+          </div>
 
-            <CardTitle className="mb-2 text-lg group-hover:text-ocean-700 transition-colors">
-              {report.title}
-            </CardTitle>
-          </CardHeader>
+          {/* Title */}
+          <h3 className="text-base font-semibold text-slate-900 group-hover:text-ocean-700 transition-colors line-clamp-2 leading-snug mb-3">
+            {report.title}
+          </h3>
 
-          <CardContent className="flex-grow" style={{ paddingTop: '0px', paddingBottom: '0px' }}>
-            <CardDescription className="line-clamp-4 mb-4 text-slate-600">
-              {report.summary}
-            </CardDescription>
+          {/* Summary */}
+          <p className="text-sm text-slate-500 line-clamp-4 flex-1 leading-relaxed">
+            {report.summary}
+          </p>
 
-            {/* Metadata Row with Icons */}
-            <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-sm mb-6 text-slate-500">
-              <div className="flex flex-wrap gap-x-4 gap-y-2">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-base">🌍</span>
+          {/* Footer */}
+          <div className="mt-5 pt-4 border-t border-slate-50 flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3 text-xs text-slate-400 flex-wrap">
+              {report.region && (
+                <div className="flex items-center gap-1">
+                  <Globe className="w-3.5 h-3.5 shrink-0" />
                   <span>{report.region}</span>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="text-base">📄</span>
+              )}
+              {report.reportType && (
+                <div className="flex items-center gap-1">
+                  <FileText className="w-3.5 h-3.5 shrink-0" />
                   <span>{report.reportType}</span>
                 </div>
-              </div>
-              <span className="text-sm font-medium text-ocean-600 group-hover:text-ocean-700 flex items-center gap-1 ml-auto">
-                Read More
-                <span className="transition-transform group-hover:translate-x-1">→</span>
-              </span>
+              )}
             </div>
-          </CardContent>
+            <span className="text-sm font-semibold text-ocean-600 inline-flex items-center gap-1.5 shrink-0 group-hover:gap-2 transition-all duration-150">
+              Read More
+              <ArrowRight className="w-3.5 h-3.5" />
+            </span>
+          </div>
         </div>
-      </Card>
+      </div>
     </Link>
   );
 }

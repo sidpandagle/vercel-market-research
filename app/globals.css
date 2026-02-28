@@ -2,41 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Modern Healthcare Design System with Enhanced Colors & Visual Depth */
+/* Synaptic Research — Editorial Intelligence Design System */
 :root {
-  /* Primary Healthcare Navy-Ocean-Cyan Palette */
-  --primary: #2563A3; /* Ocean-600 - Deep blue */
-  --primary-hover: #1B4B7F; /* Ocean-700 - Darker blue */
-  --primary-light: #3B7CB8; /* Ocean-500 - Lighter blue */
-  --primary-dark: #0F2D52; /* Navy-800 - Deep navy */
-  
-  /* Accent Colors */
-  --accent-navy: #020B1F; /* Navy-950 - Deepest navy */
-  --accent-ocean: #2563A3; /* Ocean-600 - Medium ocean */
-  --accent-bright: #00D4FF; /* Bright-500 - Bright cyan */
-  --accent-amber: #f59e0b; /* Amber-500 */
-  
-  /* Softer Neutrals with Warmth */
-  --secondary: #f0fdf4; /* Soft green-tinted background */
-  --border: #cbd5e1; /* Slate-300 - softer than pure gray */
-  --border-light: #e2e8f0; /* Slate-200 */
-  --card: #ffffff;
-  --card-foreground: #1e293b; /* Slate-800 - softer than black */
-  --muted: #f1f5f9; /* Slate-100 - warmer gray */
-  --muted-foreground: #536073; /* Darkened for WCAG AA contrast on tinted backgrounds */
-  
-  /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #0F2D52 0%, #2563A3 50%, #3B7CB8 100%);
-  --gradient-accent: linear-gradient(135deg, #2563A3 0%, #00D4FF 100%);
-  --gradient-warm: linear-gradient(135deg, #f59e0b 0%, #ec4899 100%);
+  /* Primary: Deep Indigo (replaces ocean blues) */
+  --primary: #4338CA;        /* Indigo-600 */
+  --primary-hover: #3730A3;  /* Indigo-700 */
+  --primary-light: #4F46E5;  /* Indigo-500 */
+  --primary-dark: #252249;   /* Indigo-900 */
 
-  /* Teal accent colors for report content theming */
-  --teal-bright: #22E1B0;       /* Bright teal-cyan for H2 */
-  --teal-primary: #29ADA4;      /* Muted professional teal for H3 */
-  --teal-steel: #307898;        /* Steel blue for H4 */
-  --teal-deep: #37448C;         /* Deep blue for H5/H6 */
-  --teal-subtle: #E0F5F3;       /* Very light teal for hover backgrounds */
-  --teal-border: #B0D9D5;       /* Soft teal for accents */
+  /* Accent Colors */
+  --accent-navy: #0F0E1A;    /* Deep warm near-black */
+  --accent-ocean: #4338CA;   /* Indigo-600 */
+  --accent-bright: #F59E0B;  /* Warm amber gold */
+  --accent-amber: #D97706;   /* Amber-600 */
+
+  /* Warm Neutrals (replaces cool slate) */
+  --secondary: #FDF8F0;      /* Warm cream */
+  --border: #D6D3D1;         /* Stone-300 */
+  --border-light: #E7E5E4;   /* Stone-200 */
+  --card: #ffffff;
+  --card-foreground: #1C1917;  /* Stone-900 */
+  --muted: #F5F4F0;            /* Warm gray-50 */
+  --muted-foreground: #57534E; /* Stone-600 */
+
+  /* Solid color replacements (formerly gradients) */
+  --gradient-primary: #4338CA;
+  --gradient-accent: #4338CA;
+  --gradient-warm: #D97706;
+
+  /* Violet accent colors for report content (replaces teal) */
+  --teal-bright: #8B5CF6;    /* Violet-500 */
+  --teal-primary: #7C3AED;   /* Violet-600 */
+  --teal-steel: #6366F1;     /* Indigo-500 */
+  --teal-deep: #4338CA;      /* Indigo-600 */
+  --teal-subtle: #EDE9FE;    /* Violet-50 */
+  --teal-border: #C4B5FD;    /* Violet-300 */
 }
 
 html {
@@ -44,10 +44,11 @@ html {
 }
 
 body {
-  font-family: var(--font-geist-sans);
+  font-family: var(--font-dm-sans), 'DM Sans', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* overflow-x removed - was breaking position: sticky */
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  letter-spacing: 0.005em;
 }
 
 /* Suppress Google Translate default toolbar */
@@ -66,29 +67,32 @@ html body { top: 0 !important; }
     text-wrap: balance;
   }
 
-  /* Gradient Utilities */
+  /* Solid Color Utilities (formerly gradients) */
   .gradient-primary {
-    background: var(--gradient-primary);
+    background: #4338CA;
   }
   .gradient-accent {
-    background: var(--gradient-accent);
+    background: #4338CA;
   }
   .gradient-warm {
-    background: var(--gradient-warm);
+    background: #D97706;
   }
 
-  /* Enhanced Shadows with Color Tints */
+  /* Enhanced Shadows with Indigo Color Tints */
   .shadow-primary {
-    box-shadow: 0 4px 14px 0 rgba(37, 99, 163, 0.2);
+    box-shadow: 0 4px 14px 0 rgba(67, 56, 202, 0.22);
   }
   .shadow-primary-lg {
-    box-shadow: 0 10px 25px -5px rgba(37, 99, 163, 0.25), 0 8px 10px -6px rgba(37, 99, 163, 0.15);
+    box-shadow: 0 10px 30px -5px rgba(67, 56, 202, 0.28), 0 8px 12px -6px rgba(67, 56, 202, 0.16);
   }
   .shadow-ocean {
-    box-shadow: 0 4px 14px 0 rgba(59, 124, 184, 0.2);
+    box-shadow: 0 4px 14px 0 rgba(79, 70, 229, 0.22);
   }
   .shadow-soft {
-    box-shadow: 0 2px 8px 0 rgba(15, 23, 42, 0.08);
+    box-shadow: 0 2px 10px 0 rgba(15, 14, 26, 0.08);
+  }
+  .shadow-amber {
+    box-shadow: 0 4px 14px 0 rgba(245, 158, 11, 0.25);
   }
 
   /* Auto-scroll animation for partners */
@@ -109,94 +113,93 @@ html body { top: 0 !important; }
 
 @layer base {
   :root {
-    /* Modern Healthcare Blue-Teal System */
-    --background: 210 20% 98%; /* Slight blue tint */
-    --foreground: 215 25% 27%; /* Slate-700 - softer than black */
-    
+    /* Warm Editorial Intelligence Color System */
+    --background: 40 30% 98%;       /* Warm cream near-white */
+    --foreground: 20 14% 11%;       /* Warm deep charcoal (Stone-900) */
+
     --card: 0 0% 100%;
-    --card-foreground: 215 25% 27%;
-    
+    --card-foreground: 20 14% 11%;
+
     --popover: 0 0% 100%;
-    --popover-foreground: 215 25% 27%;
-    
-    /* Primary: Modern Ocean Blue */
-    --primary: 210 63% 51%; /* Ocean-600 */
+    --popover-foreground: 20 14% 11%;
+
+    /* Primary: Deep Indigo */
+    --primary: 243 75% 59%;         /* Indigo-600 */
     --primary-foreground: 0 0% 100%;
-    
-    /* Secondary: Soft Blue Tint */
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 215 25% 27%;
-    
-    /* Muted: Warmer Gray */
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 40%; /* Darkened for WCAG AA contrast */
-    
-    /* Accent: Bright Cyan */
-    --accent: 193 100% 50%; /* Bright-500 */
-    --accent-foreground: 0 0% 100%;
-    
+
+    /* Secondary: Warm cream */
+    --secondary: 40 33% 94%;
+    --secondary-foreground: 20 14% 11%;
+
+    /* Muted: Warm light gray */
+    --muted: 40 20% 95%;
+    --muted-foreground: 25 6% 35%;  /* Stone-600 */
+
+    /* Accent: Warm Amber Gold */
+    --accent: 38 92% 50%;           /* Amber-500 */
+    --accent-foreground: 20 14% 11%;
+
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    
-    /* Softer Borders with Blue Tint */
-    --border: 215 20% 82%; /* Slate-300 */
-    --input: 215 20% 82%;
-    --ring: 188 95% 35%; /* Match primary */
-    
-    /* Enhanced Chart Colors - Vibrant & Distinct */
-    --chart-1: 188 95% 42%; /* Cyan-500 */
-    --chart-2: 172 66% 50%; /* Teal-500 */
-    --chart-3: 160 84% 39%; /* Emerald-600 */
-    --chart-4: 262 83% 58%; /* Violet-500 */
-    --chart-5: 25 95% 53%; /* Orange-500 */
-    
-    --radius: 0.75rem; /* Slightly larger for modern feel */
-  }
-  
-  .dark {
-    --background: 222 47% 11%; /* Dark blue-gray */
-    --foreground: 210 40% 98%;
-    
-    --card: 222 47% 11%;
-    --card-foreground: 210 40% 98%;
-    
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
-    
-    /* Primary: Lighter Cyan for dark mode */
-    --primary: 188 86% 53%; /* Cyan-400 */
-    --primary-foreground: 222 47% 11%;
-    
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
-    
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%; /* Slate-400 */
-    
-    --accent: 172 66% 50%; /* Teal-500 */
-    --accent-foreground: 0 0% 100%;
-    
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-    
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 188 86% 53%;
-    
-    /* Dark mode chart colors */
-    --chart-1: 188 86% 53%; /* Cyan-400 */
-    --chart-2: 172 66% 50%; /* Teal-500 */
-    --chart-3: 160 84% 39%; /* Emerald-600 */
-    --chart-4: 262 83% 58%; /* Violet-500 */
-    --chart-5: 25 95% 53%; /* Orange-500 */
 
-    /* Teal colors for dark mode - brighter for visibility */
-    --teal-bright: #33E1B8;
-    --teal-primary: #3BC5BC;
-    --teal-steel: #4A8FA8;
-    --teal-deep: #5B6FC0;
-    --teal-subtle: #1A3F3C;
-    --teal-border: #2A5F5C;
+    /* Warm Stone borders */
+    --border: 20 6% 82%;            /* Stone-300 */
+    --input: 20 6% 82%;
+    --ring: 243 75% 59%;
+
+    /* Chart Colors — varied and vibrant */
+    --chart-1: 243 75% 59%;         /* Indigo */
+    --chart-2: 38 92% 50%;          /* Amber */
+    --chart-3: 262 83% 58%;         /* Violet */
+    --chart-4: 142 71% 45%;         /* Emerald */
+    --chart-5: 0 84% 60%;           /* Red */
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 240 20% 8%;       /* Very deep warm-dark */
+    --foreground: 40 30% 94%;       /* Warm near-white */
+
+    --card: 240 18% 12%;
+    --card-foreground: 40 30% 94%;
+
+    --popover: 240 18% 12%;
+    --popover-foreground: 40 30% 94%;
+
+    /* Primary: Lighter indigo for dark mode */
+    --primary: 243 75% 70%;
+    --primary-foreground: 240 20% 8%;
+
+    --secondary: 240 15% 18%;
+    --secondary-foreground: 40 30% 94%;
+
+    --muted: 240 15% 18%;
+    --muted-foreground: 40 15% 65%;
+
+    --accent: 38 92% 60%;           /* Brighter amber in dark */
+    --accent-foreground: 20 14% 11%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 40 30% 94%;
+
+    --border: 240 15% 20%;
+    --input: 240 15% 20%;
+    --ring: 243 75% 70%;
+
+    --chart-1: 243 75% 70%;
+    --chart-2: 38 92% 60%;
+    --chart-3: 262 83% 68%;
+    --chart-4: 142 71% 55%;
+    --chart-5: 0 84% 70%;
+
+    /* Violet accents for dark mode */
+    --teal-bright: #A78BFA;
+    --teal-primary: #8B5CF6;
+    --teal-steel: #818CF8;
+    --teal-deep: #6366F1;
+    --teal-subtle: #1E1B4B;
+    --teal-border: #4C3F80;
   }
 }
 
@@ -206,7 +209,29 @@ html body { top: 0 !important; }
   }
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: var(--font-dm-sans), 'DM Sans', system-ui, sans-serif;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    line-height: 1.65;
+    letter-spacing: 0.005em;
+  }
+
+  /* Editorial serif for all major headings */
+  h1, h2 {
+    font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
+    font-feature-settings: "kern" 1, "liga" 1, "onum" 1;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  h3, h4, h5, h6 {
+    font-family: var(--font-dm-sans), 'DM Sans', system-ui, sans-serif;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+
+  /* Generous paragraph spacing */
+  p {
+    line-height: 1.75;
   }
 
   /* Smooth scrolling */
@@ -220,45 +245,64 @@ html body { top: 0 !important; }
   }
 
   .prose p {
-    @apply text-[var(--muted-foreground)] leading-relaxed;
-    font-size: 1rem;
-    line-height: 1.75rem;
+    @apply text-[var(--muted-foreground)];
+    font-size: 1.0625rem;
+    line-height: 1.85;
+    margin-bottom: 1.25rem;
   }
 
   .prose h1 {
     @apply text-[var(--foreground)] font-bold;
-    font-size: 2.25rem;
-    line-height: 2.5rem;
+    font-family: var(--font-playfair), Georgia, serif;
+    font-size: 2.5rem;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    margin-bottom: 1.5rem;
+    margin-top: 2.5rem;
   }
 
   .prose h2 {
     @apply text-[var(--foreground)] font-bold;
-    font-size: 1.875rem;
-    line-height: 2.25rem;
+    font-family: var(--font-playfair), Georgia, serif;
+    font-size: 2rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+    margin-top: 2.5rem;
   }
 
   .prose h3 {
     @apply text-[var(--foreground)] font-semibold;
+    font-family: var(--font-dm-sans), sans-serif;
     font-size: 1.5rem;
-    line-height: 2rem;
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
   }
 
   .prose h4 {
     @apply text-[var(--foreground)] font-semibold;
     font-size: 1.25rem;
-    line-height: 1.75rem;
+    line-height: 1.4;
+    margin-bottom: 0.75rem;
+    margin-top: 1.75rem;
   }
 
   .prose h5 {
     @apply text-[var(--foreground)] font-semibold;
     font-size: 1.125rem;
-    line-height: 1.75rem;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+    margin-top: 1.5rem;
   }
 
   .prose h6 {
     @apply text-[var(--foreground)] font-semibold;
     font-size: 1rem;
-    line-height: 1.5rem;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+    margin-top: 1.25rem;
   }
 
   .prose strong,
@@ -306,7 +350,7 @@ html body { top: 0 !important; }
   .prose th {
     @apply text-[var(--foreground)] font-semibold text-left;
     padding: 6px 15px;
-    border: 1px solid #b09ad5;
+    border: 1px solid #c4b5fd;
     font-size: 0.875rem;
     text-transform: none;
     letter-spacing: normal;
@@ -327,7 +371,7 @@ html body { top: 0 !important; }
   }
 
   .prose tbody tr:hover {
-    background-color: rgba(176, 154, 213, 0.05);
+    background-color: rgba(196, 181, 253, 0.08);
   }
 
   .prose tbody tr:last-child {
@@ -337,7 +381,7 @@ html body { top: 0 !important; }
   .prose td {
     @apply text-[var(--foreground)];
     padding: 6px 15px;
-    border: 1px solid #b09ad5;
+    border: 1px solid #c4b5fd;
     font-size: 0.9375rem;
   }
 
@@ -383,7 +427,7 @@ html body { top: 0 !important; }
   }
 
   .styled-report-content > ul:first-of-type {
-    @apply bg-[#ede9fe];
+    @apply bg-[#EEF2FF];
     li {
       @apply border-b border-gray-300;
       p {

@@ -294,7 +294,7 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
           align-items: center;
           justify-content: center;
           gap: 0.5rem;
-          background: linear-gradient(to right, #0F2D52, #2563A3, #3B7CB8);
+          background: #2563A3;
           color: white !important;
           padding: 0.75rem 1.25rem;
           border-radius: 0.75rem;

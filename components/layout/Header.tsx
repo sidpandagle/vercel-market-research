@@ -12,12 +12,12 @@ export default function Header() {
   const isNotReportPage = !pathname.includes("/reports/");
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/80 backdrop-blur-xl supports-[backdrop-filter]:bg-white/60 shadow-sm">
+    <header className="sticky top-0 z-50 w-full border-b border-stone-200 bg-white/85 backdrop-blur-xl supports-[backdrop-filter]:bg-white/70 shadow-[0_1px_12px_0_rgba(15,14,26,0.06)]">
       <div className={`${isNotReportPage ? 'container mx-auto' : ''} flex h-16 items-center justify-between px-4 md:px-6 gap-2 md:gap-4 w-full`}>
         <Link href="/" className="flex items-center group flex-shrink-0">
           <Image
             src="/assets/images/logo.png"
-            alt="Healthcare Foresights - Predict. Research. Intelligence"
+            alt="Synaptic Research - Research. Insights. Intelligence."
             width={180}
             height={50}
             priority
@@ -40,7 +40,7 @@ export default function Header() {
         <Navigation />
 
         {/* Language Selector */}
-        <div className="ml-2 pl-2 border-l border-slate-200">
+        <div className="ml-2 pl-2 border-l border-stone-200">
           <GoogleTranslate />
         </div>
 

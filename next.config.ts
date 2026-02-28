@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'cdn.healthcareforesights.com',
+        hostname: 'cdn.synapticresearch.com',
       },
     ],
   },
@@ -34,10 +34,10 @@ const nextConfig: NextConfig = {
         has: [
           {
             type: 'host',
-            value: 'healthcareforesights.com',
+            value: 'synapticresearch.com',
           },
         ],
-        destination: 'https://www.healthcareforesights.com/:path*',
+        destination: 'https://www.synapticresearch.com/:path*',
         permanent: true,
       },
     ];

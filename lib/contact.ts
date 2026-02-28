@@ -27,7 +27,7 @@ export interface ContactInfo {
 }
 
 export const CONTACT_INFO: ContactInfo = {
-  email: 'support@healthcareforesights.com',
+  email: 'support@synapticresearch.com',
   whatsapp: {
     number: '+18016399061',
     formatted: '+1 801-639-9061',
@@ -50,7 +50,7 @@ export const CONTACT_INFO: ContactInfo = {
     },
     india: {
       name: 'Asia-Pacific Centre',
-      company: 'Healthcare Foresights Pvt. Ltd.',
+      company: 'Synaptic Research Pvt. Ltd.',
       addressLine1: 'B-701, Basileo, MS Kate Chowk',
       addressLine2: 'Pimple Gurav',
       city: 'Pune',

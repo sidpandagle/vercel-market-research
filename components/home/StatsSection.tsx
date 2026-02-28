@@ -1,45 +1,68 @@
-import { Section, Container, Grid } from '@/components/ui';
+import { BookOpen, Globe, LayoutGrid, Users } from 'lucide-react';
+import type { ElementType } from 'react';
 
 interface Stat {
   value: string;
   label: string;
+  desc: string;
+  icon: ElementType;
 }
 
 const stats: Stat[] = [
-  { value: '500+', label: 'Research Reports' },
-  { value: '50+', label: 'Countries Covered' },
-  { value: '20+', label: 'Industry Sectors' },
-  { value: '1000+', label: 'Enterprise Clients' },
+  {
+    value: '2,500+',
+    label: 'Research Reports',
+    desc: 'Across all healthcare verticals',
+    icon: BookOpen,
+  },
+  {
+    value: '50+',
+    label: 'Countries Covered',
+    desc: 'Global research and market insights',
+    icon: Globe,
+  },
+  {
+    value: '20+',
+    label: 'Industry Sectors',
+    desc: 'From pharma to animal health',
+    icon: LayoutGrid,
+  },
+  {
+    value: '1,000+',
+    label: 'Enterprise Clients',
+    desc: 'Trusted by industry leaders worldwide',
+    icon: Users,
+  },
 ];
 
 export default function StatsSection() {
   return (
-    <Section background="card" padding="sm">
-      <Container size="xl">
-        <div className="space-y-8">
-          <div className="text-center space-y-3">
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)]">
-              Why Choose Us
-            </h2>
-            <p className="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">
-              Trusted by healthcare organizations worldwide
-            </p>
-          </div>
-
-          <Grid cols={4} gap="lg">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center space-y-2">
-                <div className="text-4xl md:text-5xl font-bold text-[var(--primary)]">
+    <section className="bg-navy-950 border-y border-navy-900/80">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-white/[0.06]">
+          {stats.map((stat) => {
+            const Icon = stat.icon;
+            return (
+              <div key={stat.value} className="px-6 md:px-10 py-10 text-center">
+                <div className="flex justify-center mb-5">
+                  <div className="w-12 h-12 rounded-xl bg-bright-500/15 flex items-center justify-center">
+                    <Icon className="w-5 h-5 text-bright-400" strokeWidth={1.5} />
+                  </div>
+                </div>
+                <div className="text-4xl md:text-5xl font-bold text-white tracking-tight tabular-nums">
                   {stat.value}
                 </div>
-                <div className="text-base md:text-lg text-[var(--muted-foreground)]">
+                <div className="text-sm font-semibold text-slate-300 mt-2 mb-1">
                   {stat.label}
                 </div>
+                <div className="text-xs text-slate-500 leading-relaxed">
+                  {stat.desc}
+                </div>
               </div>
-            ))}
-          </Grid>
+            );
+          })}
         </div>
-      </Container>
-    </Section>
+      </div>
+    </section>
   );
 }
