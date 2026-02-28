@@ -38,10 +38,15 @@ export default async function CheckoutPage({
 
   const report = response.data;
 
-  const price = typeof report.price === 'number' ? report.price : parseFloat(String(report.price || '0'));
-  const discountedPrice = typeof report.discounted_price === 'number'
-    ? report.discounted_price
-    : parseFloat(String(report.discounted_price || '0'));
+  const parsePriceString = (val: string | number | undefined | null): number => {
+    if (typeof val === 'number') return val;
+    const cleaned = String(val || '0').replace(/[^0-9.]/g, '');
+    const parsed = parseFloat(cleaned);
+    return isNaN(parsed) ? 0 : parsed;
+  };
+
+  const price = parsePriceString(report.price);
+  const discountedPrice = parsePriceString(report.discounted_price);
 
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
