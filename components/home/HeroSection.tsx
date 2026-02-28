@@ -51,7 +51,7 @@ export default function HeroSection() {
             {/* Headline — Playfair Display applied via globals.css h1 rule */}
             <h1 className="text-[3rem] sm:text-[3.5rem] lg:text-[4rem] xl:text-[4.75rem] text-white leading-[1.04] tracking-[-0.025em]">
               The Intelligence<br />
-              Behind Healthcare's<br />
+              Behind Healthcare&apos;s<br />
               <span className="text-gradient-amber">Biggest Decisions.</span>
             </h1>
 
