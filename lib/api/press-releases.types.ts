@@ -35,6 +35,7 @@ export interface ApiPressRelease {
   publishDate?: string | null;
   scheduledPublishEnabled?: boolean;
   location?: string;
+  reportUrl?: string;
   metadata?: ApiPressReleaseMetadata;
   createdAt: string;
   updatedAt: string;
@@ -59,6 +60,7 @@ export interface PressRelease {
   // Extended fields for detail page
   tags?: string[];
   location?: string;
+  reportUrl?: string;
 
   // Full nested objects from API
   authorId?: number;

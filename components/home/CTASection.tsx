@@ -3,14 +3,14 @@ import { Section, Container, Button } from '@/components/ui';
 
 export default function CTASection() {
   return (
-    <Section padding="xl">
+    <Section padding="sm">
       <Container size="lg">
-        <div className="bg-[var(--primary)] rounded-2xl px-8 py-16 md:px-16 md:py-20 text-center space-y-6">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
+        <div className="bg-[var(--primary)] rounded-2xl px-8 py-8 md:px-16 md:py-10 text-center space-y-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-white">
             Ready to Transform Your Healthcare Strategy?
           </h2>
 
-          <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
+          <p className="text-lg text-white/90 max-w-2xl mx-auto">
             Get in touch with our team to see how our research can drive your decisions
           </p>
 

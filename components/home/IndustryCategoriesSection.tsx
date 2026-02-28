@@ -4,7 +4,7 @@ import categories from '@/data/categories.json';
 
 export default function IndustryCategoriesSection() {
   return (
-    <Section padding="lg">
+    <Section padding="sm">
       <Container size="xl">
         <div className="space-y-8">
           <div className="text-center space-y-3">

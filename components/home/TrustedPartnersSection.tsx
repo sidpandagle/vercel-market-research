@@ -27,9 +27,9 @@ export default function TrustedPartnersSection() {
   const duplicatedPartners = [...partners, ...partners];
 
   return (
-    <Section background="card" padding="lg">
+    <Section background="card" padding="sm">
       <Container size="xl">
-        <div className="space-y-12">
+        <div className="space-y-2">
           <div className="text-center space-y-4">
             <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)]">
               Trusted Partners
@@ -39,7 +39,7 @@ export default function TrustedPartnersSection() {
             </p>
           </div>
 
-          <div className="relative overflow-hidden py-4">
+          <div className="relative overflow-hidden">
             {/* Gradient fade effects on edges */}
             <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[var(--card)] to-transparent z-10 pointer-events-none"></div>
             <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[var(--card)] to-transparent z-10 pointer-events-none"></div>
@@ -48,7 +48,7 @@ export default function TrustedPartnersSection() {
               {duplicatedPartners.map((partner, index) => (
                 <div
                   key={`${partner.id}-${index}`}
-                  className="flex-shrink-0 w-[180px] h-[200px] flex items-center justify-center p-6 bg-white rounded-xl"
+                  className="flex-shrink-0 w-[180px] h-[180px] flex items-center justify-center p-6 bg-white rounded-xl"
                 >
                   <Image
                     src={partner.logo}

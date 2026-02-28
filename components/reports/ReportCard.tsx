@@ -1,8 +1,4 @@
-'use client';
-
-import { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, Badge } from '@/components/ui';
 import type { Report } from '@/lib/api/reports.types';
 
@@ -11,25 +7,11 @@ interface ReportCardProps {
 }
 
 export default function ReportCard({ report }: ReportCardProps) {
-  const [imgSrc, setImgSrc] = useState(report.categoryImageUrl || '/placeholder-report.svg');
-
   return (
     <Link href={`/reports/${report.slug}`} className="block h-full group">
-      <Card className="h-full flex flex-row hover:shadow-primary-lg hover:border-ocean-500 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+      <Card className="h-full hover:shadow-primary-lg hover:border-ocean-500 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
 
-        {/* Left: Feature Image */}
-        <div className="relative w-44 min-w-[176px] shrink-0 overflow-hidden rounded-l-lg bg-slate-100">
-          <Image
-            src={imgSrc}
-            alt={report.category}
-            fill
-            className="object-cover rounded-lg"
-            sizes="176px"
-            onError={() => setImgSrc('/placeholder-report.svg')}
-          />
-        </div>
-
-        {/* Right: Card Content */}
+        {/* Card Content */}
         <div className="flex flex-col flex-1 min-w-0">
           <CardHeader>
             {/* Badge Row */}

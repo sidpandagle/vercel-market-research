@@ -218,14 +218,16 @@ export default async function PressReleaseDetailPage({ params }: PressReleasePag
                       Customization
                     </Button>
                   </Link>
-                  <Link href="/reports">
-                    <Button
-                      className="w-full mt-3"
-                      size="lg"
-                    >
-                      Read Report
-                    </Button>
-                  </Link>
+                  {pressRelease.reportUrl && (
+                    <Link href={pressRelease.reportUrl}>
+                      <Button
+                        className="w-full mt-3"
+                        size="lg"
+                      >
+                        Read Report
+                      </Button>
+                    </Link>
+                  )}
                 </CardContent>
               </Card>
 

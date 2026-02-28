@@ -14,7 +14,7 @@ const stats: Stat[] = [
 
 export default function StatsSection() {
   return (
-    <Section background="card" padding="lg">
+    <Section background="card" padding="sm">
       <Container size="xl">
         <div className="space-y-8">
           <div className="text-center space-y-3">

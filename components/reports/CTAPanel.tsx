@@ -7,10 +7,11 @@ interface CTAPanelProps {
   price: string;
   discounted_price: string;
   reportTitle?: string;
+  reportSlug?: string;
 }
 
 export const CTAPanel = React.forwardRef<HTMLDivElement, CTAPanelProps>(
-  ({ price, discounted_price, reportTitle }, ref) => {
+  ({ price, discounted_price, reportTitle, reportSlug }, ref) => {
     return (
       <Card ref={ref}>
         <CardContent className="space-y-4">
@@ -33,7 +34,7 @@ export const CTAPanel = React.forwardRef<HTMLDivElement, CTAPanelProps>(
           </div>
 
           <div className="space-y-3">
-            <Link href="/contact">
+            <Link href={reportSlug ? `/checkout/${reportSlug}` : '/contact'}>
               <Button className="w-full" size="lg">
                 Buy Now
               </Button>

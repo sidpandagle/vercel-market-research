@@ -106,8 +106,7 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
 
         /* H3 - Subsections with muted teal */
         .styled-report-content h3 {
-          color: #29ADA4;
-          color: var(--teal-primary, #29ADA4);
+          color: #00695C;
           font-weight: 600;
           margin-top: 1rem;
           margin-bottom: 1rem;
@@ -209,8 +208,7 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
 
         /* Links with teal color */
         .styled-report-content a {
-          color: #29ADA4;
-          color: var(--teal-primary, #29ADA4);
+          color: #00695C;
           text-decoration: underline;
           text-decoration-color: #B0D9D5;
           text-decoration-color: var(--teal-border, #B0D9D5);
@@ -226,8 +224,7 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
 
         /* Blockquotes with teal left border */
         .styled-report-content blockquote {
-          border-left: 4px solid #29ADA4;
-          border-left: 4px solid var(--teal-primary, #29ADA4);
+          border-left: 4px solid #00695C;
           padding-left: 1.25rem;
           margin-left: 0;
           margin-right: 0;

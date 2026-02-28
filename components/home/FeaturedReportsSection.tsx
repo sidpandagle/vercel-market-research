@@ -16,7 +16,7 @@ export default async function FeaturedReportsSection() {
   const featuredReports = response.data;
 
   return (
-    <Section background="muted" padding="lg">
+    <Section background="muted" padding="sm">
       <Container size="xl">
         <div className="space-y-8">
           <div className="text-center space-y-3">

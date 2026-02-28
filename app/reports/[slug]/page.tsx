@@ -11,7 +11,7 @@ import MeetTheTeam from "@/components/reports/MeetTheTeam";
 import FAQ from "@/components/reports/FAQ";
 import { parseHTMLAndGenerateTOC, addStaticSectionsToTOC } from "@/lib/html-toc-utils";
 import type { SidebarTOCItem } from "@/lib/toc-utils";
-import { StructuredData, generateArticleSchema, generateBreadcrumbSchema, generateFAQSchema } from "@/components/seo/StructuredData";
+import { StructuredData, generateArticleSchema, generateBreadcrumbSchema, generateFAQSchema, generateProductSchema, generateDatasetSchema } from "@/components/seo/StructuredData";
 
 // Enable ISR with 10-minute revalidation
 export const revalidate = 600;
@@ -325,21 +325,52 @@ export default async function ReportPage({
   // TODO: Fetch related reports from API when relatedReportIds are provided
   // const relatedReports: Report[] = [];
 
+  const reportUrl = `https://www.healthcareforesights.com/reports/${report.slug}`;
+  const reportKeywords = report.meta_keywords?.split(',').map(k => k.trim()).filter(Boolean);
+
   // Generate structured data schemas
   const articleSchema = generateArticleSchema({
     type: 'Report',
     title: report.title,
     description: report.description,
-    url: `https://www.healthcareforesights.com/reports/${report.slug}`,
+    url: reportUrl,
     datePublished: report.date,
     author: report.authors && report.authors.length > 0 ? report.authors.map((author) => author.name) : undefined,
-    keywords: report.meta_keywords?.split(',').map(k => k.trim()).filter(Boolean),
+    keywords: reportKeywords,
+  });
+
+  const productSchema = generateProductSchema({
+    name: report.title,
+    description: report.description,
+    url: reportUrl,
+    price: report.price,
+    discountedPrice: report.discounted_price,
+    category: report.category,
+    reportCode: report.reportCode || `HF${report.id}`,
+    keywords: reportKeywords,
+    datePublished: report.date,
+  });
+
+  const datasetSchema = generateDatasetSchema({
+    name: `${report.title} - Market Data`,
+    description: `Market research dataset for ${report.title}. Includes market size, CAGR, and forecast data for ${report.forecastPeriod || `${baseYearLabel}–${forecastEndYear}`}.`,
+    url: reportUrl,
+    datePublished: report.date,
+    keywords: reportKeywords,
+    temporalCoverage: report.forecastPeriod
+      ? report.forecastPeriod.replace('-', '/')
+      : `${baseYearLabel}/${forecastEndYear}`,
+    variableMeasured: [
+      ...(report.marketSize2024 ? [`Market Size (${baseYearLabel}): ${report.marketSize2024}`] : []),
+      ...(report.marketSize2032 ? [`Market Size (${forecastEndYear}): ${report.marketSize2032}`] : []),
+      ...(report.cagr ? [`CAGR (${report.forecastPeriod || `${baseYearLabel}–${forecastEndYear}`}): ${report.cagr}`] : []),
+    ],
   });
 
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: 'Home', url: 'https://www.healthcareforesights.com' },
     { name: 'Reports', url: 'https://www.healthcareforesights.com/reports' },
-    { name: report.title, url: `https://www.healthcareforesights.com/reports/${report.slug}` },
+    { name: report.title, url: reportUrl },
   ]);
 
   const faqSchema = report.faqs && report.faqs.length > 0 ? generateFAQSchema(report.faqs) : null;
@@ -347,6 +378,8 @@ export default async function ReportPage({
   return (
     <>
       <StructuredData data={articleSchema} />
+      <StructuredData data={productSchema} />
+      <StructuredData data={datasetSchema} />
       <StructuredData data={breadcrumbSchema} />
       {faqSchema && <StructuredData data={faqSchema} />}
 
@@ -365,6 +398,7 @@ export default async function ReportPage({
           price={report.price}
           discounted_price={report.discounted_price}
           reportTitle={report.title}
+          reportSlug={report.slug}
         >
           <article>
               <header className="mb-8 pb-8 border-b border-[var(--border)]">
@@ -422,7 +456,7 @@ export default async function ReportPage({
               {hasFullContent ? (
                 <>
                   <section className="mb-12">
-                    <h2 id="overview" className="text-3xl font-bold text-[var(--teal-deep)] mb-6 scroll-mt-24">
+                    <h2 id="overview" className="text-2xl font-bold text-[var(--teal-deep)] mb-6 scroll-mt-24">
                       Market Overview
                     </h2>
                     <StyledReportContent
@@ -451,7 +485,7 @@ export default async function ReportPage({
                   {/* Images (Refer Below) */}
 
                   <section className="mb-12">
-                    <h2 id="competitive" className="text-3xl font-bold text-[var(--teal-deep)] mb-6 scroll-mt-24">
+                    <h2 id="competitive" className="text-2xl font-bold text-[var(--teal-deep)] mb-6 scroll-mt-24">
                       Competitive Landscape
                     </h2>
                     <p className="text-[#333333] mb-8 leading-relaxed">

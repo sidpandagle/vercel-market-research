@@ -477,6 +477,7 @@ export function mapApiPressReleaseToPressRelease(apiPressRelease: ApiPressReleas
     content: apiPressRelease.content,
     tags,
     location: apiPressRelease.location,
+    reportUrl: apiPressRelease.reportUrl,
 
     // Include nested objects
     authorId: apiPressRelease.authorId,

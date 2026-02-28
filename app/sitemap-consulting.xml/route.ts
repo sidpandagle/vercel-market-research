@@ -12,7 +12,7 @@ export async function GET() {
     const consultingHubPage = {
       url: `${BASE_URL}/consulting`,
       lastModified: new Date().toISOString(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'weekly',
       priority: 0.8,
     };
 
@@ -20,7 +20,7 @@ export async function GET() {
     const dynamicConsultingPages = consultingServices.map((service) => ({
       url: `${BASE_URL}/consulting/${service.slug}`,
       lastModified: new Date().toISOString(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'weekly',
       priority: 0.7,
     }));
 

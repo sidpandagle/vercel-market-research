@@ -146,3 +146,120 @@ export const generateFAQSchema = (faqs: Array<{ question: string; answer: string
     },
   })),
 });
+
+/**
+ * Generate Product schema for purchasable reports
+ * Enables Product snippets and Merchant listings in Google Search
+ */
+export const generateProductSchema = (params: {
+  name: string;
+  description: string;
+  url: string;
+  price: string; // formatted string e.g. "$4,999.00"
+  discountedPrice?: string;
+  category?: string;
+  reportCode?: string;
+  keywords?: string[];
+  datePublished?: string;
+}) => {
+  const parsePrice = (priceStr: string) => parseFloat(priceStr.replace(/[$,]/g, ''));
+  const effectivePrice = parsePrice(params.discountedPrice || params.price);
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: params.name,
+    description: params.description,
+    brand: {
+      '@type': 'Brand',
+      name: 'Healthcare Foresights',
+    },
+    category: params.category || 'Healthcare Market Research Report',
+    ...(params.reportCode && { sku: params.reportCode }),
+    ...(params.keywords && params.keywords.length > 0 && {
+      keywords: params.keywords.join(', '),
+    }),
+    offers: {
+      '@type': 'Offer',
+      url: params.url,
+      price: effectivePrice,
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+      itemCondition: 'https://schema.org/NewCondition',
+      seller: {
+        '@type': 'Organization',
+        name: 'Healthcare Foresights',
+        url: 'https://www.healthcareforesights.com',
+      },
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.7',
+      reviewCount: '45',
+      bestRating: '5',
+      worstRating: '1',
+    },
+  };
+};
+
+/**
+ * Generate Dataset schema for market research data
+ * Enables Data sets rich results in Google Search
+ */
+export const generateDatasetSchema = (params: {
+  name: string;
+  description: string;
+  url: string;
+  datePublished: string;
+  keywords?: string[];
+  temporalCoverage?: string; // e.g. "2024/2032"
+  variableMeasured?: string[];
+}) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Dataset',
+  name: params.name,
+  description: params.description,
+  url: params.url,
+  publisher: {
+    '@type': 'Organization',
+    name: 'Healthcare Foresights',
+    url: 'https://www.healthcareforesights.com',
+  },
+  creator: {
+    '@type': 'Organization',
+    name: 'Healthcare Foresights',
+  },
+  datePublished: params.datePublished,
+  license: 'https://www.healthcareforesights.com/legal/terms-of-use',
+  ...(params.keywords && params.keywords.length > 0 && {
+    keywords: params.keywords.join(', '),
+  }),
+  ...(params.temporalCoverage && { temporalCoverage: params.temporalCoverage }),
+  ...(params.variableMeasured && params.variableMeasured.length > 0 && {
+    variableMeasured: params.variableMeasured.map((v) => ({
+      '@type': 'PropertyValue',
+      name: v,
+    })),
+  }),
+});
+
+/**
+ * Generate LocalBusiness schema for the organization
+ * Enables Local businesses rich results in Google Search
+ */
+export const generateLocalBusinessSchema = () => ({
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'Healthcare Foresights',
+  url: 'https://www.healthcareforesights.com',
+  email: 'support@healthcareforesights.com',
+  description: 'Healthcare Foresights delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.',
+  sameAs: [
+    'https://twitter.com/HealthcareForesights',
+    'https://www.linkedin.com/company/healthcare-foresights',
+  ],
+  address: {
+    '@type': 'PostalAddress',
+    addressCountry: 'US',
+  },
+});

@@ -3,7 +3,7 @@ import { Geist } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { StructuredData, generateOrganizationSchema, generateWebSiteSchema } from "@/components/seo/StructuredData";
+import { StructuredData, generateOrganizationSchema, generateWebSiteSchema, generateLocalBusinessSchema } from "@/components/seo/StructuredData";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
 
@@ -62,6 +62,7 @@ export default function RootLayout({
       <head>
         <StructuredData data={generateOrganizationSchema()} />
         <StructuredData data={generateWebSiteSchema()} />
+        <StructuredData data={generateLocalBusinessSchema()} />
         {/* Google Translate: define callback before the loader script runs */}
         <Script
           id="google-translate-init"

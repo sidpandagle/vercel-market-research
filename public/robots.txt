@@ -1,5 +1,7 @@
-User-agent: *
-Allow: /
-
-# Sitemap location
+# Sitemaps
 Sitemap: https://www.healthcareforesights.com/sitemap.xml
+Sitemap: https://www.healthcareforesights.com/sitemap-pages.xml
+Sitemap: https://www.healthcareforesights.com/sitemap-consulting.xml
+Sitemap: https://www.healthcareforesights.com/sitemap-reports-1.xml
+Sitemap: https://www.healthcareforesights.com/sitemap-blogs-1.xml
+Sitemap: https://www.healthcareforesights.com/sitemap-press-releases-1.xml
