@@ -137,17 +137,17 @@ export default function GoogleTranslate() {
         />
         <style>{`
           .lang-btn {
-            color: #2563A3;
-            border: 1.5px solid #2563A3;
+            color: #1E7252;
+            border: 1.5px solid #1E7252;
             background: transparent;
             animation: langPulse 2.4s ease-in-out infinite;
             transition: color 0.55s ease, border-color 0.55s ease;
             will-change: box-shadow;
           }
           @keyframes langPulse {
-            0%   { box-shadow: 0 0 0 0 rgba(37,99,163,0.5); }
-            65%  { box-shadow: 0 0 0 6px rgba(37,99,163,0); }
-            100% { box-shadow: 0 0 0 0 rgba(37,99,163,0); }
+            0%   { box-shadow: 0 0 0 0 rgba(30,114,82,0.5); }
+            65%  { box-shadow: 0 0 0 6px rgba(30,114,82,0); }
+            100% { box-shadow: 0 0 0 0 rgba(30,114,82,0); }
           }
 
           /* Solid fill layer — opacity-transitions smoothly */
@@ -155,7 +155,7 @@ export default function GoogleTranslate() {
             position: absolute;
             inset: -1px;
             border-radius: 9999px;
-            background: #2563A3;
+            background: #1E7252;
             opacity: 0;
             transition: opacity 0.55s ease;
             z-index: 1;
@@ -191,9 +191,9 @@ export default function GoogleTranslate() {
           /* Hover text/border settle */
           .lang-btn:hover {
             color: #fff;
-            border-color: rgba(29,78,216,0.6);
+            border-color: rgba(26,92,68,0.6);
             animation-play-state: paused;
-            box-shadow: 0 4px 16px rgba(37,99,163,0.28);
+            box-shadow: 0 4px 16px rgba(30,114,82,0.28);
           }
 
           /* Chevron rotation */
@@ -205,7 +205,7 @@ export default function GoogleTranslate() {
 
       {isOpen && (
         <div
-          className="absolute right-0 top-full mt-2 w-52 bg-white border border-slate-200 rounded-lg shadow-lg z-[60] py-1 overflow-hidden notranslate"
+          className="absolute right-0 top-full mt-2 w-52 bg-white border border-stone-200 rounded-lg shadow-lg z-[60] py-1 overflow-hidden notranslate"
           role="listbox"
           aria-label="Language options"
           translate="no"
@@ -218,13 +218,13 @@ export default function GoogleTranslate() {
               onClick={() => selectLanguage(lang.code)}
               className={`w-full flex items-center justify-between px-4 py-2.5 text-sm text-left transition-colors ${
                 currentLang === lang.code
-                  ? "text-[#2563A3] bg-blue-50 font-medium"
-                  : "text-slate-700 hover:bg-slate-50"
+                  ? "text-ocean-600 bg-ocean-50 font-medium"
+                  : "text-stone-700 hover:bg-stone-50"
               }`}
             >
               <span className="notranslate">{lang.label}</span>
               {currentLang === lang.code && (
-                <Check className="w-3.5 h-3.5 text-[#2563A3]" />
+                <Check className="w-3.5 h-3.5 text-ocean-600" />
               )}
             </button>
           ))}

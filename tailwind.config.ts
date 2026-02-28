@@ -22,27 +22,27 @@ export default {
   				foreground: 'hsl(var(--primary-foreground))'
   			},
   			'primary-hover': 'var(--primary-hover)',
-  			/* Deep warm near-black replaces cold navy */
+  			/* Deep forest near-black */
   			'navy': {
-  				'950': '#0F0E1A',
-  				'900': '#1A1830',
-  				'800': '#252249',
+  				'950': '#091C15',
+  				'900': '#0D2820',
+  				'800': '#163528',
   			},
-  			/* Indigo spectrum replaces ocean blues */
+  			/* Forest green spectrum */
   			'ocean': {
-  				'700': '#3730A3',
-  				'600': '#4338CA',
-  				'500': '#4F46E5',
-  				'400': '#6366F1',
-  				'300': '#818CF8',
-  				'200': '#A5B4FC',
-  				'100': '#C7D2FE',
-  				'50':  '#EEF2FF',
+  				'700': '#1A5C44',
+  				'600': '#1E7252',
+  				'500': '#25906A',
+  				'400': '#34A87E',
+  				'300': '#5BBEA0',
+  				'200': '#8DD5BC',
+  				'100': '#C0E8DA',
+  				'50':  '#E6F5F0',
   			},
-  			/* Warm amber gold replaces bright cyan */
+  			/* Lime/chartreuse accent */
   			'bright': {
-  				'500': '#F59E0B',
-  				'400': '#FCD34D',
+  				'500': '#84CC16',
+  				'400': '#A3E635',
   			},
   			secondary: {
   				DEFAULT: 'hsl(var(--secondary))',

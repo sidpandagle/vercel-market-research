@@ -43,7 +43,7 @@ export default function StatsSection() {
           {stats.map((stat) => {
             const Icon = stat.icon;
             return (
-              <div key={stat.value} className="px-6 md:px-10 py-10 text-center">
+              <div key={stat.value} className="px-6 md:px-10 py-14 text-center">
                 <div className="flex justify-center mb-5">
                   <div className="w-12 h-12 rounded-xl bg-bright-500/15 flex items-center justify-center shadow-[0_0_24px_-4px_rgba(245,158,11,0.35)]">
                     <Icon className="w-5 h-5 text-bright-400" strokeWidth={1.5} />

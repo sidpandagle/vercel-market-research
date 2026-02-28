@@ -23,9 +23,9 @@ export default async function FeaturedReportsSection() {
   const featuredReports = response.data;
 
   return (
-    <Section background="muted" padding="lg">
+    <Section background="muted" padding="xl">
       <Container size="xl">
-        <div className="space-y-10">
+        <div className="space-y-14">
 
           {/* Section header */}
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">

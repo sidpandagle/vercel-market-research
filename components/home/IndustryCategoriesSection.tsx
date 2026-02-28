@@ -49,9 +49,9 @@ const fallbackStyle: CategoryStyle = {
 
 export default function IndustryCategoriesSection() {
   return (
-    <Section padding="lg" background="default">
+    <Section padding="xl" background="default">
       <Container size="xl">
-        <div className="space-y-10">
+        <div className="space-y-14">
 
           {/* Section header */}
           <div className="text-center space-y-3">

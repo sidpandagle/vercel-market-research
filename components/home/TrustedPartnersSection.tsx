@@ -26,9 +26,9 @@ export default function TrustedPartnersSection() {
   const duplicatedPartners = [...partners, ...partners];
 
   return (
-    <Section background="card" padding="md">
+    <Section background="card" padding="lg">
       <Container size="xl">
-        <div className="space-y-8">
+        <div className="space-y-10">
 
           {/* Subtle label — no large h2 */}
           <p className="text-center text-xs font-semibold uppercase tracking-widest text-slate-400">

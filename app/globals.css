@@ -4,17 +4,17 @@
 
 /* Synaptic Research — Editorial Intelligence Design System */
 :root {
-  /* Primary: Deep Indigo (replaces ocean blues) */
-  --primary: #4338CA;        /* Indigo-600 */
-  --primary-hover: #3730A3;  /* Indigo-700 */
-  --primary-light: #4F46E5;  /* Indigo-500 */
-  --primary-dark: #252249;   /* Indigo-900 */
+  /* Primary: Forest Green */
+  --primary: #1E7252;        /* Forest-600 */
+  --primary-hover: #1A5C44;  /* Forest-700 */
+  --primary-light: #25906A;  /* Forest-500 */
+  --primary-dark: #0D2820;   /* Forest-900 */
 
   /* Accent Colors */
-  --accent-navy: #0F0E1A;    /* Deep warm near-black */
-  --accent-ocean: #4338CA;   /* Indigo-600 */
-  --accent-bright: #F59E0B;  /* Warm amber gold */
-  --accent-amber: #D97706;   /* Amber-600 */
+  --accent-navy: #091C15;    /* Deep forest near-black */
+  --accent-ocean: #1E7252;   /* Forest-600 */
+  --accent-bright: #84CC16;  /* Lime-500 */
+  --accent-amber: #65A30D;   /* Lime-700 */
 
   /* Warm Neutrals (replaces cool slate) */
   --secondary: #FDF8F0;      /* Warm cream */
@@ -26,17 +26,17 @@
   --muted-foreground: #57534E; /* Stone-600 */
 
   /* Solid color replacements (formerly gradients) */
-  --gradient-primary: #4338CA;
-  --gradient-accent: #4338CA;
-  --gradient-warm: #D97706;
+  --gradient-primary: #1E7252;
+  --gradient-accent: #1E7252;
+  --gradient-warm: #65A30D;
 
-  /* Violet accent colors for report content (replaces teal) */
-  --teal-bright: #8B5CF6;    /* Violet-500 */
-  --teal-primary: #7C3AED;   /* Violet-600 */
-  --teal-steel: #6366F1;     /* Indigo-500 */
-  --teal-deep: #4338CA;      /* Indigo-600 */
-  --teal-subtle: #EDE9FE;    /* Violet-50 */
-  --teal-border: #C4B5FD;    /* Violet-300 */
+  /* Forest green accent colors for report content */
+  --teal-bright: #34A87E;    /* Forest-400 */
+  --teal-primary: #1E7252;   /* Forest-600 */
+  --teal-steel: #25906A;     /* Forest-500 */
+  --teal-deep: #1A5C44;      /* Forest-700 */
+  --teal-subtle: #E6F5F0;    /* Forest-50 */
+  --teal-border: #8DD5BC;    /* Forest-200 */
 }
 
 html {
@@ -69,30 +69,30 @@ html body { top: 0 !important; }
 
   /* Solid Color Utilities (formerly gradients) */
   .gradient-primary {
-    background: #4338CA;
+    background: #1E7252;
   }
   .gradient-accent {
-    background: #4338CA;
+    background: #1E7252;
   }
   .gradient-warm {
-    background: #D97706;
+    background: #65A30D;
   }
 
-  /* Enhanced Shadows with Indigo Color Tints */
+  /* Enhanced Shadows with Forest Color Tints */
   .shadow-primary {
-    box-shadow: 0 4px 14px 0 rgba(67, 56, 202, 0.22);
+    box-shadow: 0 4px 14px 0 rgba(30, 114, 82, 0.22);
   }
   .shadow-primary-lg {
-    box-shadow: 0 10px 30px -5px rgba(67, 56, 202, 0.28), 0 8px 12px -6px rgba(67, 56, 202, 0.16);
+    box-shadow: 0 10px 30px -5px rgba(30, 114, 82, 0.28), 0 8px 12px -6px rgba(30, 114, 82, 0.16);
   }
   .shadow-ocean {
-    box-shadow: 0 4px 14px 0 rgba(79, 70, 229, 0.22);
+    box-shadow: 0 4px 14px 0 rgba(37, 144, 106, 0.22);
   }
   .shadow-soft {
-    box-shadow: 0 2px 10px 0 rgba(15, 14, 26, 0.08);
+    box-shadow: 0 2px 10px 0 rgba(9, 28, 21, 0.08);
   }
   .shadow-amber {
-    box-shadow: 0 4px 14px 0 rgba(245, 158, 11, 0.25);
+    box-shadow: 0 4px 14px 0 rgba(132, 204, 22, 0.25);
   }
 
   /* Auto-scroll animation for partners */
@@ -112,7 +112,7 @@ html body { top: 0 !important; }
 
   /* ── Glassmorphism ── */
   .glass-dark {
-    background: rgba(26, 24, 48, 0.60);
+    background: rgba(9, 28, 21, 0.60);
     backdrop-filter: blur(20px) saturate(1.5);
     -webkit-backdrop-filter: blur(20px) saturate(1.5);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -129,14 +129,14 @@ html body { top: 0 !important; }
   /* ── Mesh radial-gradient overlay (dark sections) ── */
   .mesh-gradient-dark {
     background-image:
-      radial-gradient(ellipse at 15% 30%, rgba(67, 56, 202, 0.20) 0%, transparent 55%),
-      radial-gradient(ellipse at 85% 15%, rgba(245, 158, 11, 0.06) 0%, transparent 50%),
-      radial-gradient(ellipse at 55% 85%, rgba(79, 70, 229, 0.11) 0%, transparent 55%);
+      radial-gradient(ellipse at 15% 30%, rgba(30, 114, 82, 0.20) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 15%, rgba(132, 204, 22, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 55% 85%, rgba(37, 144, 106, 0.11) 0%, transparent 55%);
   }
 
   /* ── Gradient text ── */
   .text-gradient-amber {
-    background: linear-gradient(135deg, #FCD34D 0%, #F59E0B 65%);
+    background: linear-gradient(135deg, #A3E635 0%, #84CC16 65%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -186,8 +186,8 @@ html body { top: 0 !important; }
     --popover: 0 0% 100%;
     --popover-foreground: 20 14% 11%;
 
-    /* Primary: Deep Indigo */
-    --primary: 243 75% 59%;         /* Indigo-600 */
+    /* Primary: Forest Green */
+    --primary: 158 58% 28%;         /* Forest-600 */
     --primary-foreground: 0 0% 100%;
 
     /* Secondary: Warm cream */
@@ -198,8 +198,8 @@ html body { top: 0 !important; }
     --muted: 40 20% 95%;
     --muted-foreground: 25 6% 35%;  /* Stone-600 */
 
-    /* Accent: Warm Amber Gold */
-    --accent: 38 92% 50%;           /* Amber-500 */
+    /* Accent: Lime/Chartreuse */
+    --accent: 81 80% 44%;           /* Lime-500 */
     --accent-foreground: 20 14% 11%;
 
     --destructive: 0 84% 60%;
@@ -208,12 +208,12 @@ html body { top: 0 !important; }
     /* Warm Stone borders */
     --border: 20 6% 82%;            /* Stone-300 */
     --input: 20 6% 82%;
-    --ring: 243 75% 59%;
+    --ring: 158 58% 28%;
 
     /* Chart Colors — varied and vibrant */
-    --chart-1: 243 75% 59%;         /* Indigo */
-    --chart-2: 38 92% 50%;          /* Amber */
-    --chart-3: 262 83% 58%;         /* Violet */
+    --chart-1: 158 58% 28%;         /* Forest */
+    --chart-2: 81 80% 44%;          /* Lime */
+    --chart-3: 158 59% 36%;         /* Forest-500 */
     --chart-4: 142 71% 45%;         /* Emerald */
     --chart-5: 0 84% 60%;           /* Red */
 
@@ -230,39 +230,39 @@ html body { top: 0 !important; }
     --popover: 240 18% 12%;
     --popover-foreground: 40 30% 94%;
 
-    /* Primary: Lighter indigo for dark mode */
-    --primary: 243 75% 70%;
-    --primary-foreground: 240 20% 8%;
+    /* Primary: Lighter forest for dark mode */
+    --primary: 158 50% 45%;
+    --primary-foreground: 158 58% 8%;
 
-    --secondary: 240 15% 18%;
+    --secondary: 158 15% 18%;
     --secondary-foreground: 40 30% 94%;
 
-    --muted: 240 15% 18%;
+    --muted: 158 15% 18%;
     --muted-foreground: 40 15% 65%;
 
-    --accent: 38 92% 60%;           /* Brighter amber in dark */
+    --accent: 81 80% 55%;           /* Brighter lime in dark */
     --accent-foreground: 20 14% 11%;
 
     --destructive: 0 63% 31%;
     --destructive-foreground: 40 30% 94%;
 
-    --border: 240 15% 20%;
-    --input: 240 15% 20%;
-    --ring: 243 75% 70%;
+    --border: 158 15% 20%;
+    --input: 158 15% 20%;
+    --ring: 158 50% 45%;
 
-    --chart-1: 243 75% 70%;
-    --chart-2: 38 92% 60%;
-    --chart-3: 262 83% 68%;
+    --chart-1: 158 50% 45%;
+    --chart-2: 81 80% 55%;
+    --chart-3: 158 59% 44%;
     --chart-4: 142 71% 55%;
     --chart-5: 0 84% 70%;
 
-    /* Violet accents for dark mode */
-    --teal-bright: #A78BFA;
-    --teal-primary: #8B5CF6;
-    --teal-steel: #818CF8;
-    --teal-deep: #6366F1;
-    --teal-subtle: #1E1B4B;
-    --teal-border: #4C3F80;
+    /* Forest accents for dark mode */
+    --teal-bright: #5BBEA0;
+    --teal-primary: #34A87E;
+    --teal-steel: #25906A;
+    --teal-deep: #1E7252;
+    --teal-subtle: #0D2820;
+    --teal-border: #1A5C44;
   }
 }
 
@@ -413,7 +413,7 @@ html body { top: 0 !important; }
   .prose th {
     @apply text-[var(--foreground)] font-semibold text-left;
     padding: 6px 15px;
-    border: 1px solid #c4b5fd;
+    border: 1px solid #8DD5BC;
     font-size: 0.875rem;
     text-transform: none;
     letter-spacing: normal;
@@ -434,7 +434,7 @@ html body { top: 0 !important; }
   }
 
   .prose tbody tr:hover {
-    background-color: rgba(196, 181, 253, 0.08);
+    background-color: rgba(141, 213, 188, 0.08);
   }
 
   .prose tbody tr:last-child {
@@ -444,7 +444,7 @@ html body { top: 0 !important; }
   .prose td {
     @apply text-[var(--foreground)];
     padding: 6px 15px;
-    border: 1px solid #c4b5fd;
+    border: 1px solid #8DD5BC;
     font-size: 0.9375rem;
   }
 
@@ -490,7 +490,7 @@ html body { top: 0 !important; }
   }
 
   .styled-report-content > ul:first-of-type {
-    @apply bg-[#EEF2FF];
+    @apply bg-[#E6F5F0];
     li {
       @apply border-b border-gray-300;
       p {

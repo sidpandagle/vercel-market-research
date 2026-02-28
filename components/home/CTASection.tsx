@@ -10,7 +10,7 @@ const highlights = [
 
 export default function CTASection() {
   return (
-    <section className="relative overflow-hidden bg-navy-950 mesh-gradient-dark py-20 md:py-28">
+    <section className="relative overflow-hidden bg-navy-950 mesh-gradient-dark py-24 md:py-36">
 
       {/* Dot pattern */}
       <div

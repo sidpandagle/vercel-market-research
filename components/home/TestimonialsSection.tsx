@@ -59,9 +59,9 @@ export default function TestimonialsSection() {
   );
 
   return (
-    <Section padding="lg" background="muted">
+    <Section padding="xl" background="muted">
       <Container size="xl">
-        <div className="space-y-10">
+        <div className="space-y-14">
 
           {/* Header */}
           <div className="text-center space-y-3">
