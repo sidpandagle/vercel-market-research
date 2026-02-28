@@ -10,8 +10,8 @@ export default {
   theme: {
   	extend: {
   		fontFamily: {
-  			sans: ['var(--font-dm-sans)', 'DM Sans', 'system-ui', 'sans-serif'],
-  			display: ['var(--font-playfair)', 'Playfair Display', 'Georgia', 'serif'],
+  			sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+  			display: ['var(--font-fraunces)', 'Fraunces', 'Georgia', 'serif'],
   			mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
   		},
   		colors: {

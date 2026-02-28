@@ -10,7 +10,7 @@ const highlights = [
 
 export default function CTASection() {
   return (
-    <section className="relative overflow-hidden bg-navy-950 py-20 md:py-28">
+    <section className="relative overflow-hidden bg-navy-950 mesh-gradient-dark py-20 md:py-28">
 
       {/* Dot pattern */}
       <div
@@ -26,6 +26,11 @@ export default function CTASection() {
       <div className="absolute bottom-0 right-1/4 w-[500px] h-[350px] bg-bright-500/[0.09] rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+        {/* Glassmorphism inner container */}
+        <div className="relative rounded-3xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm px-8 py-12 md:px-14 md:py-16 shadow-2xl shadow-black/30">
+          {/* Top gradient highlight line */}
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.14] to-transparent rounded-t-3xl pointer-events-none" />
+
         <div className="flex flex-col items-center gap-8 text-center">
 
           {/* Eyebrow */}
@@ -36,7 +41,7 @@ export default function CTASection() {
           {/* Headline */}
           <h2 className="text-3xl md:text-[3.25rem] text-white leading-[1.12] tracking-[-0.02em] max-w-3xl">
             Ready to Make Data-Driven{' '}
-            <span className="text-bright-400">Healthcare Decisions?</span>
+            <span className="text-gradient-amber">Healthcare Decisions?</span>
           </h2>
 
           {/* Subtext */}
@@ -85,6 +90,7 @@ export default function CTASection() {
           </div>
 
         </div>
+        </div>{/* /glassmorphism container */}
       </div>
     </section>
   );

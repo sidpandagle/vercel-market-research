@@ -4,6 +4,12 @@ import { Section, Container, Badge } from '@/components/ui';
 import { formatDate } from '@/lib/utils';
 import { getReports, isApiError } from '@/lib/api';
 
+const accentBars = [
+  'bg-gradient-to-r from-ocean-700 to-ocean-500',
+  'bg-gradient-to-r from-bright-500 to-bright-400',
+  'bg-gradient-to-r from-violet-700 to-violet-500',
+];
+
 export default async function FeaturedReportsSection() {
   const response = await getReports({
     status: 'published',
@@ -50,10 +56,10 @@ export default async function FeaturedReportsSection() {
               <Link
                 key={report.id}
                 href={`/reports/${report.slug}`}
-                className="group flex flex-col bg-white border border-slate-100 rounded-2xl overflow-hidden hover:border-ocean-200 hover:shadow-xl hover:shadow-ocean-100/50 hover:-translate-y-0.5 transition-all duration-200"
+                className="group flex flex-col bg-white border border-slate-100 rounded-2xl overflow-hidden hover:border-ocean-200 hover:shadow-2xl hover:shadow-ocean-100/60 hover:-translate-y-1 transition-all duration-250"
               >
-                {/* Colored top bar — alternates accent */}
-                <div className={`h-[3px] shrink-0 ${idx === 1 ? 'bg-bright-500' : 'bg-ocean-600'}`} />
+                {/* Gradient accent bar — cycles indigo / amber / violet */}
+                <div className={`h-[3px] shrink-0 ${accentBars[idx % accentBars.length]}`} />
 
                 <div className="flex flex-col flex-1 p-6">
                   {/* Meta row */}

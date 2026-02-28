@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans, Playfair_Display } from "next/font/google";
+import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -7,16 +7,16 @@ import { StructuredData, generateOrganizationSchema, generateWebSiteSchema, gene
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
 
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
   preload: true,
   weight: ["300", "400", "500", "600", "700"],
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
   display: "swap",
   preload: true,
@@ -101,7 +101,7 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
       </head>
-      <body className={`${dmSans.variable} ${playfair.variable} antialiased`}>
+      <body className={`${inter.variable} ${fraunces.variable} antialiased`}>
         <div id="google_translate_element" className="hidden" />
         <Header />
         <main className="min-h-screen">{children}</main>

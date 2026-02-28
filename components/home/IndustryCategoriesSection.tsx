@@ -76,7 +76,7 @@ export default function IndustryCategoriesSection() {
                 <Link
                   key={category.id}
                   href={`/reports?category=${category.slug}`}
-                  className="group flex flex-col gap-4 p-5 bg-white border border-slate-100 rounded-2xl hover:border-ocean-200 hover:shadow-lg hover:shadow-ocean-50 hover:-translate-y-0.5 transition-all duration-200"
+                  className="group flex flex-col gap-4 p-5 bg-white border border-slate-100 rounded-2xl hover:border-ocean-200 hover:shadow-xl hover:shadow-ocean-100/50 hover:-translate-y-1 transition-all duration-200"
                 >
                   <div
                     className={`w-11 h-11 rounded-xl ${style.bg} ${style.text} ring-1 ${style.ring} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-200`}

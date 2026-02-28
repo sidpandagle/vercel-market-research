@@ -82,17 +82,17 @@ export default function TestimonialsSection() {
             {currentTestimonials.map((testimonial) => (
               <div
                 key={testimonial.id}
-                className="flex flex-col bg-white border border-slate-100 rounded-2xl overflow-hidden hover:shadow-lg hover:border-slate-200 transition-all duration-200"
+                className="flex flex-col bg-white border border-slate-100 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-ocean-50/70 hover:border-ocean-100 hover:-translate-y-0.5 transition-all duration-200"
               >
-                {/* Accent stripe */}
-                <div className="h-[3px] bg-ocean-600 shrink-0" />
+                {/* Gradient accent stripe */}
+                <div className="h-[3px] bg-gradient-to-r from-ocean-600 via-ocean-400 to-ocean-300 shrink-0" />
 
                 <div className="flex flex-col flex-1 p-6">
                   {/* Top row: rating */}
                   <div className="flex items-center justify-between mb-5">
                     <StarRating rating={testimonial.rating} />
                     <svg
-                      className="w-7 h-7 text-ocean-100"
+                      className="w-9 h-9 text-ocean-200/70"
                       fill="currentColor"
                       viewBox="0 0 32 32"
                       aria-hidden="true"
@@ -140,9 +140,9 @@ export default function TestimonialsSection() {
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
-                  className={`h-2 rounded-full transition-all duration-200 ${
+                  className={`h-2 rounded-full transition-all duration-300 ${
                     index === currentIndex
-                      ? 'w-8 bg-ocean-600'
+                      ? 'w-8 bg-gradient-to-r from-ocean-600 to-ocean-400'
                       : 'w-2 bg-slate-200 hover:bg-slate-300'
                   }`}
                   aria-label={`Go to slide ${index + 1}`}

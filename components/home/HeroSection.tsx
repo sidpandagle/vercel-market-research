@@ -14,19 +14,22 @@ const chartBars = [40, 55, 48, 62, 70, 65, 78, 85, 80, 92];
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[92vh] flex items-center overflow-hidden bg-navy-950">
+    <section className="relative min-h-[92vh] flex items-center overflow-hidden bg-navy-950 mesh-gradient-dark">
 
-      {/* Dot grid */}
+      {/* Line-grid texture */}
+      <div className="absolute inset-0 line-grid pointer-events-none" />
+
+      {/* Dot grid (subtle, on top of line-grid) */}
       <div
-        className="absolute inset-0 opacity-[0.04] pointer-events-none"
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
         style={{
           backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'28\' height=\'28\' viewBox=\'0 0 28 28\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Ccircle cx=\'1\' cy=\'1\' r=\'1\' fill=\'white\'/%3E%3C/svg%3E")',
           backgroundSize: '28px 28px',
         }}
       />
 
-      {/* Ambient glow orbs */}
-      <div className="absolute top-0 left-0 w-[700px] h-[600px] rounded-full bg-ocean-600/[0.18] blur-3xl -translate-x-1/3 -translate-y-1/4 pointer-events-none" />
+      {/* Ambient glow orbs — pulsing */}
+      <div className="absolute top-0 left-0 w-[700px] h-[600px] rounded-full bg-ocean-600/[0.18] blur-3xl -translate-x-1/3 -translate-y-1/4 pointer-events-none animate-pulse-ambient" />
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-bright-500/[0.07] blur-3xl translate-x-1/4 translate-y-1/4 pointer-events-none" />
       <div className="absolute top-1/2 right-1/3 w-[350px] h-[250px] rounded-full bg-ocean-500/[0.07] blur-3xl -translate-y-1/2 pointer-events-none" />
 
@@ -49,7 +52,7 @@ export default function HeroSection() {
             <h1 className="text-[3rem] sm:text-[3.5rem] lg:text-[4rem] xl:text-[4.75rem] text-white leading-[1.04] tracking-[-0.025em]">
               The Intelligence<br />
               Behind Healthcare's<br />
-              <span className="text-bright-400">Biggest Decisions.</span>
+              <span className="text-gradient-amber">Biggest Decisions.</span>
             </h1>
 
             {/* Subheadline */}
@@ -115,8 +118,13 @@ export default function HeroSection() {
           <div className="hidden lg:flex lg:col-span-5 items-center justify-center">
             <div className="relative w-full max-w-[400px] h-[520px]">
 
-              {/* Primary report card */}
-              <div className="absolute top-0 right-0 w-[345px] bg-navy-900 border border-white/[0.09] rounded-2xl p-6 shadow-2xl shadow-black/60">
+              {/* Soft glow behind primary card */}
+              <div className="absolute top-0 right-0 w-[345px] h-[300px] bg-ocean-600/[0.10] blur-2xl rounded-3xl pointer-events-none" />
+
+              {/* Primary report card — glassmorphism */}
+              <div className="absolute top-0 right-0 w-[345px] glass-dark rounded-2xl p-6 shadow-2xl shadow-black/60 animate-float-gentle">
+                {/* Gradient top-border highlight */}
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ocean-400/40 to-transparent rounded-t-2xl" />
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-ocean-600/[0.22] text-ocean-300 border border-ocean-500/20">
                     Pharmaceuticals
@@ -159,8 +167,10 @@ export default function HeroSection() {
                 </div>
               </div>
 
-              {/* Secondary report card */}
-              <div className="absolute bottom-6 left-0 w-[295px] bg-navy-900 border border-white/[0.09] rounded-2xl p-5 shadow-2xl shadow-black/50">
+              {/* Secondary report card — glassmorphism */}
+              <div className="absolute bottom-6 left-0 w-[295px] glass-dark rounded-2xl p-5 shadow-2xl shadow-black/50 animate-float-alt">
+                {/* Gradient top-border highlight */}
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-bright-400/40 to-transparent rounded-t-2xl" />
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-bright-500/[0.14] text-bright-400 border border-bright-500/20">
                     Medical Devices
