@@ -30,8 +30,8 @@ export default async function FeaturedReportsSection() {
 
           <Grid cols={3} gap="lg">
             {featuredReports.map((report) => (
-              <Link key={report.id} href={`/reports/${report.slug}`}>
-                <Card className="hover:shadow-lg transition-shadow">
+              <Link key={report.id} href={`/reports/${report.slug}`} className="block h-full">
+                <Card className="hover:shadow-lg transition-shadow h-full flex flex-col">
                   <CardHeader>
                     <div className="flex items-center gap-2 mb-3">
                       <Badge variant="primary" size="sm">
@@ -43,7 +43,7 @@ export default async function FeaturedReportsSection() {
                     </div>
                     <CardTitle className="text-lg">{report.title}</CardTitle>
                   </CardHeader>
-                  <CardContent style={{ paddingTop: 0, paddingBottom: 0 }}>
+                  <CardContent className="flex-1" style={{ paddingTop: 0, paddingBottom: 0 }}>
                     <CardDescription className="line-clamp-4">{report.summary}</CardDescription>
                   </CardContent>
                   <CardFooter>
