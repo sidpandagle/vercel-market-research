@@ -70,12 +70,12 @@ export default function MegaMenu({ categories, isActive }: MegaMenuProps) {
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
         className={cn(
-          "text-sm font-medium transition-colors",
-          "hover:text-[var(--primary)]",
-          "flex items-center gap-1 cursor-pointer",
+          "text-sm font-medium transition-colors relative pb-0.5",
+          "after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-bright-500 after:transition-all after:duration-200",
+          "flex items-center gap-1 cursor-pointer whitespace-nowrap",
           isActive
-            ? "text-[var(--primary)]"
-            : "text-[var(--muted-foreground)]"
+            ? "text-[var(--primary)] after:w-full"
+            : "text-[var(--muted-foreground)] after:w-0 hover:text-[var(--primary)] hover:after:w-full"
         )}
         aria-haspopup="true"
         aria-expanded={isOpen}
@@ -113,11 +113,9 @@ export default function MegaMenu({ categories, isActive }: MegaMenuProps) {
       <div
         className={cn(
           "fixed left-0 right-0 z-50",
-          // Mobile: full height with scroll, Desktop: auto height
-          "lg:top-[64px]",
-          "bg-[var(--background)] border-t border-[var(--border)] shadow-lg bg-[var(--card)]",
+          "lg:top-[62px]",
+          "bg-white border-t-2 border-t-bright-500 shadow-[0_8px_32px_0_rgba(9,28,21,0.12)]",
           "transition-all duration-300 ease-out",
-          // Mobile-specific scrolling styles
           isOpen
             ? "opacity-100 visible translate-y-0"
             : "opacity-0 invisible -translate-y-2 pointer-events-none"
@@ -132,32 +130,43 @@ export default function MegaMenu({ categories, isActive }: MegaMenuProps) {
           WebkitOverflowScrolling: 'touch',
         }}
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-6 max-w-7xl mx-auto">
-          {categories.map((category) => (
+        <div className="p-6 max-w-7xl mx-auto">
+          <div className="mb-4 flex items-center justify-between">
+            <span className="text-xs font-semibold text-stone-400 uppercase tracking-widest">Browse by Category</span>
             <Link
-              key={category.id}
-              href={`/reports?category=${category.slug}`}
+              href="/reports"
               onClick={() => setIsOpen(false)}
-              className={cn(
-                "group block p-4 rounded-lg",
-                "border border-[var(--border)] bg-[var(--card)]",
-                "hover:border-[var(--primary)] hover:shadow-md",
-                "transition-all duration-200",
-                "focus:outline-none focus:ring-2 focus:ring-[var(--primary)]",
-                // Ensure proper touch target size on mobile
-                "min-h-[80px]"
-              )}
-              role="menuitem"
-              tabIndex={isOpen ? 0 : -1}
+              className="text-xs font-semibold text-ocean-600 hover:text-ocean-700 hover:underline underline-offset-4 transition-colors"
             >
-              <h3 className="font-semibold text-base mb-2 text-[var(--foreground)] group-hover:text-[var(--primary)] transition-colors">
-                {category.name}
-              </h3>
-              <p className="text-sm text-[var(--muted-foreground)] line-clamp-2">
-                {category.description}
-              </p>
+              View all reports →
             </Link>
-          ))}
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+            {categories.map((category) => (
+              <Link
+                key={category.id}
+                href={`/reports?category=${category.slug}`}
+                onClick={() => setIsOpen(false)}
+                className={cn(
+                  "group block p-3 rounded-md",
+                  "border-l-2 border-l-transparent bg-stone-50",
+                  "hover:border-l-bright-500 hover:bg-white hover:shadow-sm",
+                  "transition-all duration-200",
+                  "focus:outline-none focus:ring-2 focus:ring-[var(--primary)]",
+                  "min-h-[72px]"
+                )}
+                role="menuitem"
+                tabIndex={isOpen ? 0 : -1}
+              >
+                <h3 className="font-semibold text-sm mb-1 text-stone-800 group-hover:text-ocean-700 transition-colors">
+                  {category.name}
+                </h3>
+                <p className="text-xs text-stone-500 line-clamp-2 leading-relaxed">
+                  {category.description}
+                </p>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </div>

@@ -5,7 +5,6 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { StructuredData, generateOrganizationSchema, generateWebSiteSchema, generateLocalBusinessSchema } from "@/components/seo/StructuredData";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import Script from "next/script";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -72,37 +71,8 @@ export default function RootLayout({
         <StructuredData data={generateOrganizationSchema()} />
         <StructuredData data={generateWebSiteSchema()} />
         <StructuredData data={generateLocalBusinessSchema()} />
-        {/* Google Translate: define callback before the loader script runs */}
-        <Script
-          id="google-translate-init"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.googleTranslateElementInit = function() {
-                new google.translate.TranslateElement(
-                  { pageLanguage: 'en', autoDisplay: false },
-                  'google_translate_element'
-                );
-                var _gtBannerInterval = setInterval(function() {
-                  var banner = document.querySelector('iframe.goog-te-banner-frame');
-                  if (banner) {
-                    banner.style.display = 'none';
-                    document.body.style.top = '0px';
-                    clearInterval(_gtBannerInterval);
-                  }
-                }, 200);
-                setTimeout(function() { clearInterval(_gtBannerInterval); }, 5000);
-              };
-            `,
-          }}
-        />
-        <Script
-          src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-          strategy="afterInteractive"
-        />
       </head>
       <body className={`${inter.variable} ${fraunces.variable} antialiased`}>
-        <div id="google_translate_element" className="hidden" />
         <Header />
         <main className="min-h-screen">{children}</main>
         <Footer />

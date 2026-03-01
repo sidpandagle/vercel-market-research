@@ -74,12 +74,12 @@ export default function ConsultingMenu({ services, isActive }: ConsultingMenuPro
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
         className={cn(
-          "text-sm font-medium transition-colors",
-          "hover:text-[var(--primary)]",
+          "text-sm font-medium transition-colors relative pb-0.5",
+          "after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-bright-500 after:transition-all after:duration-200",
           "flex items-center gap-1 cursor-pointer whitespace-nowrap",
           isActive
-            ? "text-[var(--primary)]"
-            : "text-[var(--muted-foreground)]"
+            ? "text-[var(--primary)] after:w-full"
+            : "text-[var(--muted-foreground)] after:w-0 hover:text-[var(--primary)] hover:after:w-full"
         )}
         aria-haspopup="true"
         aria-expanded={isOpen}
@@ -117,10 +117,10 @@ export default function ConsultingMenu({ services, isActive }: ConsultingMenuPro
       <div
         className={cn(
           "fixed left-0 right-0 z-50",
-          "lg:top-[64px]",
-          "bg-[var(--background)] border-t border-[var(--border)] shadow-lg bg-[var(--card)]",
+          "lg:top-[62px]",
+          "bg-white border-t-2 border-t-bright-500 shadow-[0_8px_32px_0_rgba(9,28,21,0.12)]",
           "transition-all duration-300 ease-out",
-          "max-h-[calc(100vh-64px)] overflow-y-auto",
+          "max-h-[calc(100vh-62px)] overflow-y-auto",
           isOpen
             ? "opacity-100 visible translate-y-0"
             : "opacity-0 invisible -translate-y-2 pointer-events-none"
@@ -135,52 +135,47 @@ export default function ConsultingMenu({ services, isActive }: ConsultingMenuPro
         }}
       >
         <div className="p-6 max-w-7xl mx-auto">
-          {/* Services overview link */}
-          <div className="mb-5 pb-4 border-b border-[var(--border)]">
+          {/* Header row */}
+          <div className="mb-4 flex items-center justify-between">
+            <span className="text-xs font-semibold text-stone-400 uppercase tracking-widest">Our Services</span>
             <Link
               href="/services"
               onClick={() => setIsOpen(false)}
-              className={cn(
-                "inline-flex items-center gap-2 text-sm font-semibold text-[var(--primary)]",
-                "hover:underline underline-offset-4"
-              )}
+              className="text-xs font-semibold text-ocean-600 hover:text-ocean-700 hover:underline underline-offset-4 transition-colors"
               role="menuitem"
               tabIndex={isOpen ? 0 : -1}
             >
-              View All Services
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
+              View all services →
             </Link>
           </div>
 
           {/* Services by Category */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {Object.entries(servicesByCategory).map(([category, categoryServices]) => (
-              <div key={category} className="space-y-3">
-                <h3 className="text-xs font-semibold text-[var(--muted-foreground)] uppercase tracking-wider">
+              <div key={category} className="space-y-2">
+                <h3 className="text-xs font-semibold text-stone-400 uppercase tracking-widest pb-1 border-b border-stone-100">
                   {category}
                 </h3>
-                <div className="space-y-2">
+                <div className="space-y-1">
                   {categoryServices.map((service) => (
                     <Link
                       key={service.id}
                       href={`/consulting/${service.slug}`}
                       onClick={() => setIsOpen(false)}
                       className={cn(
-                        "block p-3 rounded-lg",
-                        "border border-transparent",
-                        "hover:border-[var(--primary)] hover:bg-[var(--muted)]",
+                        "group block p-3 rounded-md",
+                        "border-l-2 border-l-transparent bg-stone-50",
+                        "hover:border-l-bright-500 hover:bg-white hover:shadow-sm",
                         "transition-all duration-200",
                         "focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
                       )}
                       role="menuitem"
                       tabIndex={isOpen ? 0 : -1}
                     >
-                      <h4 className="font-medium text-sm text-[var(--foreground)] mb-1">
+                      <h4 className="font-semibold text-sm text-stone-800 group-hover:text-ocean-700 mb-0.5 transition-colors">
                         {service.title}
                       </h4>
-                      <p className="text-xs text-[var(--muted-foreground)] line-clamp-2">
+                      <p className="text-xs text-stone-500 line-clamp-2 leading-relaxed">
                         {service.description}
                       </p>
                     </Link>
