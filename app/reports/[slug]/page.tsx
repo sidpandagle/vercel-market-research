@@ -2,31 +2,16 @@ import { notFound } from "next/navigation";
 // import Image from "next/image";
 // import Link from "next/link";
 import type { Metadata } from "next";
-import { getReports, getReportBySlug, isApiError } from "@/lib/api";
-import { Breadcrumb, Badge, Card, CardContent } from "@/components/ui";
+import { Breadcrumb } from "@/components/ui";
 // import { Download } from "lucide-react";
 import { ReportContentWrapper } from "@/components/reports/ReportContentWrapper";
-import { StyledReportContent } from "@/components/reports/StyledReportContent";
-import MeetTheTeam from "@/components/reports/MeetTheTeam";
-import FAQ from "@/components/reports/FAQ";
-import { parseHTMLAndGenerateTOC, addStaticSectionsToTOC } from "@/lib/html-toc-utils";
 import type { SidebarTOCItem } from "@/lib/toc-utils";
 import { StructuredData, generateArticleSchema, generateBreadcrumbSchema, generateFAQSchema, generateProductSchema, generateDatasetSchema } from "@/components/seo/StructuredData";
-
-// Enable ISR with 10-minute revalidation
-export const revalidate = 600;
+import { getJsonReportBySlug, getAllJsonReportSlugs, jsonReportToUIReport } from "@/lib/jsonReports";
+import { JsonReportSections } from "@/components/reports/JsonReportSections";
 
 export async function generateStaticParams() {
-  const response = await getReports({ status: 'published', limit: 1000 });
-
-  if (isApiError(response)) {
-    console.error('Failed to fetch reports for static generation:', response.message);
-    return [];
-  }
-
-  return response.data.map((report) => ({
-    slug: report.slug,
-  }));
+  return getAllJsonReportSlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -34,49 +19,35 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  try {
-    const { slug } = await params;
-    const response = await getReportBySlug(slug);
+  const { slug } = await params;
+  const jsonReport = getJsonReportBySlug(slug);
 
-    if (isApiError(response)) {
-      return {
-        title: "Report Not Found",
-      };
-    }
+  if (!jsonReport) return { title: "Report Not Found" };
 
-    const report = response.data;
+  const title = jsonReport.seo.meta_title || jsonReport.title;
+  const description = jsonReport.seo.meta_description || jsonReport.market_overview.summary;
+  const keywords = jsonReport.seo.keywords;
+  const region = jsonReport.regional_analysis[0]?.region ?? 'Global';
 
-    // Use meta fields if available, fallback to regular fields
-    const title = report.meta_title || report.title;
-    const description = report.meta_description || report.description;
-
-    // Parse meta_keywords if available, otherwise use default keywords
-    const keywords = report.meta_keywords
-      ? report.meta_keywords.split(',').map(k => k.trim()).filter(Boolean)
-      : ["healthcare market research", "healthcare industry analysis", report.category, report.region];
-
-    return {
+  return {
+    title,
+    description,
+    keywords,
+    openGraph: {
       title,
       description,
-      keywords,
-      openGraph: {
-        title,
-        description,
-        type: "article",
-        publishedTime: report.date,
-      },
-      twitter: {
-        card: 'summary_large_image',
-        title,
-        description,
-      },
-      alternates: {
-        canonical: `/reports/${slug}`,
-      },
-    };
-  } catch {
-    return { title: "Report Not Found" };
-  }
+      type: "article",
+      publishedTime: String(jsonReport.published_year),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+    alternates: {
+      canonical: `/reports/${slug}`,
+    },
+  };
 }
 
 interface Report {
@@ -137,20 +108,11 @@ export default async function ReportPage({
 }) {
   const { slug } = await params;
 
-  // Fetch report from API
-  let response;
-  try {
-    response = await getReportBySlug(slug);
-  } catch {
-    notFound();
-  }
+  const jsonReport = getJsonReportBySlug(slug);
+  if (!jsonReport) notFound();
 
-  if (isApiError(response)) {
-    console.error('Failed to fetch report:', response.message);
-    notFound();
-  }
-
-  const report = response.data as Report;
+  // Build the report object from JSON data
+  const report = jsonReportToUIReport(jsonReport, 0) as Report;
 
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
@@ -158,139 +120,111 @@ export default async function ReportPage({
     { label: report.title },
   ];
 
-  const hasFullContent = !!(report.fullReportTOC && report.marketDetails);
+  const hasFullContent = false;
+  const sidebarTOC: SidebarTOCItem[] = [];
 
-  // Parse marketDetails HTML and generate TOC with IDs
-  let sidebarTOC: SidebarTOCItem[] = [];
-  let marketDetailsWithIds = report.marketDetails || '';
+  const baseYearLabel = String(jsonReport.base_year);
+  const forecastEndYear = jsonReport.forecast_period.split('-')[1];
+  const forecastRangeLabel = jsonReport.forecast_period;
 
-  if (hasFullContent && report.marketDetails) {
-    const { toc, htmlWithIds } = parseHTMLAndGenerateTOC(report.marketDetails);
-    marketDetailsWithIds = htmlWithIds;
-
-    // Add static sections from the page to TOC
-    const staticSections: SidebarTOCItem[] = [];
-
-    // Add Competitive Landscape section if key players exist
-    if (report.keyPlayers && report.keyPlayers.length > 0) {
-      staticSections.push(
-        { id: 'competitive', title: 'Competitive Landscape', level: 2 },
-        { id: 'key-players', title: 'Key Market Players', level: 3 }
-      );
-    }
-
-    // Add Team and FAQ sections
-    const allSections: SidebarTOCItem[] = [
-      ...toc,
-      ...staticSections,
-      ...addStaticSectionsToTOC(
-        [],
-        !!(report.authors && report.authors.length > 0),
-        !!(report.faqs && report.faqs.length > 0)
-      )
-    ];
-
-    sidebarTOC = allSections;
-  }
-
-  const baseYearLabel = report.baseYear || '2024';
-  const forecastEndYear = report.forecastPeriod?.split('-')[1] || '2032';
-  const forecastRangeLabel = report.forecastPeriod || `${baseYearLabel}-${forecastEndYear}`;
+  const displayMarketSizeCurrent = `$${jsonReport.market_size.current_value.toFixed(1)}B`;
+  const displayMarketSizeForecast = `$${jsonReport.market_size.forecast_value.toFixed(1)}B`;
+  const displayCAGR = `${jsonReport.market_size.cagr}%`;
 
   const metricCards = [
     {
       label: `Revenue, ${baseYearLabel}`,
-      value: report.marketSize2024 || '—',
-      bg: 'bg-[#B2DFDB]',
-      labelColor: 'text-[#00897B]',
-      valueColor: 'text-[#00695C]',
+      value: displayMarketSizeCurrent,
+      bg: 'bg-[var(--teal-subtle)]',
+      labelColor: 'text-[var(--teal-primary)]',
+      valueColor: 'text-[var(--teal-deep)]',
       icon: (
         <svg
           aria-hidden
-          className="w-10 h-10 text-[#26A69A]"
+          className="w-10 h-10 text-[var(--teal-steel)]"
           viewBox="0 0 64 64"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
             d="M16 44c0-6.627 5.373-12 12-12s12 5.373 12 12"
-            stroke="#26A69A"
+            stroke="currentColor"
             strokeWidth="3"
             strokeLinecap="round"
           />
-          <path d="M12 48h40" stroke="#26A69A" strokeWidth="3" strokeLinecap="round" />
+          <path d="M12 48h40" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
           <path
             d="M28 28V18c0-3.314 2.686-6 6-6s6 2.686 6 6v2"
-            stroke="#26A69A"
+            stroke="currentColor"
             strokeWidth="3"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
-          <path d="M24 36v-6" stroke="#26A69A" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M38 32v-4" stroke="#26A69A" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-          <circle cx="34" cy="20" r="2" fill="#26A69A" />
+          <path d="M24 36v-6" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M38 32v-4" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+          <circle cx="34" cy="20" r="2" fill="currentColor" />
         </svg>
       ),
     },
     {
       label: `Forecast, ${forecastEndYear}`,
-      value: report.marketSize2032 || '—',
-      bg: 'bg-[#B2DFDB]',
-      labelColor: 'text-[#00897B]',
-      valueColor: 'text-[#00695C]',
+      value: displayMarketSizeForecast,
+      bg: 'bg-[var(--teal-subtle)]',
+      labelColor: 'text-[var(--teal-primary)]',
+      valueColor: 'text-[var(--teal-deep)]',
       icon: (
         <svg
           aria-hidden
-          className="w-10 h-10 text-[#26A69A]"
+          className="w-10 h-10 text-[var(--teal-steel)]"
           viewBox="0 0 64 64"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
             d="M10 46l10-18 10 12 12-22 12 28"
-            stroke="#26A69A"
+            stroke="currentColor"
             strokeWidth="3"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
-          <path d="M10 52h44" stroke="#26A69A" strokeWidth="3" strokeLinecap="round" />
-          <circle cx="20" cy="28" r="2" fill="#26A69A" />
-          <circle cx="30" cy="40" r="2" fill="#26A69A" />
-          <circle cx="42" cy="20" r="2" fill="#26A69A" />
-          <circle cx="54" cy="48" r="2" fill="#26A69A" />
+          <path d="M10 52h44" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+          <circle cx="20" cy="28" r="2" fill="currentColor" />
+          <circle cx="30" cy="40" r="2" fill="currentColor" />
+          <circle cx="42" cy="20" r="2" fill="currentColor" />
+          <circle cx="54" cy="48" r="2" fill="currentColor" />
         </svg>
       ),
     },
     {
       label: `CAGR, ${forecastRangeLabel}`,
-      value: report.cagr || '—',
-      bg: 'bg-[#B2DFDB]',
-      labelColor: 'text-[#00897B]',
-      valueColor: 'text-[#00695C]',
+      value: displayCAGR,
+      bg: 'bg-[var(--teal-subtle)]',
+      labelColor: 'text-[var(--teal-primary)]',
+      valueColor: 'text-[var(--teal-deep)]',
       icon: (
         <svg
           aria-hidden
-          className="w-10 h-10 text-[#26A69A]"
+          className="w-10 h-10 text-[var(--teal-steel)]"
           viewBox="0 0 64 64"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
             d="M14 40h6v-8h-6v8zm12 0h6V20h-6v20zm12 0h6V28h-6v12zm12 0h6V16h-6v24z"
-            fill="#26A69A"
+            fill="currentColor"
             opacity="0.3"
           />
-          <path d="M12 44h40" stroke="#26A69A" strokeWidth="3" strokeLinecap="round" />
+          <path d="M12 44h40" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
           <path
             d="M12 34c6-4 10-6 16-6s10 2 16 6 10 6 16 6"
-            stroke="#26A69A"
+            stroke="currentColor"
             strokeWidth="3"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
           <path
             d="M40 18l4-4 4 4"
-            stroke="#26A69A"
+            stroke="currentColor"
             strokeWidth="3"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -301,21 +235,21 @@ export default async function ReportPage({
     {
       label: 'Report Coverage',
       value: report.region,
-      bg: 'bg-[#B2DFDB]',
-      labelColor: 'text-[#00897B]',
-      valueColor: 'text-[#00695C]',
+      bg: 'bg-[var(--teal-subtle)]',
+      labelColor: 'text-[var(--teal-primary)]',
+      valueColor: 'text-[var(--teal-deep)]',
       icon: (
         <svg
           aria-hidden
-          className="w-10 h-10 text-[#26A69A]"
+          className="w-10 h-10 text-[var(--teal-steel)]"
           viewBox="0 0 64 64"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <circle cx="32" cy="28" r="14" stroke="#26A69A" strokeWidth="3" />
-          <path d="M32 14v4m0 28v4m14-14h4M14 32h4" stroke="#26A69A" strokeWidth="3" strokeLinecap="round" />
-          <path d="M24 44l-6 6" stroke="#26A69A" strokeWidth="3" strokeLinecap="round" />
-          <path d="M40 44l6 6" stroke="#26A69A" strokeWidth="3" strokeLinecap="round" />
+          <circle cx="32" cy="28" r="14" stroke="currentColor" strokeWidth="3" />
+          <path d="M32 14v4m0 28v4m14-14h4M14 32h4" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+          <path d="M24 44l-6 6" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+          <path d="M40 44l6 6" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
         </svg>
       ),
     },
@@ -385,207 +319,100 @@ export default async function ReportPage({
 
       <div className="bg-[var(--background)]">
         <div className="border-b border-[var(--border)] bg-[var(--card)]">
-          <div className="px-4 py-4 md:px-6">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-4">
             <Breadcrumb items={breadcrumbItems} />
+          </div>
         </div>
-      </div>
 
-      <div className="px-4 py-8 md:px-6">
-        <ReportContentWrapper
-          tableOfContents={sidebarTOC}
-          fullReportTOC={report.fullReportTOC}
-          hasFullContent={hasFullContent}
-          price={report.price}
-          discounted_price={report.discounted_price}
-          reportTitle={report.title}
-          reportSlug={report.slug}
-        >
-          <article>
-              <header className="mb-8 pb-8 border-b border-[var(--border)]">
-                <div className="flex items-center gap-3 mb-4">
-                  <Badge variant="default">{report.category}</Badge>
-                  <Badge variant="outline">{report.region}</Badge>
-                </div>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8">
+          <ReportContentWrapper
+            tableOfContents={sidebarTOC}
+            fullReportTOC={report.fullReportTOC}
+            hasFullContent={hasFullContent}
+            price={report.price}
+            discounted_price={report.discounted_price}
+            reportTitle={report.title}
+            reportSlug={report.slug}
+          >
+            <article>
+              {/* ── Dark Forest Hero Header ── */}
+              <header className="relative overflow-hidden rounded-2xl mb-10" style={{ background: 'linear-gradient(145deg, #091C15 0%, #0D2820 55%, #163528 100%)' }}>
+                {/* Crosshatch texture overlay */}
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    backgroundImage: 'repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0, rgba(255,255,255,0.03) 1px, transparent 0, transparent 50%)',
+                    backgroundSize: '24px 24px',
+                  }}
+                />
+                {/* Ambient glow orbs */}
+                <div className="absolute top-0 right-0 w-80 h-80 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(37,144,106,0.18) 0%, transparent 70%)', transform: 'translate(30%, -30%)' }} />
+                <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(30,114,82,0.12) 0%, transparent 70%)', transform: 'translate(-30%, 30%)' }} />
 
-                <h1 className="text-4xl font-bold text-[var(--foreground)] mb-4">
-                  {report.title}
-                </h1>
-
-                <p className="text-xl text-[var(--muted-foreground)] mb-6">
-                  {report.description}
-                </p>
-
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                  <div>
-                    <p className="text-[var(--muted-foreground)] mb-1">Report Code</p>
-                    <p className="font-semibold text-[var(--foreground)]">
-                      {report.reportCode || `HF${report.id}`}
-                    </p>
+                <div className="relative z-10 p-7 md:p-10">
+                  {/* Category + Region chips */}
+                  <div className="flex flex-wrap items-center gap-2 mb-5">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-widest border" style={{ background: 'rgba(132,204,22,0.15)', color: '#A3E635', borderColor: 'rgba(132,204,22,0.30)' }}>
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#A3E635]" />
+                      {report.category}
+                    </span>
+                    <span className="px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wider" style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.60)', border: '1px solid rgba(255,255,255,0.12)' }}>
+                      {report.region}
+                    </span>
+                    <span className="px-3 py-1 rounded-full text-xs font-medium" style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.45)', border: '1px solid rgba(255,255,255,0.10)' }}>
+                      {baseYearLabel} – {forecastEndYear}
+                    </span>
                   </div>
-                  <div>
-                    <p className="text-[var(--muted-foreground)] mb-1">Published</p>
-                    <p className="font-semibold text-[var(--foreground)]">{report.date}</p>
+
+                  {/* Title */}
+                  <h1 className="font-display text-2xl md:text-4xl font-bold leading-tight mb-4" style={{ color: '#fff', letterSpacing: '-0.02em', lineHeight: '1.2' }}>
+                    {report.title}
+                  </h1>
+
+                  {/* Description */}
+                  <p className="text-base md:text-lg leading-relaxed mb-8 max-w-2xl" style={{ color: 'rgba(255,255,255,0.62)' }}>
+                    {report.description}
+                  </p>
+
+                  {/* Metric stat cards */}
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
+                    {metricCards.map((card) => (
+                      <div
+                        key={card.label}
+                        className="rounded-xl p-4"
+                        style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.10)', backdropFilter: 'blur(8px)' }}
+                      >
+                        <p className="text-xs uppercase tracking-wider mb-2" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                          {card.label}
+                        </p>
+                        <p className="font-display text-2xl font-bold" style={{ color: '#fff', letterSpacing: '-0.01em' }}>
+                          {card.value}
+                        </p>
+                      </div>
+                    ))}
                   </div>
-                  <div>
-                    <p className="text-[var(--muted-foreground)] mb-1">Pages</p>
-                    <p className="font-semibold text-[var(--foreground)]">{report.pages}+</p>
-                  </div>
-                  <div>
-                    <p className="text-[var(--muted-foreground)] mb-1">Format</p>
-                    <p className="font-semibold text-[var(--foreground)]">PDF, Excel</p>
+
+                  {/* Metadata strip */}
+                  <div className="flex flex-wrap gap-x-6 gap-y-1.5 pt-5" style={{ borderTop: '1px solid rgba(255,255,255,0.10)' }}>
+                    {[
+                      ['Code', report.reportCode || `HF${report.id}`],
+                      ['Published', report.date],
+                      ['Pages', `${report.pages}+`],
+                      ['Format', 'PDF + Excel'],
+                    ].map(([label, val]) => (
+                      <span key={label} className="text-xs" style={{ color: 'rgba(255,255,255,0.40)' }}>
+                        {label}:{' '}
+                        <span style={{ color: 'rgba(255,255,255,0.75)', fontWeight: 500 }}>{val}</span>
+                      </span>
+                    ))}
                   </div>
                 </div>
               </header>
 
-              <section className="mb-10">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {metricCards.map((card) => (
-                    <Card key={card.label} className={`${card.bg} border-none`}>
-                      <CardContent className="flex items-center gap-3" style={{padding: '8px'}}>
-                        {card.icon}
-                        <div>
-                          <p className={`text-sm font-semibold ${card.labelColor}`}>{card.label}</p>
-                          <p className={`text-lg font-bold ${card.valueColor}`}>{card.value}</p>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </section>
-
-              {hasFullContent ? (
-                <>
-                  <section className="mb-12">
-                    <h2 id="overview" className="text-2xl font-bold text-[var(--teal-deep)] mb-6 scroll-mt-24">
-                      Market Overview
-                    </h2>
-                    <StyledReportContent
-                      htmlContent={marketDetailsWithIds}
-                      reportSlug={report.slug}
-                    />
-
-                    {report.keyFindings && report.keyFindings.length > 0 && (
-                      <div className="mt-8">
-                        <h3 className="text-3xl font-bold text-[#000000] mb-6">
-                          Key Findings
-                        </h3>
-                        <div className="bg-[#ede9fe] rounded-lg py-4 px-6">
-                          <ul className="list-disc list-outside ml-5 space-y-0">
-                            {report.keyFindings.map((finding, index) => (
-                              <li key={index} className="text-[#333333] py-4 border-b border-gray-300 last:border-b-0">
-                                {finding}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    )}
-                  </section>
-
-                  {/* Images (Refer Below) */}
-
-                  <section className="mb-12">
-                    <h2 id="competitive" className="text-2xl font-bold text-[var(--teal-deep)] mb-6 scroll-mt-24">
-                      Competitive Landscape
-                    </h2>
-                    <p className="text-[#333333] mb-8 leading-relaxed">
-                      The market is characterized by intense competition among established players
-                      and emerging companies. Strategic partnerships, mergers and acquisitions, and
-                      product innovation are key strategies employed by market participants.
-                    </p>
-
-                    {report.keyPlayers && report.keyPlayers.length > 0 && (
-                      <div id="key-players" className="scroll-mt-24">
-                        <h3 className="text-base font-semibold text-[#000000] mb-3">
-                          Key Market Players
-                        </h3>
-                        <div className="grid gap-1.5">
-                          {report.keyPlayers.map((player, index) => (
-                            <Card key={index} className="hover:shadow-sm transition-shadow">
-                              <CardContent className="py-2 px-4">
-                                <div className="flex items-center justify-between">
-                                  <h4 className="font-medium text-[var(--foreground)] text-sm">
-                                    {player.name}
-                                  </h4>
-                                  <div className="flex items-center gap-2">
-                                    <span className="text-xs text-[var(--muted-foreground)]">Market Share</span>
-                                    <span className="text-sm font-bold text-[var(--primary)]">
-                                      {player.marketShare}
-                                    </span>
-                                  </div>
-                                </div>
-                              </CardContent>
-                            </Card>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </section>
-
-                  {/* <section className="mb-12">
-                    <h2 id="drivers" className="text-3xl font-bold text-[var(--foreground)] mb-6 scroll-mt-24">
-                      Market Drivers & Opportunities
-                    </h2>
-                    <div className="prose prose-lg max-w-none text-[var(--muted-foreground)]">
-                      <ul className="space-y-3">
-                        <li>Increasing adoption of digital health technologies</li>
-                        <li>Growing investment in healthcare infrastructure</li>
-                        <li>Favorable government policies and reimbursement frameworks</li>
-                        <li>Rising healthcare expenditure in emerging markets</li>
-                        <li>Technological advancements and innovation</li>
-                      </ul>
-                    </div>
-                  </section>
-
-                  <section className="mb-12">
-                    <h2 id="challenges" className="text-3xl font-bold text-[var(--foreground)] mb-6 scroll-mt-24">
-                      Challenges & Restraints
-                    </h2>
-                    <div className="prose prose-lg max-w-none text-[var(--muted-foreground)]">
-                      <ul className="space-y-3">
-                        <li>Data privacy and security concerns</li>
-                        <li>Regulatory compliance complexity</li>
-                        <li>High initial implementation costs</li>
-                        <li>Integration challenges with legacy systems</li>
-                        <li>Limited digital literacy in certain regions</li>
-                      </ul>
-                    </div>
-                  </section> */}
-
-                  {/* NEW SECTIONS */}
-                  <MeetTheTeam teamMembers={report.authors} />
-
-                  {/* FAQ Section */}
-                  {report.faqs && <FAQ faqs={report.faqs} />}
-                </>
-              ) : (
-                <section className="prose prose-lg max-w-none">
-                  <h2>Executive Summary</h2>
-                  <p>
-                    This report provides comprehensive analysis of the {report.category.toLowerCase()}
-                    sector in the healthcare industry. Our research covers market trends, key players,
-                    growth opportunities, and strategic recommendations.
-                  </p>
-
-                  <h2>Key Findings</h2>
-                  <ul>
-                    <li>Market size and growth projections</li>
-                    <li>Competitive landscape analysis</li>
-                    <li>Regulatory environment overview</li>
-                    <li>Technology trends and innovations</li>
-                  </ul>
-
-                  <h2>Market Overview</h2>
-                  <p>
-                    The healthcare market continues to evolve with new technologies, changing
-                    regulations, and shifting patient demographics. This section provides detailed
-                    insights into current market conditions.
-                  </p>
-                </section>
-              )}
+              <JsonReportSections report={jsonReport} />
             </article>
-        </ReportContentWrapper>
-      </div>
+          </ReportContentWrapper>
+        </div>
       </div>
     </>
   );

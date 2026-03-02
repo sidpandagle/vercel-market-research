@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Section, Container } from '@/components/ui';
 import testimonialsData from '@/data/testimonials.json';
 
 interface Testimonial {
@@ -28,13 +27,14 @@ function getInitials(company: string): string {
     .slice(0, 2);
 }
 
-function StarRating({ rating }: { rating: number }) {
+function StarRating({ rating, size = 'sm' }: { rating: number; size?: 'sm' | 'md' }) {
+  const dim = size === 'md' ? 'w-4 h-4' : 'w-3.5 h-3.5';
   return (
     <div className="flex items-center gap-0.5">
       {Array.from({ length: 5 }).map((_, i) => (
         <svg
           key={i}
-          className={`w-3.5 h-3.5 ${i < rating ? 'text-bright-500' : 'text-slate-200'}`}
+          className={`${dim} ${i < rating ? 'text-bright-500' : 'text-white/[0.12]'}`}
           fill="currentColor"
           viewBox="0 0 20 20"
           aria-hidden="true"
@@ -58,109 +58,151 @@ export default function TestimonialsSection() {
     (currentIndex + 1) * ITEMS_PER_SLIDE
   );
 
+  const [featured, ...secondary] = currentTestimonials;
+
   return (
-    <Section padding="xl" background="muted">
-      <Container size="xl">
-        <div className="space-y-14">
+    <section className="bg-stone-50 py-24 relative overflow-hidden">
 
-          {/* Header */}
-          <div className="text-center space-y-3">
-            <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-ocean-600 px-3 py-1.5 rounded-full bg-ocean-50 border border-ocean-100">
-              <span className="w-1.5 h-1.5 rounded-full bg-ocean-500 shrink-0" />
-              Client Stories
-            </span>
-            <h2 className="text-3xl md:text-4xl text-slate-900 tracking-tight">
-              Trusted by Industry Leaders
-            </h2>
-            <p className="text-base text-slate-500 max-w-2xl mx-auto">
-              What healthcare executives and research teams say about Synaptic Research.
-            </p>
-          </div>
+      {/* Background textures */}
+      <div className="absolute top-0 left-1/4 w-[600px] h-[400px] bg-ocean-500/[0.06] rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-[400px] h-[300px] bg-bright-500/[0.07] rounded-full blur-3xl pointer-events-none" />
 
-          {/* Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {currentTestimonials.map((testimonial) => (
+      <div className="relative mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+
+        {/* Section header */}
+        <div className="text-center space-y-3 mb-14">
+          <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-ocean-600 px-3 py-1.5 rounded-full bg-ocean-500/[0.10] border border-ocean-500/20">
+            <span className="w-1.5 h-1.5 rounded-full bg-ocean-500 shrink-0" />
+            Client Stories
+          </span>
+          <h2 className="font-display text-3xl md:text-[2.75rem] lg:text-5xl text-stone-900 tracking-tight leading-[1.1]">
+            Trusted by Industry Leaders
+          </h2>
+          <p className="text-base text-stone-500 max-w-2xl mx-auto leading-relaxed">
+            What healthcare executives and research teams say about Synaptic Research.
+          </p>
+        </div>
+
+        {/* Featured + secondary layout */}
+        <div className="grid lg:grid-cols-12 gap-6">
+
+          {/* ── Featured testimonial ── */}
+          {featured && (
+            <div className="lg:col-span-7 relative bg-white border border-stone-200 rounded-3xl p-8 md:p-10 overflow-hidden flex flex-col shadow-sm">
+              {/* Top gradient line */}
+              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-ocean-400/40 to-transparent rounded-t-3xl" />
+
+              {/* Large decorative quote mark */}
+              <svg
+                className="w-20 h-20 text-bright-500/[0.30] mb-5 shrink-0"
+                fill="currentColor"
+                viewBox="0 0 32 32"
+                aria-hidden="true"
+              >
+                <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
+              </svg>
+
+              {/* Quote */}
+              <p className="font-display italic text-lg md:text-xl text-stone-700 leading-[1.80] flex-1 mb-8">
+                &ldquo;{featured.quote}&rdquo;
+              </p>
+
+              {/* Rating */}
+              <StarRating rating={featured.rating} size="md" />
+
+              {/* Author */}
+              <div className="flex items-center gap-4 mt-6 pt-6 border-t border-stone-100">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-ocean-600 to-ocean-400 flex items-center justify-center text-white text-sm font-bold shrink-0 ring-2 ring-ocean-500/30 shadow-lg shadow-ocean-600/20">
+                  {getInitials(featured.company)}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-stone-900">{featured.role}</p>
+                  <p className="text-xs text-stone-400 mt-0.5">
+                    {featured.company} &middot; {featured.location}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ── Secondary testimonials ── */}
+          <div className="lg:col-span-5 flex flex-col gap-6">
+            {secondary.map((testimonial) => (
               <div
                 key={testimonial.id}
-                className="flex flex-col bg-white border border-slate-100 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-ocean-50/70 hover:border-ocean-100 hover:-translate-y-0.5 transition-all duration-200"
+                className="flex-1 bg-white border border-stone-200 rounded-2xl p-6 overflow-hidden relative flex flex-col shadow-sm"
               >
-                {/* Gradient accent stripe */}
-                <div className="h-[3px] bg-gradient-to-r from-ocean-600 via-ocean-400 to-ocean-300 shrink-0" />
+                {/* Top accent */}
+                <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-bright-400/40 to-transparent rounded-t-2xl" />
 
-                <div className="flex flex-col flex-1 p-6">
-                  {/* Top row: rating */}
-                  <div className="flex items-center justify-between mb-5">
-                    <StarRating rating={testimonial.rating} />
-                    <svg
-                      className="w-9 h-9 text-ocean-200/70"
-                      fill="currentColor"
-                      viewBox="0 0 32 32"
-                      aria-hidden="true"
-                    >
-                      <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
-                    </svg>
+                <div className="flex items-start justify-between mb-4">
+                  <StarRating rating={testimonial.rating} />
+                  <svg
+                    className="w-8 h-8 text-stone-200 shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 32 32"
+                    aria-hidden="true"
+                  >
+                    <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
+                  </svg>
+                </div>
+
+                <p className="font-display italic text-sm text-stone-600 leading-[1.82] flex-1 mb-5">
+                  &ldquo;{testimonial.quote}&rdquo;
+                </p>
+
+                <div className="flex items-center gap-3 pt-4 border-t border-stone-100">
+                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-ocean-600 to-ocean-400 flex items-center justify-center text-white text-xs font-bold shrink-0 ring-1 ring-ocean-500/25">
+                    {getInitials(testimonial.company)}
                   </div>
-
-                  {/* Quote */}
-                  <p className="text-sm text-slate-600 leading-[1.8] flex-1 mb-6">
-                    &ldquo;{testimonial.quote}&rdquo;
-                  </p>
-
-                  {/* Author */}
-                  <div className="flex items-center gap-3 pt-4 border-t border-slate-50">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-ocean-500 to-ocean-700 flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-sm">
-                      {getInitials(testimonial.company)}
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-sm font-semibold text-slate-900 truncate">
-                        {testimonial.role}
-                      </p>
-                      <p className="text-xs text-slate-500 truncate">
-                        {testimonial.company} · {testimonial.location}
-                      </p>
-                    </div>
+                  <div className="min-w-0">
+                    <p className="text-xs font-semibold text-stone-800 truncate">{testimonial.role}</p>
+                    <p className="text-[11px] text-stone-400 truncate mt-0.5">
+                      {testimonial.company} &middot; {testimonial.location}
+                    </p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Navigation */}
-          <div className="flex items-center justify-center gap-4">
-            <button
-              onClick={prevSlide}
-              className="w-10 h-10 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-500 hover:bg-ocean-50 hover:border-ocean-200 hover:text-ocean-600 transition-all duration-200"
-              aria-label="Previous testimonials"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
+        </div>
 
-            <div className="flex gap-2">
-              {Array.from({ length: totalSlides }).map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentIndex(index)}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    index === currentIndex
-                      ? 'w-8 bg-gradient-to-r from-ocean-600 to-ocean-400'
-                      : 'w-2 bg-slate-200 hover:bg-slate-300'
-                  }`}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
-            </div>
+        {/* Navigation */}
+        <div className="flex items-center justify-center gap-4 mt-12">
+          <button
+            onClick={prevSlide}
+            className="w-10 h-10 rounded-full border border-stone-200 bg-white flex items-center justify-center text-stone-400 hover:bg-ocean-50 hover:border-ocean-400/50 hover:text-ocean-600 transition-all duration-200 shadow-sm"
+            aria-label="Previous testimonials"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
 
-            <button
-              onClick={nextSlide}
-              className="w-10 h-10 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-500 hover:bg-ocean-50 hover:border-ocean-200 hover:text-ocean-600 transition-all duration-200"
-              aria-label="Next testimonials"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
+          <div className="flex gap-2">
+            {Array.from({ length: totalSlides }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  index === currentIndex
+                    ? 'w-8 bg-gradient-to-r from-ocean-500 to-bright-400'
+                    : 'w-1.5 bg-stone-300 hover:bg-stone-400'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
           </div>
 
+          <button
+            onClick={nextSlide}
+            className="w-10 h-10 rounded-full border border-stone-200 bg-white flex items-center justify-center text-stone-400 hover:bg-ocean-50 hover:border-ocean-400/50 hover:text-ocean-600 transition-all duration-200 shadow-sm"
+            aria-label="Next testimonials"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
         </div>
-      </Container>
-    </Section>
+
+      </div>
+    </section>
   );
 }

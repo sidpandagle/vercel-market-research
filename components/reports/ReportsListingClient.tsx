@@ -2,9 +2,8 @@
 
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Section, Container, Grid } from '@/components/ui';
+import { Search, X, ChevronDown } from 'lucide-react';
 import ReportCard from './ReportCard';
-import FilterSidebar, { FilterState } from './FilterSidebar';
 import Pagination from './Pagination';
 import SearchBar from './SearchBar';
 import categories from '@/data/categories.json';
@@ -30,220 +29,292 @@ interface ReportsListingClientProps {
 
 const ITEMS_PER_PAGE = 12;
 
+const REGIONS = [
+  'Global',
+  'North America',
+  'Europe',
+  'Asia Pacific',
+  'Latin America',
+  'Middle East & Africa',
+];
+
 export default function ReportsListingClient({ reports }: ReportsListingClientProps) {
   const searchParams = useSearchParams();
-  const [filters, setFilters] = useState<FilterState>({
-    industries: [],
-    regions: [],
-    reportTypes: [],
-    priceRanges: [],
-    searchQuery: ''
-  });
-  const [currentPage, setCurrentPage] = useState(1);
+  const [activeCategory, setActiveCategory] = useState('');
+  const [activeRegion, setActiveRegion] = useState('');
   const [searchResults, setSearchResults] = useState<Report[] | null>(null);
-  const [isSearching, setIsSearching] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  // Handle URL category and search parameters on mount
   useEffect(() => {
     const categoryParam = searchParams.get('category');
-    const searchParam = searchParams.get('search');
-
-    setFilters(prev => {
-      const newFilters = { ...prev };
-
-      // Handle category parameter
-      if (categoryParam) {
-        // Find category by slug
-        const category = categories.find(c => c.slug === categoryParam);
-        if (category) {
-          newFilters.industries = [category.name];
-        }
-      }
-
-      // Handle search parameter
-      if (searchParam) {
-        newFilters.searchQuery = searchParam;
-      }
-
-      return newFilters;
-    });
+    if (categoryParam) {
+      const cat = categories.find((c) => c.slug === categoryParam);
+      if (cat) setActiveCategory(cat.name);
+    }
   }, [searchParams]);
 
-  // Handle search results from SearchBar
   const handleSearchResults = useCallback((results: Report[] | null, loading: boolean) => {
     setSearchResults(results);
-    setIsSearching(loading);
-    setCurrentPage(1); // Reset to first page when search changes
+    if (!loading) setCurrentPage(1);
   }, []);
 
-  // Helper function to check if price is in range
-  const isPriceInRange = (price: string, range: string): boolean => {
-    const priceNum = parseInt(price.replace(/[^0-9]/g, ''));
-
-    switch (range) {
-      case 'Under $2,000':
-        return priceNum < 2000;
-      case '$2,000 - $3,000':
-        return priceNum >= 2000 && priceNum <= 3000;
-      case '$3,000 - $4,000':
-        return priceNum >= 3000 && priceNum <= 4000;
-      case '$4,000+':
-        return priceNum >= 4000;
-      default:
-        return false;
-    }
-  };
-
-  // Filter reports based on active filters
-  // Use search results if available, otherwise use all reports
   const filteredReports = useMemo(() => {
-    const dataSource = searchResults !== null ? searchResults : reports;
-    return dataSource.filter((report) => {
-      // Search query filter
-      if (filters.searchQuery) {
-        const searchLower = filters.searchQuery.toLowerCase();
-        const titleMatch = report.title.toLowerCase().includes(searchLower);
-        const descMatch = report.description.toLowerCase().includes(searchLower);
-        if (!titleMatch && !descMatch) {
-          return false;
-        }
-      }
-
-      // Industry filter (maps to category)
-      if (filters.industries.length > 0 && !filters.industries.includes(report.category)) {
-        return false;
-      }
-
-      // Region filter
-      if (filters.regions.length > 0 && !filters.regions.includes(report.region)) {
-        return false;
-      }
-
-      // Report Type filter
-      if (filters.reportTypes.length > 0 && !filters.reportTypes.includes(report.reportType)) {
-        return false;
-      }
-
-      // Price Range filter
-      if (filters.priceRanges.length > 0) {
-        const matchesPriceRange = filters.priceRanges.some((range) =>
-          isPriceInRange(report.price, range)
-        );
-        if (!matchesPriceRange) {
-          return false;
-        }
-      }
-
+    const base = searchResults !== null ? searchResults : reports;
+    return base.filter((r) => {
+      if (activeCategory && r.category !== activeCategory) return false;
+      if (activeRegion && r.region !== activeRegion) return false;
       return true;
     });
-  }, [reports, filters, searchResults]);
+  }, [reports, activeCategory, activeRegion, searchResults]);
 
-  // Calculate pagination
   const totalPages = Math.ceil(filteredReports.length / ITEMS_PER_PAGE);
 
-  // Paginate filtered reports
   const paginatedReports = useMemo(() => {
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const endIndex = startIndex + ITEMS_PER_PAGE;
-    return filteredReports.slice(startIndex, endIndex);
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredReports.slice(start, start + ITEMS_PER_PAGE);
   }, [filteredReports, currentPage]);
 
-  // Reset to page 1 when filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [filters]);
+  }, [activeCategory, activeRegion]);
 
-  // Handle page change with smooth scroll
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
+    document.getElementById('reports-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
-    // Scroll to top of results grid
-    const resultsGrid = document.getElementById('reports-grid');
-    if (resultsGrid) {
-      resultsGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+  const hasFilters = !!(activeCategory || activeRegion);
+
+  const clearAll = () => {
+    setActiveCategory('');
+    setActiveRegion('');
   };
 
   return (
-    <Section padding="lg">
-      <Container size="xl">
-        <div className="grid lg:grid-cols-[280px_1fr] gap-8">
-          {/* Left Sidebar - Sticky on Desktop */}
-          <aside className="hidden lg:block">
-            <div className="sticky top-24">
-              <FilterSidebar
-                filters={filters}
-                onFilterChange={setFilters}
-                totalCount={filteredReports.length}
-              />
-            </div>
-          </aside>
+    <>
+      {/* ── Hero Banner ──────────────────────────────────────────────────────── */}
+      <section
+        className="relative overflow-hidden pt-20 pb-16 px-6 line-grid mesh-gradient-dark"
+        style={{ background: '#091C15' }}
+      >
+        {/* Decorative lime glow */}
+        <div
+          className="absolute top-0 right-1/4 w-96 h-96 rounded-full opacity-[0.06] blur-3xl pointer-events-none"
+          style={{ background: '#84CC16' }}
+        />
 
-          {/* Main Content */}
-          <main>
-            {/* Search Bar */}
-            <div className="mb-6">
-              <SearchBar
-                onSearchResults={handleSearchResults}
-                placeholder="Search reports by title, description, or keywords..."
-              />
-            </div>
-
-            {/* Header */}
-            <div className="mb-8">
-              <h1 className="text-4xl font-bold mb-2 text-[var(--foreground)]">
-                Research Reports
+        <div className="relative max-w-7xl mx-auto">
+          <div className="flex flex-col lg:flex-row lg:items-end gap-10">
+            {/* Left: Headline */}
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-6">
+                <div className="h-px w-8 flex-shrink-0" style={{ background: '#84CC16' }} />
+                <p
+                  className="text-xs font-bold tracking-[0.2em] uppercase"
+                  style={{ color: '#84CC16' }}
+                >
+                  Market Intelligence
+                </p>
+              </div>
+              <h1
+                className="font-display font-bold leading-none mb-5"
+                style={{
+                  color: '#F5F4F0',
+                  fontSize: 'clamp(2.75rem, 5vw, 4.5rem)',
+                  letterSpacing: '-0.03em',
+                }}
+              >
+                Research
+                <br />
+                <span style={{ color: '#8DD5BC' }}>Reports</span>
               </h1>
-              <p className="text-lg text-[var(--muted-foreground)]">
-                {isSearching ? 'Searching...' : `${filteredReports.length} ${filteredReports.length === 1 ? 'report' : 'reports'} available`}
+              <p style={{ color: '#6B9E8B', fontSize: '1rem', lineHeight: '1.7' }}>
+                {filteredReports.length.toLocaleString()}{' '}
+                {filteredReports.length === 1 ? 'report' : 'reports'} across{' '}
+                {categories.length} healthcare sectors
               </p>
             </div>
 
-            {/* Results Grid */}
-            {paginatedReports.length > 0 ? (
-              <>
-                <Grid cols={1} gap="lg" id="reports-grid">
-                  {paginatedReports.map((report) => (
-                    <ReportCard key={report.id} report={report} />
-                  ))}
-                </Grid>
-
-                {/* Pagination */}
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={handlePageChange}
-                />
-              </>
-            ) : (
-              /* Empty State */
-              <div className="text-center py-12">
-                <div className="mb-4">
-                  <svg
-                    className="w-16 h-16 mx-auto text-[var(--muted-foreground)] opacity-50"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                    />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-semibold mb-2 text-[var(--foreground)]">
-                  No reports found
-                </h3>
-                <p className="text-[var(--muted-foreground)] mb-6">
-                  Try adjusting your filters to see more results
-                </p>
-              </div>
-            )}
-          </main>
+            {/* Right: Search */}
+            <div className="w-full lg:w-[440px] flex-shrink-0">
+              <SearchBar
+                onSearchResults={handleSearchResults}
+                placeholder="Search by topic, technology, or region…"
+              />
+            </div>
+          </div>
         </div>
-      </Container>
-    </Section>
+      </section>
+
+      {/* ── Filter Strip ─────────────────────────────────────────────────────── */}
+      <div
+        className="sticky top-16 z-20 bg-white border-b"
+        style={{ borderColor: '#E7E5E4' }}
+      >
+        <div className="max-w-7xl mx-auto px-6">
+          <div
+            className="flex items-center gap-2.5 py-3 overflow-x-auto"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' } as React.CSSProperties}
+          >
+            {/* All button */}
+            <button
+              onClick={() => setActiveCategory('')}
+              className="px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-150 flex-shrink-0"
+              style={
+                !activeCategory
+                  ? { background: '#1E7252', color: '#fff' }
+                  : { background: '#F5F4F0', color: '#78716C' }
+              }
+            >
+              All Reports
+            </button>
+
+            <div className="h-5 w-px flex-shrink-0" style={{ background: '#D6D3D1' }} />
+
+            {/* Category pills */}
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategory((prev) => (prev === cat.name ? '' : cat.name))}
+                className="px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-150 flex-shrink-0"
+                style={
+                  activeCategory === cat.name
+                    ? { background: '#1E7252', color: '#fff' }
+                    : { background: '#F5F4F0', color: '#78716C' }
+                }
+              >
+                {cat.name}
+              </button>
+            ))}
+
+            <div className="h-5 w-px flex-shrink-0" style={{ background: '#D6D3D1' }} />
+
+            {/* Region select */}
+            <div className="relative flex-shrink-0">
+              <select
+                value={activeRegion}
+                onChange={(e) => setActiveRegion(e.target.value)}
+                className="appearance-none pl-3 pr-8 py-1.5 rounded-full text-xs font-semibold border cursor-pointer focus:outline-none transition-all duration-150"
+                style={
+                  activeRegion
+                    ? { background: '#1E7252', color: '#fff', borderColor: '#1E7252' }
+                    : { background: '#F5F4F0', color: '#78716C', borderColor: '#E7E5E4' }
+                }
+              >
+                <option value="">All Regions</option>
+                {REGIONS.map((r) => (
+                  <option key={r} value={r}>
+                    {r}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown
+                className="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none"
+                style={{ color: activeRegion ? '#fff' : '#A8A29E' }}
+              />
+            </div>
+
+            {/* Clear filters */}
+            {hasFilters && (
+              <>
+                <div className="h-5 w-px flex-shrink-0" style={{ background: '#D6D3D1' }} />
+                <button
+                  onClick={clearAll}
+                  className="flex items-center gap-1 flex-shrink-0 text-xs font-medium transition-colors duration-150"
+                  style={{ color: '#A8A29E' }}
+                >
+                  <X className="w-3 h-3" />
+                  Clear
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* ── Reports Grid ─────────────────────────────────────────────────────── */}
+      <section className="py-12 px-6" style={{ background: '#FAFAF8', minHeight: '60vh' }}>
+        <div className="max-w-7xl mx-auto">
+          {paginatedReports.length > 0 ? (
+            <>
+              {/* Results meta bar */}
+              <div className="flex items-center justify-between mb-8">
+                <p className="text-xs font-medium tracking-wide" style={{ color: '#A8A29E' }}>
+                  Showing{' '}
+                  <span style={{ color: '#57534E' }}>
+                    {(currentPage - 1) * ITEMS_PER_PAGE + 1}–
+                    {Math.min(currentPage * ITEMS_PER_PAGE, filteredReports.length)}
+                  </span>{' '}
+                  of {filteredReports.length.toLocaleString()} reports
+                </p>
+                {activeCategory && (
+                  <div
+                    className="flex items-center gap-2 text-xs px-3 py-1 rounded-full"
+                    style={{ background: '#E6F5F0', color: '#1A5C44' }}
+                  >
+                    <span className="font-medium">{activeCategory}</span>
+                    <button
+                      onClick={() => setActiveCategory('')}
+                      className="opacity-60 hover:opacity-100 transition-opacity"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Grid */}
+              <div
+                id="reports-grid"
+                className="grid gap-5"
+                style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))' }}
+              >
+                {paginatedReports.map((report, idx) => (
+                  <ReportCard
+                    key={report.id}
+                    report={report}
+                    index={(currentPage - 1) * ITEMS_PER_PAGE + idx + 1}
+                  />
+                ))}
+              </div>
+
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            </>
+          ) : (
+            /* Empty state */
+            <div className="flex flex-col items-center justify-center py-28 text-center">
+              <div
+                className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6"
+                style={{ background: '#F5F4F0' }}
+              >
+                <Search className="w-8 h-8" style={{ color: '#D6D3D1' }} />
+              </div>
+              <h3
+                className="font-display text-xl font-bold mb-2"
+                style={{ color: '#1C1917', letterSpacing: '-0.01em' }}
+              >
+                No reports found
+              </h3>
+              <p className="text-sm mb-8 max-w-xs" style={{ color: '#78716C', lineHeight: '1.65' }}>
+                Try a different search term or broaden your filters
+              </p>
+              {hasFilters && (
+                <button
+                  onClick={clearAll}
+                  className="px-6 py-2.5 rounded-full text-sm font-semibold text-white transition-all"
+                  style={{ background: '#1E7252' }}
+                >
+                  Clear all filters
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+      </section>
+    </>
   );
 }

@@ -162,6 +162,36 @@ body {
   .animate-pulse-ambient {
     animation: pulse-ambient 9s ease-in-out infinite;
   }
+
+  /* ── Third float variant (hero card 3) ── */
+  @keyframes float-gentle-c {
+    0%, 100% { transform: translateY(-6px); }
+    50%       { transform: translateY(6px); }
+  }
+
+  .animate-float-c {
+    animation: float-gentle-c 12s ease-in-out 3s infinite;
+    will-change: transform;
+  }
+
+  /* ── Staggered entrance (backwards = starts at from state during delay) ── */
+  @keyframes reveal-up {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-reveal-up-d1 { animation: reveal-up 0.75s 0.05s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+  .animate-reveal-up-d2 { animation: reveal-up 0.75s 0.15s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+  .animate-reveal-up-d3 { animation: reveal-up 0.75s 0.28s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+  .animate-reveal-up-d4 { animation: reveal-up 0.75s 0.42s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+  .animate-reveal-up-d5 { animation: reveal-up 0.75s 0.56s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+
+  /* ── Hide scrollbar utility ── */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* ── Reports hero search input placeholder ── */
+  .reports-search-input::placeholder { color: rgba(141, 213, 188, 0.45); }
 }
 
 @layer base {

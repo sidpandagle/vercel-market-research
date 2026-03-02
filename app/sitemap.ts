@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { getReports } from '@/lib/api/reports';
+import { getAllJsonReports } from '@/lib/jsonReports';
 import { getBlogs } from '@/lib/api/blogs';
 import { getPressReleases } from '@/lib/api/press-releases';
 
@@ -21,15 +21,16 @@ const ITEMS_PER_SITEMAP = 500;
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
-  // Fetch page 1 of each type to get total page counts from meta
-  const [reportsRes, blogsRes, prRes] = await Promise.all([
-    getReports({ status: 'published', page: 1, limit: ITEMS_PER_SITEMAP }),
+  // Get reports count from local JSON; fetch blogs/press-releases from API
+  const [blogsRes, prRes] = await Promise.all([
     getBlogs({ status: 'published', page: 1, limit: ITEMS_PER_SITEMAP }),
     getPressReleases({ status: 'published', page: 1, limit: ITEMS_PER_SITEMAP }),
   ]);
 
-  const reportsTotalPages =
-    reportsRes.success && reportsRes.meta?.totalPages ? reportsRes.meta.totalPages : 1;
+  const reportsTotalPages = Math.max(
+    1,
+    Math.ceil(getAllJsonReports().length / ITEMS_PER_SITEMAP)
+  );
   const blogsTotalPages =
     blogsRes.success && blogsRes.meta?.totalPages ? blogsRes.meta.totalPages : 1;
   const prTotalPages =

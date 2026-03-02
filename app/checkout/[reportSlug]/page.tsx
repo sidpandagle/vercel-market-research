@@ -58,7 +58,7 @@ export default async function CheckoutPage({
   return (
     <div className="bg-[var(--background)] min-h-screen">
       <div className="border-b border-[var(--border)] bg-[var(--card)]">
-        <div className="px-4 py-4 md:px-6">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <Breadcrumb items={breadcrumbItems} />
         </div>
       </div>

@@ -7,11 +7,10 @@ import Navigation from "./Navigation";
 
 export default function Header() {
   const pathname = usePathname();
-  const isNotReportPage = !pathname.includes("/reports/");
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-xl supports-[backdrop-filter]:bg-white/90 shadow-[0_2px_20px_0_rgba(9,28,21,0.08)] border-b border-stone-100" style={{ borderTop: '2px solid #84CC16' }}>
-      <div className={`${isNotReportPage ? 'container mx-auto' : ''} flex h-[60px] items-center justify-between px-4 md:px-6 gap-2 md:gap-4 w-full`}>
+      <div className={`container mx-auto flex h-[60px] items-center justify-between px-4 md:px-6 gap-2 md:gap-4 w-full`}>
         <Link href="/" className="flex items-center group flex-shrink-0">
           <Image
             src="/assets/images/logo.png"

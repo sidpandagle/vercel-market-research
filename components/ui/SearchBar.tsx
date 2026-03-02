@@ -5,8 +5,26 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useDebounce } from '@/hooks/useDebounce';
-import { searchReports, isApiError } from '@/lib/api';
-import type { Report } from '@/lib/api/reports.types';
+import allReportsData from '@/data/all_reports.json';
+import { jsonReportToUIReport } from '@/lib/jsonReports';
+import type { JsonReport } from '@/lib/jsonReports';
+
+type UIReport = ReturnType<typeof jsonReportToUIReport>;
+
+const allReports = allReportsData as JsonReport[];
+
+function searchLocal(query: string, limit = 5): UIReport[] {
+  const q = query.toLowerCase().trim();
+  if (!q) return [];
+  const matches = allReports.filter(
+    (r) =>
+      r.title.toLowerCase().includes(q) ||
+      r.industry.toLowerCase().includes(q) ||
+      r.market_overview.summary.toLowerCase().includes(q) ||
+      (r.seo.meta_description ?? '').toLowerCase().includes(q)
+  );
+  return matches.slice(0, limit).map((r, i) => jsonReportToUIReport(r, i));
+}
 
 interface SearchBarProps {
   variant?: 'hero' | 'header';
@@ -21,59 +39,27 @@ export default function SearchBar({
 }: SearchBarProps) {
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-  const [results, setResults] = useState<Report[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [results, setResults] = useState<UIReport[]>([]);
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  // Debounce the search query to avoid too many API calls
   const debouncedQuery = useDebounce(query, 300);
 
-  // Perform API search when debounced query changes
   useEffect(() => {
-    const performSearch = async () => {
-      if (!debouncedQuery.trim()) {
-        setResults([]);
-        setIsLoading(false);
-        return;
-      }
-
-      setIsLoading(true);
-
-      try {
-        const response = await searchReports(debouncedQuery, 1, 5);
-
-        if (!isApiError(response)) {
-          setResults(response.data);
-        } else {
-          setResults([]);
-          console.error('Search error:', response.message);
-        }
-      } catch (error) {
-        console.error('Search failed:', error);
-        setResults([]);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    performSearch();
+    if (!debouncedQuery.trim()) {
+      setResults([]);
+      return;
+    }
+    setResults(searchLocal(debouncedQuery));
   }, [debouncedQuery]);
 
-  // Handle input change
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setQuery(value);
     setIsOpen(true);
-
-    // Show loading state immediately when user types
-    if (value.trim()) {
-      setIsLoading(true);
-    }
   };
 
-  // Handle keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && query.trim()) {
       router.push(`/reports?search=${encodeURIComponent(query)}`);
@@ -85,14 +71,12 @@ export default function SearchBar({
     }
   };
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
@@ -186,12 +170,7 @@ export default function SearchBar({
       {/* Search Results Dropdown */}
       {isOpen && query && (
         <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-200 rounded-xl shadow-lg overflow-hidden z-50 max-h-96 overflow-y-auto">
-          {isLoading ? (
-            <div className="p-8 text-center">
-              <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-ocean-600 border-r-transparent mb-3"></div>
-              <p className="text-sm text-slate-600">Searching...</p>
-            </div>
-          ) : results.length > 0 ? (
+          {results.length > 0 ? (
             <>
               <div className="p-3 border-b border-slate-100 bg-slate-50">
                 <p className="text-xs font-medium text-slate-600">

@@ -86,22 +86,24 @@ export const ReportContentWrapper: React.FC<ReportContentWrapperProps> = ({
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-      {/* Left Sidebar - TOC Navigation */}
-      <aside className="hidden lg:block lg:col-span-3 2xl:col-span-2">
-        <div className="sticky top-24">
-          {hasFullContent && activeTOC && activeTOC.length > 0 && (
-            <TableOfContents
-              items={activeTOC}
-              onShowFullTOC={() => setShowFullTOC(true)}
-              showFullTOC={showFullTOC}
-              onNavigateToSection={handleNavigateToSection}
-            />
-          )}
-        </div>
-      </aside>
+      {/* Left Sidebar - TOC Navigation (only when full content is available) */}
+      {hasFullContent && (
+        <aside className="hidden lg:block lg:col-span-3 2xl:col-span-2">
+          <div className="sticky top-24">
+            {activeTOC && activeTOC.length > 0 && (
+              <TableOfContents
+                items={activeTOC}
+                onShowFullTOC={() => setShowFullTOC(true)}
+                showFullTOC={showFullTOC}
+                onNavigateToSection={handleNavigateToSection}
+              />
+            )}
+          </div>
+        </aside>
+      )}
 
       {/* Main Content Area */}
-      <main className={hasFullContent ? 'lg:col-span-6 2xl:col-span-8' : 'lg:col-span-9  2xl:col-span-8'}>
+      <main className={hasFullContent ? 'lg:col-span-6 2xl:col-span-8' : 'lg:col-span-9 2xl:col-span-8'}>
         {showFullTOC ? (
           <FullReportTOC
             chapters={chapters}
@@ -113,7 +115,7 @@ export const ReportContentWrapper: React.FC<ReportContentWrapperProps> = ({
       </main>
 
       {/* Right Sidebar - CTA Panel */}
-      <aside className={hasFullContent ? 'lg:col-span-3 2xl:col-span-2' : 'lg:col-span-2 2xl:col-span-2'}>
+      <aside className={hasFullContent ? 'lg:col-span-3 2xl:col-span-2' : 'lg:col-span-3 2xl:col-span-4'}>
         <div className="sticky top-24 space-y-4 max-h-[calc(100vh-6rem)] overflow-y-auto">
           <CustomizeReportCard reportTitle={reportTitle} />
           <CTAPanel discounted_price={discounted_price} price={price} reportTitle={reportTitle} reportSlug={reportSlug} />
