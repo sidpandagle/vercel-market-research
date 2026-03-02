@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui';
+import { CountrySelect } from '@/components/ui/country-select';
+import { getDefaultCountry, type Country } from '@/lib/data/countries';
 import { PayPalButton } from './PayPalButton';
 import { createOrder, captureOrder } from '@/lib/api/orders';
 
@@ -21,18 +23,22 @@ interface CustomerDetails {
   customer_country: string;
 }
 
-const INITIAL_DETAILS: CustomerDetails = {
-  customer_name: '',
-  customer_email: '',
-  customer_company: '',
-  customer_phone: '',
-  customer_country: '',
+const getInitialDetails = (): CustomerDetails => {
+  const defaultCountry = getDefaultCountry();
+  return {
+    customer_name: '',
+    customer_email: '',
+    customer_company: '',
+    customer_phone: '',
+    customer_country: defaultCountry.name,
+  };
 };
 
 export function CheckoutForm({ reportSlug, reportTitle }: CheckoutFormProps) {
   const router = useRouter();
   const [step, setStep] = useState<Step>('details');
-  const [details, setDetails] = useState<CustomerDetails>(INITIAL_DETAILS);
+  const [details, setDetails] = useState<CustomerDetails>(getInitialDetails);
+  const [countryCode, setCountryCode] = useState<string>(getDefaultCountry().code);
   const [orderId, setOrderId] = useState<number | null>(null);
   const [paypalOrderId, setPaypalOrderId] = useState<string>('');
   const [error, setError] = useState<string>('');
@@ -81,6 +87,11 @@ export function CheckoutForm({ reportSlug, reportTitle }: CheckoutFormProps) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setDetails(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleCountryChange = (country: Country) => {
+    setCountryCode(country.code);
+    setDetails(prev => ({ ...prev, customer_country: country.name }));
   };
 
   if (step === 'processing') {
@@ -178,13 +189,9 @@ export function CheckoutForm({ reportSlug, reportTitle }: CheckoutFormProps) {
               <label className="block text-sm font-medium text-[var(--foreground)] mb-1">
                 Country
               </label>
-              <input
-                type="text"
-                name="customer_country"
-                value={details.customer_country}
-                onChange={handleChange}
-                placeholder="United States"
-                className="w-full border border-[var(--border)] rounded-md px-3 py-2 text-sm bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
+              <CountrySelect
+                value={countryCode}
+                onChange={handleCountryChange}
               />
             </div>
           </div>

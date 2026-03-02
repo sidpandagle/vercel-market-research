@@ -91,6 +91,12 @@ export default function RootLayout({
           src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
           strategy="afterInteractive"
         />
+        {/* HubSpot Embed Code */}
+        <Script
+          id="hs-script-loader"
+          src="//js.hs-scripts.com/22449271.js"
+          strategy="afterInteractive"
+        />
       </head>
       <body className={`${geistSans.variable} antialiased`}>
         <div id="google_translate_element" className="hidden" />
