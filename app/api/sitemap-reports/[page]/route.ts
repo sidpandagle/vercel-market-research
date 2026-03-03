@@ -34,7 +34,7 @@ export async function GET(
     const reportUrls = reportsResponse.data.map((report) => ({
       url: `${BASE_URL}/reports/${report.slug}`,
       lastModified: new Date(report.date).toISOString(),
-      changeFrequency: 'weekly',
+      changeFrequency: 'daily',
       priority: 0.7,
     }));
 

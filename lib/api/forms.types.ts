@@ -28,6 +28,7 @@ export interface RequestSampleFormData {
   countryCode: string,
   dialCode: string,
   reportTitle: string;
+  reportSlug?: string;
   additionalInfo?: string;
 }
 

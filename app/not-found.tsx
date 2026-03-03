@@ -41,18 +41,6 @@ export default function NotFoundPage() {
 
     setIsSubmitting(false);
     setSubmitted(true);
-
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setFormData({
-        name: "",
-        email: "",
-        company: "",
-        interest: "",
-        attemptedUrl: attemptedUrl,
-      });
-      setSubmitted(false);
-    }, 3000);
   };
 
   return (

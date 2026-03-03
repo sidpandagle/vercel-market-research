@@ -37,23 +37,6 @@ export default function RequestDemoPage() {
 
     setIsSubmitting(false);
     setSubmitted(true);
-
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setFormData({
-        name: "",
-        email: "",
-        company: "",
-        phone: "",
-        jobTitle: "",
-        companySize: "",
-        interests: "",
-        preferredDate: "",
-        preferredTime: "",
-        message: "",
-      });
-      setSubmitted(false);
-    }, 3000);
   };
 
   return (

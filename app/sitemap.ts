@@ -39,13 +39,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: `${BASE_URL}/sitemap-pages.xml`,
       lastModified: now,
-      changeFrequency: 'daily' as const,
+      changeFrequency: 'weekly' as const,
       priority: 1.0,
     },
     {
       url: `${BASE_URL}/sitemap-consulting.xml`,
       lastModified: now,
-      changeFrequency: 'monthly' as const,
+      changeFrequency: 'weekly' as const,
       priority: 1.0,
     },
   ];

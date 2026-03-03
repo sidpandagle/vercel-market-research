@@ -64,11 +64,20 @@ export async function generateMetadata({
         description,
         type: "article",
         publishedTime: report.date,
+        images: [
+          {
+            url: `/reports/${slug}/opengraph-image`,
+            width: 1200,
+            height: 630,
+            alt: title,
+          },
+        ],
       },
       twitter: {
         card: 'summary_large_image',
         title,
         description,
+        images: [`/reports/${slug}/opengraph-image`],
       },
       alternates: {
         canonical: `/reports/${slug}`,
@@ -329,6 +338,8 @@ export default async function ReportPage({
   const reportKeywords = report.meta_keywords?.split(',').map(k => k.trim()).filter(Boolean);
 
   // Generate structured data schemas
+  const reportOgImage = `https://www.healthcareforesights.com/reports/${report.slug}/opengraph-image`;
+
   const articleSchema = generateArticleSchema({
     type: 'Report',
     title: report.title,
@@ -337,6 +348,7 @@ export default async function ReportPage({
     datePublished: report.date,
     author: report.authors && report.authors.length > 0 ? report.authors.map((author) => author.name) : undefined,
     keywords: reportKeywords,
+    image: reportOgImage,
   });
 
   const productSchema = generateProductSchema({
@@ -349,6 +361,7 @@ export default async function ReportPage({
     reportCode: report.reportCode || `HF${report.id}`,
     keywords: reportKeywords,
     datePublished: report.date,
+    image: reportOgImage,
   });
 
   const datasetSchema = generateDatasetSchema({

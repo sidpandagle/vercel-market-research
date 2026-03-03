@@ -81,26 +81,6 @@ export default function ContactPage() {
 
     // Success
     setSubmitted(true);
-
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      const resetCountry = getDefaultCountry();
-      setFormData({
-        fullName: "",
-        email: "",
-        company: "",
-        phone: "",
-        country: resetCountry.name,
-        countryCode: resetCountry.code,
-        dialCode: resetCountry.dialCode,
-        subject: "",
-        message: "",
-      });
-      setCaptchaValid(false);
-      captchaRef.current?.reset();
-      setSubmitted(false);
-      setError(null);
-    }, 3000);
   };
 
   return (

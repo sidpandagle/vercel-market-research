@@ -161,6 +161,7 @@ export const generateProductSchema = (params: {
   reportCode?: string;
   keywords?: string[];
   datePublished?: string;
+  image?: string;
 }) => {
   const parsePrice = (priceStr: string) => parseFloat(priceStr.replace(/[$,]/g, ''));
   const effectivePrice = parsePrice(params.discountedPrice || params.price);
@@ -170,6 +171,7 @@ export const generateProductSchema = (params: {
     '@type': 'Product',
     name: params.name,
     description: params.description,
+    image: params.image || 'https://www.healthcareforesights.com/assets/images/logo.png',
     brand: {
       '@type': 'Brand',
       name: 'Healthcare Foresights',

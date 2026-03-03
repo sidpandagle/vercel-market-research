@@ -12,6 +12,7 @@ import { getDefaultCountry, type Country } from "@/lib/data/countries";
 export default function RequestSampleForm() {
   const searchParams = useSearchParams();
   const reportTitle = searchParams.get("report") || "";
+  const reportSlug = searchParams.get("slug") || "";
   const defaultCountry = getDefaultCountry();
   const captchaRef = useRef<CaptchaRef>(null);
 
@@ -25,6 +26,7 @@ export default function RequestSampleForm() {
     dialCode: defaultCountry.dialCode,
     jobTitle: "",
     reportTitle: reportTitle,
+    reportSlug: reportSlug,
     additionalInfo: "",
   });
   const [, setCaptchaValid] = useState(false);
@@ -71,6 +73,7 @@ export default function RequestSampleForm() {
       countryCode: formData.countryCode,
       dialCode: formData.dialCode,
       reportTitle: formData.reportTitle,
+      reportSlug: formData.reportSlug || undefined,
       additionalInfo: formData.additionalInfo || undefined,
     };
 
@@ -87,27 +90,6 @@ export default function RequestSampleForm() {
 
     // Success
     setSubmitted(true);
-
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      const resetCountry = getDefaultCountry();
-      setFormData({
-        fullName: "",
-        email: "",
-        company: "",
-        phone: "",
-        country: resetCountry.name,
-        countryCode: resetCountry.code,
-        dialCode: resetCountry.dialCode,
-        jobTitle: "",
-        reportTitle: "",
-        additionalInfo: "",
-      });
-      setCaptchaValid(false);
-      captchaRef.current?.reset();
-      setSubmitted(false);
-      setError(null);
-    }, 3000);
   };
 
   return (

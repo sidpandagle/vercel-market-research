@@ -34,7 +34,7 @@ export async function GET(
     const blogUrls = blogsResponse.data.map((blog) => ({
       url: `${BASE_URL}/blog/${blog.slug}`,
       lastModified: new Date(blog.date).toISOString(),
-      changeFrequency: 'weekly',
+      changeFrequency: 'daily',
       priority: 0.6,
     }));
 
