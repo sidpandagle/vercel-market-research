@@ -74,28 +74,29 @@ export default function RootLayout({
                   { pageLanguage: 'en', autoDisplay: false },
                   'google_translate_element'
                 );
-                var _gtBannerInterval = setInterval(function() {
+                var _gtObserver = new MutationObserver(function() {
                   var banner = document.querySelector('iframe.goog-te-banner-frame');
                   if (banner) {
                     banner.style.display = 'none';
                     document.body.style.top = '0px';
-                    clearInterval(_gtBannerInterval);
+                    _gtObserver.disconnect();
                   }
-                }, 200);
-                setTimeout(function() { clearInterval(_gtBannerInterval); }, 5000);
+                });
+                _gtObserver.observe(document.body, { childList: true, subtree: true });
+                setTimeout(function() { _gtObserver.disconnect(); }, 5000);
               };
             `,
           }}
         />
         <Script
           src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
         {/* HubSpot Embed Code */}
         <Script
           id="hs-script-loader"
           src="//js.hs-scripts.com/22449271.js"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
       </head>
       <body className={`${geistSans.variable} antialiased`}>
