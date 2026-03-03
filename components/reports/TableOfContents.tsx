@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { SidebarTOCItem } from '@/lib/toc-utils';
 
@@ -20,6 +20,8 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
   onNavigateToSection,
 }) => {
   const [activeId, setActiveId] = useState<string>('');
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const activeItemRef = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -51,6 +53,24 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
       });
     };
   }, [items]);
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    const item = activeItemRef.current;
+    if (!container || !item) return;
+
+    const containerTop = container.scrollTop;
+    const containerBottom = containerTop + container.clientHeight;
+    const itemTop = item.offsetTop;
+    const itemBottom = itemTop + item.offsetHeight;
+
+    if (itemTop < containerTop || itemBottom > containerBottom) {
+      container.scrollTo({
+        top: itemTop - container.clientHeight / 2 + item.offsetHeight / 2,
+        behavior: 'smooth',
+      });
+    }
+  }, [activeId]);
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
@@ -85,11 +105,12 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
         <h3 className="text-sm font-semibold text-[var(--foreground)] mb-4 uppercase tracking-wide flex-shrink-0">
           Report Details
         </h3>
-        <div className="flex-1 overflow-y-auto pb-4">
+        <div ref={scrollContainerRef} className="flex-1 overflow-y-auto pb-4">
           <ul className="space-y-3">
             {items.map((item) => (
               <li
                 key={item.id}
+                ref={activeId === item.id ? activeItemRef : null}
                 className={cn(
                   'transition-all duration-200'
                 )}
