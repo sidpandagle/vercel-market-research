@@ -85,6 +85,15 @@ export async function submitRequestSampleForm(
 }
 
 /**
+ * Submit request customization form
+ */
+export async function submitRequestCustomizationForm(
+  data: RequestSampleFormData
+): Promise<ApiResponse<FormSubmissionResponse>> {
+  return submitForm('request-customization', data);
+}
+
+/**
  * Type guard to check if response is an error
  */
 export function isFormError(

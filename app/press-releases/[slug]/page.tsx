@@ -134,7 +134,7 @@ export default async function PressReleaseDetailPage({ params }: PressReleasePag
             <Badge variant="default">{pressRelease.category}</Badge>
           </div>
 
-          <h1 className="mb-6 text-4xl font-bold md:text-5xl lg:text-6xl">
+          <h1 className="mb-6 text-4xl font-bold">
             {pressRelease.title}
           </h1>
 

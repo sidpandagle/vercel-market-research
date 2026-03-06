@@ -69,7 +69,7 @@ export default function Footer() {
             <ul className="space-y-3 text-sm">
               <li>
                 <Link
-                  href="/reports"
+                  href="/industry"
                   className="text-slate-600 hover:text-ocean-600 transition-colors flex items-center gap-2 group"
                 >
                   <ChevronRight className="w-4 h-4 text-ocean-600 group-hover:translate-x-1 transition-transform" />

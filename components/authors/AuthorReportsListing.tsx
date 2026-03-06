@@ -55,7 +55,7 @@ export default function AuthorReportsListing({ reports, authorName }: AuthorRepo
             {authorName} hasn&apos;t authored any reports yet. Check back soon!
           </p>
           <Link
-            href="/reports"
+            href="/industry"
             className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--primary)] text-white rounded-lg hover:opacity-90 transition-opacity"
           >
             Browse All Reports

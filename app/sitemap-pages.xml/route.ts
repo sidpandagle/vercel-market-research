@@ -29,7 +29,7 @@ export async function GET() {
       priority: 0.7,
     },
     {
-      url: `${BASE_URL}/request-demo`,
+      url: `${BASE_URL}/request-analyst-meeting`,
       lastModified: new Date().toISOString(),
       changeFrequency: 'weekly',
       priority: 0.7,
@@ -41,13 +41,19 @@ export async function GET() {
       priority: 0.7,
     },
     {
+      url: `${BASE_URL}/request-customization`,
+      lastModified: new Date().toISOString(),
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    },
+    {
       url: `${BASE_URL}/consulting`,
       lastModified: new Date().toISOString(),
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/reports`,
+      url: `${BASE_URL}/industry`,
       lastModified: new Date().toISOString(),
       changeFrequency: 'daily',
       priority: 0.9,

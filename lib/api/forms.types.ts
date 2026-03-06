@@ -1,6 +1,6 @@
 // Form submission types based on the API design
 
-export type FormCategory = 'contact' | 'request-sample';
+export type FormCategory = 'contact' | 'request-sample' | 'request-customization';
 
 export type FormStatus = 'pending' | 'processed' | 'archived';
 

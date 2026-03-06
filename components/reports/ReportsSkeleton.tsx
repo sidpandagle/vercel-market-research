@@ -1,97 +1,103 @@
-import { Skeleton, Section, Container, Grid, Card, CardHeader, CardContent, CardFooter } from '@/components/ui';
+import { Skeleton } from '@/components/ui';
 
-/**
- * Skeleton loader for reports page
- * Matches the exact layout of ReportsListingClient with sidebar, search, and report cards
- */
 export default function ReportsSkeleton() {
   return (
-    <Section padding="lg">
-      <Container size="xl">
-        <div className="grid lg:grid-cols-[280px_1fr] gap-8">
-          {/* Left Sidebar Skeleton - Hidden on mobile */}
+    <>
+      {/* ── Hero Banner Skeleton ───────────────────────────────────── */}
+      <div className="bg-gradient-to-r from-slate-50 via-blue-50/40 to-slate-50 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
+          {/* Breadcrumb */}
+          <div className="flex items-center gap-2 mb-5">
+            <Skeleton className="h-3 w-10" />
+            <Skeleton className="h-3 w-2" />
+            <Skeleton className="h-3 w-14" />
+            <Skeleton className="h-3 w-2" />
+            <Skeleton className="h-3 w-28" />
+          </div>
+
+          <div className="flex items-start gap-4">
+            {/* Icon box */}
+            <Skeleton className="hidden sm:block h-14 w-14 rounded-2xl shrink-0" />
+            <div className="flex-1">
+              <Skeleton className="h-8 w-80 mb-3" />
+              <Skeleton className="h-4 w-full max-w-lg mb-1.5" />
+              <Skeleton className="h-4 w-2/3 max-w-md mb-4" />
+              <Skeleton className="h-7 w-28 rounded-full" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Two-column layout ─────────────────────────────────────── */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid lg:grid-cols-[1fr_288px] gap-10">
+
+          {/* ── Main: Report List ──────────────────────────────────── */}
+          <main>
+            {/* Search bar */}
+            <Skeleton className="h-11 w-full rounded-lg mb-5" />
+
+            {/* Meta row */}
+            <div className="flex items-center pb-3 border-b border-slate-200 mb-1">
+              <Skeleton className="h-3 w-36" />
+            </div>
+
+            {/* Report list items */}
+            {Array.from({ length: 7 }).map((_, i) => (
+              <div key={i} className="py-6 pl-5 -ml-5 border-b border-slate-100">
+                {/* Category + date */}
+                <div className="flex items-center gap-2.5 mb-2.5">
+                  <Skeleton className="h-3 w-28" />
+                  <Skeleton className="h-3 w-2 rounded-full" />
+                  <Skeleton className="h-3 w-16" />
+                </div>
+                {/* Title */}
+                <Skeleton className="h-5 w-full mb-1.5" />
+                <Skeleton className={`h-5 mb-3 ${i % 3 === 0 ? 'w-3/4' : i % 3 === 1 ? 'w-5/6' : 'w-2/3'}`} />
+                {/* Excerpt */}
+                <Skeleton className="h-3.5 w-full mb-1.5" />
+                <Skeleton className="h-3.5 w-4/5 mb-3" />
+                {/* Footer */}
+                <div className="flex items-center gap-3">
+                  <Skeleton className="h-3 w-20" />
+                  <Skeleton className="h-3 w-1" />
+                  <Skeleton className="h-3 w-24" />
+                  <Skeleton className="h-3 w-1" />
+                  <Skeleton className="h-3 w-16" />
+                </div>
+              </div>
+            ))}
+          </main>
+
+          {/* ── Right Sidebar ─────────────────────────────────────── */}
           <aside className="hidden lg:block">
-            <div className="sticky top-24 space-y-6">
-              {/* Filter header */}
-              <div className="space-y-3">
-                <Skeleton className="h-6 w-32" />
-                <Skeleton className="h-4 w-24" />
+            <div className="sticky top-24 space-y-5">
+              {/* Browse by Industry card */}
+              <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+                <div className="px-4 py-3 border-b border-slate-100 bg-slate-50">
+                  <Skeleton className="h-3 w-32" />
+                </div>
+                <div className="py-2">
+                  {Array.from({ length: 13 }).map((_, i) => (
+                    <div key={i} className="flex items-center justify-between px-4 py-2">
+                      <Skeleton className={`h-3.5 ${i === 0 ? 'w-24' : i % 4 === 1 ? 'w-28' : i % 4 === 2 ? 'w-20' : 'w-32'}`} />
+                      <Skeleton className="h-4 w-7 rounded-full" />
+                    </div>
+                  ))}
+                </div>
               </div>
 
-              {/* Filter sections */}
-              {Array.from({ length: 4 }).map((_, index) => (
-                <div key={index} className="space-y-3">
-                  <Skeleton className="h-5 w-28" />
-                  <div className="space-y-2">
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-3/4" />
-                  </div>
-                </div>
-              ))}
+              {/* CTA card */}
+              <div className="bg-gradient-to-br from-[#1B4B7F] to-[#0F2D52] rounded-xl p-5">
+                <Skeleton className="h-4 w-36 mb-2 bg-white/20" />
+                <Skeleton className="h-3 w-full mb-1.5 bg-white/10" />
+                <Skeleton className="h-3 w-4/5 mb-4 bg-white/10" />
+                <Skeleton className="h-8 w-40 rounded-lg bg-white/20" />
+              </div>
             </div>
           </aside>
-
-          {/* Main Content */}
-          <main>
-            {/* Search Bar Skeleton */}
-            <div className="mb-6">
-              <Skeleton className="h-12 w-full rounded-lg" />
-            </div>
-
-            {/* Header Skeleton */}
-            <div className="mb-8">
-              <Skeleton className="h-10 w-64 mb-2" />
-              <Skeleton className="h-6 w-40" />
-            </div>
-
-            {/* Report Cards Skeleton - Single column grid */}
-            <Grid cols={1} gap="lg">
-              {Array.from({ length: 6 }).map((_, index) => (
-                <Card key={index} className="h-full flex flex-col">
-                  <CardHeader>
-                    {/* Badge + Price Row */}
-                    <div className="flex items-center justify-between mb-3">
-                      <Skeleton className="h-6 w-24 rounded-full" />
-                      <div className="text-right space-y-1">
-                        <Skeleton className="h-4 w-16" />
-                        <Skeleton className="h-6 w-20" />
-                      </div>
-                    </div>
-
-                    {/* Title */}
-                    <Skeleton className="h-6 w-full mb-2" />
-                    <Skeleton className="h-6 w-3/4" />
-                  </CardHeader>
-
-                  <CardContent className="flex-grow" style={{ paddingTop: '0px', paddingBottom: '0px' }}>
-                    {/* Description */}
-                    <div className="space-y-2 mb-4">
-                      <Skeleton className="h-4 w-full" />
-                      <Skeleton className="h-4 w-full" />
-                      <Skeleton className="h-4 w-2/3" />
-                    </div>
-
-                    {/* Metadata Row with Icons */}
-                    <div className="flex flex-wrap gap-x-4 gap-y-2">
-                      <Skeleton className="h-4 w-20" />
-                      <Skeleton className="h-4 w-24" />
-                      <Skeleton className="h-4 w-16" />
-                    </div>
-                  </CardContent>
-
-                  <CardFooter className="border-t border-slate-200 pt-4 mt-4">
-                    <div className="flex items-center justify-between w-full">
-                      <Skeleton className="h-4 w-16" />
-                      <Skeleton className="h-4 w-24" />
-                    </div>
-                  </CardFooter>
-                </Card>
-              ))}
-            </Grid>
-          </main>
         </div>
-      </Container>
-    </Section>
+      </div>
+    </>
   );
 }

@@ -145,6 +145,7 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
           color: #333333;
           font-size: 1rem;
           line-height: 1.75;
+          margin-bottom: 1em;
         }
 
         .styled-report-content ul,
@@ -154,6 +155,9 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
 
         .styled-report-content li {
           color: #333333;
+          p {
+            margin-bottom: 0;
+          }
         }
 
         .styled-report-content strong {

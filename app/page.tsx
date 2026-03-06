@@ -12,6 +12,9 @@ import {
   TestimonialsSectionSkeleton,
 } from '@/components/home';
 
+// Enable ISR with 5-minute revalidation
+export const revalidate = 300;
+
 export const metadata: Metadata = {
   title: "Healthcare Foresights | Healthcare Market Insights & Research Reports",
   description: "Healthcare Foresights delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.",

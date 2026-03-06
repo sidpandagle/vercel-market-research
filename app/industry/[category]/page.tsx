@@ -1,0 +1,83 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { Suspense } from 'react';
+import { notFound } from 'next/navigation';
+import { getReports, isApiError } from '@/lib/api';
+import { ReportsListingClient } from '@/components/reports';
+import ReportsSkeleton from '@/components/reports/ReportsSkeleton';
+import categories from '@/data/categories.json';
+
+interface PageProps {
+  params: Promise<{ category: string }>;
+}
+
+export async function generateStaticParams() {
+  return categories.map((category) => ({
+    category: category.slug,
+  }));
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { category: categorySlug } = await params;
+  const category = categories.find((c) => c.slug === categorySlug);
+
+  if (!category) {
+    return { title: 'Category Not Found' };
+  }
+
+  return {
+    title: `${category.name} Market Research Reports`,
+    description: category.description,
+    keywords: [
+      `${category.name} market research`,
+      `${category.name} reports`,
+      `${category.name} industry analysis`,
+    ],
+    alternates: {
+      canonical: `/industry/${category.slug}`,
+    },
+  };
+}
+
+export const revalidate = 300;
+
+async function CategoryReportsContent({ categorySlug }: { categorySlug: string }) {
+  const response = await getReports({
+    status: 'published',
+    limit: 100,
+  });
+
+  if (isApiError(response)) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <h2 className="text-2xl font-bold text-gray-900">Unable to Load Reports</h2>
+          <p className="text-gray-600">{response.message}</p>
+          <Link
+            href={`/industry/${categorySlug}`}
+            className="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Try Again
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  return <ReportsListingClient reports={response.data} activeCategorySlug={categorySlug} />;
+}
+
+export default async function CategoryPage({ params }: PageProps) {
+  const { category } = await params;
+  const categoryData = categories.find((c) => c.slug === category);
+
+  if (!categoryData) {
+    notFound();
+  }
+
+  return (
+    <Suspense fallback={<ReportsSkeleton />}>
+      <CategoryReportsContent categorySlug={category} />
+    </Suspense>
+  );
+}

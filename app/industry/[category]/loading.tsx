@@ -1,5 +1,5 @@
 import ReportsSkeleton from '@/components/reports/ReportsSkeleton';
 
-export default function ReportsLoading() {
+export default function CategoryLoading() {
   return <ReportsSkeleton />;
 }

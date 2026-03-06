@@ -75,7 +75,7 @@ export default function NotFoundPage() {
               </div>
 
               <div className="space-y-4">
-                <Link href="/reports">
+                <Link href="/industry">
                   <Card hover className="cursor-pointer transition-all">
                     <CardContent className="flex items-start gap-4 pt-6">
                       <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">

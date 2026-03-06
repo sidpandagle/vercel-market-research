@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 // import Image from "next/image";
-// import Link from "next/link";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { getReports, getReportBySlug, isApiError } from "@/lib/api";
 import { Breadcrumb, Badge, Card, CardContent } from "@/components/ui";
@@ -12,6 +12,7 @@ import FAQ from "@/components/reports/FAQ";
 import { parseHTMLAndGenerateTOC, addStaticSectionsToTOC } from "@/lib/html-toc-utils";
 import type { SidebarTOCItem } from "@/lib/toc-utils";
 import { StructuredData, generateArticleSchema, generateBreadcrumbSchema, generateFAQSchema, generateProductSchema, generateDatasetSchema } from "@/components/seo/StructuredData";
+import categories from "@/data/categories.json";
 
 // Enable ISR with 10-minute revalidation
 export const revalidate = 600;
@@ -163,7 +164,7 @@ export default async function ReportPage({
 
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
-    { label: 'Reports', href: '/reports' },
+    { label: 'Reports', href: '/industry' },
     { label: report.title },
   ];
 
@@ -334,6 +335,10 @@ export default async function ReportPage({
   // TODO: Fetch related reports from API when relatedReportIds are provided
   // const relatedReports: Report[] = [];
 
+  const categorySlug = categories.find(
+    (c) => c.name.toLowerCase() === report.category.toLowerCase()
+  )?.slug ?? report.category.toLowerCase().replace(/\s+/g, '-');
+
   const reportUrl = `https://www.healthcareforesights.com/reports/${report.slug}`;
   const reportKeywords = report.meta_keywords?.split(',').map(k => k.trim()).filter(Boolean);
 
@@ -382,7 +387,7 @@ export default async function ReportPage({
 
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: 'Home', url: 'https://www.healthcareforesights.com' },
-    { name: 'Reports', url: 'https://www.healthcareforesights.com/reports' },
+    { name: 'Reports', url: 'https://www.healthcareforesights.com/industry' },
     { name: report.title, url: reportUrl },
   ]);
 
@@ -416,7 +421,9 @@ export default async function ReportPage({
           <article>
               <header className="mb-8 pb-8 border-b border-[var(--border)]">
                 <div className="flex items-center gap-3 mb-4">
-                  <Badge variant="default">{report.category}</Badge>
+                  <Link href={`/industry/${categorySlug}`}>
+                    <Badge variant="default" className="cursor-pointer hover:opacity-80 transition-opacity">{report.category}</Badge>
+                  </Link>
                   <Badge variant="outline">{report.region}</Badge>
                 </div>
 

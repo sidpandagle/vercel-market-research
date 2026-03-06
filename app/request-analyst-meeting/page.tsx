@@ -5,7 +5,7 @@ import { Section, Container, Card, CardHeader, CardTitle, CardDescription, CardC
 import { CONTACT_INFO } from "@/lib/contact";
 import { QuickContactSection, TrustedPartnersSidebar } from "@/components/contact";
 
-export default function RequestDemoPage() {
+export default function RequestAnalystMeetingPage() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",

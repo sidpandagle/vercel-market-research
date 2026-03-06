@@ -76,7 +76,7 @@ export default function SearchBar({
   // Handle keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && query.trim()) {
-      router.push(`/reports?search=${encodeURIComponent(query)}`);
+      router.push(`/industry?search=${encodeURIComponent(query)}`);
       setIsOpen(false);
       inputRef.current?.blur();
     } else if (e.key === 'Escape') {
@@ -226,7 +226,7 @@ export default function SearchBar({
                 ))}
               </div>
               <Link
-                href={`/reports?search=${encodeURIComponent(query)}`}
+                href={`/industry?search=${encodeURIComponent(query)}`}
                 onClick={() => {
                   setIsOpen(false);
                   setQuery('');

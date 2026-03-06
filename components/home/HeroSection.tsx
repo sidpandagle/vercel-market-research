@@ -83,7 +83,7 @@ export default function HeroSection() {
 
           {/* CTA buttons with enhanced styling */}
           <div className="flex flex-col sm:flex-row gap-4 animate-fadeIn motion-reduce:animate-none z-1" style={{ animationDelay: '0.2s' }}>
-            <Link href="/reports">
+            <Link href="/industry">
               <Button
                 variant="primary"
                 size="lg"

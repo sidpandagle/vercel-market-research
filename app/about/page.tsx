@@ -208,7 +208,7 @@ export default function AboutPage() {
                       Contact Us
                     </Button>
                   </Link>
-                  <Link href="/reports">
+                  <Link href="/industry">
                     <Button variant="outline" size="lg">
                       Browse Reports
                     </Button>

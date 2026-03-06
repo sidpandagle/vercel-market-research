@@ -57,7 +57,7 @@ export default async function FeaturedReportsSection() {
           </Grid>
 
           <div className="text-center mt-8">
-            <Link href="/reports">
+            <Link href="/industry">
               <Button variant="outline" size="md">
                 View All Reports
               </Button>

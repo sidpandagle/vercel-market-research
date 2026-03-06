@@ -17,6 +17,7 @@ const ITEMS_PER_SITEMAP = 500;
  * - /sitemap-blogs-1.xml, /sitemap-blogs-2.xml, ... - Published blog posts (500 per file)
  * - /sitemap-press-releases-1.xml, /sitemap-press-releases-2.xml, ... - Published press releases (500 per file)
  * - /sitemap-consulting.xml - Consulting services pages
+ * - /news-sitemap.xml - Google News sitemap (all blogs + press releases)
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
@@ -46,6 +47,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${BASE_URL}/sitemap-consulting.xml`,
       lastModified: now,
       changeFrequency: 'weekly' as const,
+      priority: 1.0,
+    },
+    {
+      url: `${BASE_URL}/news-sitemap.xml`,
+      lastModified: now,
+      changeFrequency: 'daily' as const,
       priority: 1.0,
     },
   ];

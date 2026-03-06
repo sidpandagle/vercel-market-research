@@ -50,7 +50,7 @@ export default function OrderSuccessPage() {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
-          <Link href="/reports">
+          <Link href="/industry">
             <Button variant="outline" size="lg">
               Browse More Reports
             </Button>

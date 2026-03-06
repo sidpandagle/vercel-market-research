@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   keywords: ["healthcare research demo", "market research demo", "healthcare consulting demo"],
 };
 
-export default function RequestDemoLayout({
+export default function RequestAnalystMeetingLayout({
   children,
 }: {
   children: React.ReactNode;

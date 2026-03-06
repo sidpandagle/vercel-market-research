@@ -292,7 +292,7 @@ export default function ServicesPage() {
                       Contact Our Team
                     </Button>
                   </Link>
-                  <Link href="/request-demo">
+                  <Link href="/request-analyst-meeting">
                     <Button variant="outline" size="lg">
                       Schedule a Demo
                     </Button>

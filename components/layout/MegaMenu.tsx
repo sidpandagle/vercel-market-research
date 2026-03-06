@@ -136,7 +136,7 @@ export default function MegaMenu({ categories, isActive }: MegaMenuProps) {
           {categories.map((category) => (
             <Link
               key={category.id}
-              href={`/reports?category=${category.slug}`}
+              href={`/industry/${category.slug}`}
               onClick={() => setIsOpen(false)}
               className={cn(
                 "group block p-4 rounded-lg",

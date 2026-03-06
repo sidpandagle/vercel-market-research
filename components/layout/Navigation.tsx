@@ -59,7 +59,7 @@ export default function Navigation() {
 
         <MegaMenu
           categories={categories}
-          isActive={pathname.startsWith("/reports")}
+          isActive={pathname.startsWith("/industry") || pathname.startsWith("/reports")}
         />
         <ConsultingMenu
           services={consultingServices}
@@ -225,12 +225,12 @@ export default function Navigation() {
             </span>
             <div className="mt-2 flex flex-col">
               <Link
-                href="/reports"
+                href="/industry"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={cn(
                   "py-3 px-4 text-base font-medium rounded-lg transition-colors",
                   "hover:bg-slate-100",
-                  pathname === "/reports"
+                  pathname === "/industry"
                     ? "text-[var(--primary)] bg-slate-50"
                     : "text-slate-700"
                 )}
@@ -240,7 +240,7 @@ export default function Navigation() {
               {categories.map((category) => (
                 <Link
                   key={category.id}
-                  href={`/reports?category=${category.slug}`}
+                  href={`/industry/${category.slug}`}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="py-2 px-4 text-sm text-slate-600 rounded-lg hover:bg-slate-100 transition-colors"
                 >

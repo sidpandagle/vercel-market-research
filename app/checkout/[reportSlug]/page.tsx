@@ -50,7 +50,7 @@ export default async function CheckoutPage({
 
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
-    { label: 'Reports', href: '/reports' },
+    { label: 'Reports', href: '/industry' },
     { label: report.title, href: `/reports/${report.slug}` },
     { label: 'Checkout' },
   ];
