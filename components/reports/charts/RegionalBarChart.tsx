@@ -133,7 +133,7 @@ export const RegionalBarChart: React.FC<RegionalBarChartProps> = ({
                   Share: <span className="font-bold text-foreground">{r.market_share.toFixed(1)}%</span>
                 </span>
                 <span className="text-muted-foreground">
-                  CAGR: <span className="font-bold text-green-600">{r.growth_rate.toFixed(1)}%</span>
+                  CAGR: <span className="font-bold text-blue-600">{r.growth_rate.toFixed(1)}%</span>
                 </span>
               </div>
               {r.largest_country && (

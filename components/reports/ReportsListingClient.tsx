@@ -95,12 +95,12 @@ export default function ReportsListingClient({ reports }: ReportsListingClientPr
       {/* ── Hero Banner ──────────────────────────────────────────────────────── */}
       <section
         className="relative overflow-hidden pt-20 pb-16 px-6 line-grid mesh-gradient-dark"
-        style={{ background: '#091C15' }}
+        style={{ background: '#0F172A' }}
       >
         {/* Decorative lime glow */}
         <div
           className="absolute top-0 right-1/4 w-96 h-96 rounded-full opacity-[0.06] blur-3xl pointer-events-none"
-          style={{ background: '#84CC16' }}
+          style={{ background: '#38BDF8' }}
         />
 
         <div className="relative max-w-7xl mx-auto">
@@ -108,10 +108,10 @@ export default function ReportsListingClient({ reports }: ReportsListingClientPr
             {/* Left: Headline */}
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-6">
-                <div className="h-px w-8 flex-shrink-0" style={{ background: '#84CC16' }} />
+                <div className="h-px w-8 flex-shrink-0" style={{ background: '#38BDF8' }} />
                 <p
                   className="text-xs font-bold tracking-[0.2em] uppercase"
-                  style={{ color: '#84CC16' }}
+                  style={{ color: '#38BDF8' }}
                 >
                   Market Intelligence
                 </p>
@@ -126,9 +126,9 @@ export default function ReportsListingClient({ reports }: ReportsListingClientPr
               >
                 Research
                 <br />
-                <span style={{ color: '#8DD5BC' }}>Reports</span>
+                <span style={{ color: '#93C5FD' }}>Reports</span>
               </h1>
-              <p style={{ color: '#6B9E8B', fontSize: '1rem', lineHeight: '1.7' }}>
+              <p style={{ color: '#6B9ED6', fontSize: '1rem', lineHeight: '1.7' }}>
                 {filteredReports.length.toLocaleString()}{' '}
                 {filteredReports.length === 1 ? 'report' : 'reports'} across{' '}
                 {categories.length} healthcare sectors
@@ -162,7 +162,7 @@ export default function ReportsListingClient({ reports }: ReportsListingClientPr
               className="px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-150 flex-shrink-0"
               style={
                 !activeCategory
-                  ? { background: '#1E7252', color: '#fff' }
+                  ? { background: '#1D4ED8', color: '#fff' }
                   : { background: '#F5F4F0', color: '#78716C' }
               }
             >
@@ -179,7 +179,7 @@ export default function ReportsListingClient({ reports }: ReportsListingClientPr
                 className="px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-150 flex-shrink-0"
                 style={
                   activeCategory === cat.name
-                    ? { background: '#1E7252', color: '#fff' }
+                    ? { background: '#1D4ED8', color: '#fff' }
                     : { background: '#F5F4F0', color: '#78716C' }
                 }
               >
@@ -197,7 +197,7 @@ export default function ReportsListingClient({ reports }: ReportsListingClientPr
                 className="appearance-none pl-3 pr-8 py-1.5 rounded-full text-xs font-semibold border cursor-pointer focus:outline-none transition-all duration-150"
                 style={
                   activeRegion
-                    ? { background: '#1E7252', color: '#fff', borderColor: '#1E7252' }
+                    ? { background: '#1D4ED8', color: '#fff', borderColor: '#1D4ED8' }
                     : { background: '#F5F4F0', color: '#78716C', borderColor: '#E7E5E4' }
                 }
               >
@@ -250,7 +250,7 @@ export default function ReportsListingClient({ reports }: ReportsListingClientPr
                 {activeCategory && (
                   <div
                     className="flex items-center gap-2 text-xs px-3 py-1 rounded-full"
-                    style={{ background: '#E6F5F0', color: '#1A5C44' }}
+                    style={{ background: '#EFF6FF', color: '#1E40AF' }}
                   >
                     <span className="font-medium">{activeCategory}</span>
                     <button
@@ -306,7 +306,7 @@ export default function ReportsListingClient({ reports }: ReportsListingClientPr
                 <button
                   onClick={clearAll}
                   className="px-6 py-2.5 rounded-full text-sm font-semibold text-white transition-all"
-                  style={{ background: '#1E7252' }}
+                  style={{ background: '#1D4ED8' }}
                 >
                   Clear all filters
                 </button>

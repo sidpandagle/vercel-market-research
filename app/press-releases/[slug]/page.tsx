@@ -211,7 +211,7 @@ export default async function PressReleaseDetailPage({ params }: PressReleasePag
                   </Link>
                   <Link href={`/request-sample?report=${encodeURIComponent(pressRelease.title)}&customize=true`}>
                     <Button
-                      className="w-full mt-3 bg-green-50 text-green-700 hover:bg-green-100 hover:text-green-800 border-green-200 hover:border-green-300"
+                      className="w-full mt-3 bg-blue-50 text-blue-700 hover:bg-blue-100 hover:text-blue-800 border-blue-200 hover:border-blue-300"
                       variant="outline"
                       size="lg"
                     >

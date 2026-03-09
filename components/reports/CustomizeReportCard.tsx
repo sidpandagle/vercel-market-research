@@ -17,9 +17,9 @@ export const CustomizeReportCard = React.forwardRef<HTMLDivElement, CustomizeRep
         {/* Icon */}
         <div
           className="w-10 h-10 rounded-xl flex items-center justify-center mb-3"
-          style={{ background: '#E6F5F0', border: '1px solid #8DD5BC' }}
+          style={{ background: '#EFF6FF', border: '1px solid #93C5FD' }}
         >
-          <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none" style={{ color: '#1E7252' }}>
+          <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none" style={{ color: '#1D4ED8' }}>
             <path d="M3 10h14M10 3v14M6 6l8 8M14 6l-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
           </svg>
         </div>
@@ -34,9 +34,9 @@ export const CustomizeReportCard = React.forwardRef<HTMLDivElement, CustomizeRep
         <Link href={`/request-sample${reportTitle ? `?report=${encodeURIComponent(reportTitle)}&customize=true` : '?customize=true'}`} className="block">
           <button
             className="w-full py-2 px-4 rounded-xl text-sm font-semibold transition-all duration-200"
-            style={{ background: '#E6F5F0', color: '#1E7252', border: '1px solid #8DD5BC' }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = '#C0E8DA' }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = '#E6F5F0' }}
+            style={{ background: '#EFF6FF', color: '#1D4ED8', border: '1px solid #93C5FD' }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = '#BFDBFE' }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = '#EFF6FF' }}
           >
             Customize This Report
           </button>

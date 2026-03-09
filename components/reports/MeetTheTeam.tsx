@@ -191,7 +191,7 @@ export default function MeetTheTeam({ teamMembers }: MeetTheTeamProps) {
 
   return (
     <section id="meet-the-team" className="mb-12 scroll-mt-24">
-      <h2 className="text-2xl font-bold text-[var(--teal-deep)] mb-3">
+      <h2 className="text-2xl font-bold text-[var(--blue-deep)] mb-3">
         Meet the Team
       </h2>
       <p className="text-[var(--muted-foreground)] mb-8">

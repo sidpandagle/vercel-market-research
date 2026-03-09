@@ -118,7 +118,7 @@ export default function ConsultingMenu({ services, isActive }: ConsultingMenuPro
         className={cn(
           "fixed left-0 right-0 z-50",
           "lg:top-[62px]",
-          "bg-white border-t-2 border-t-bright-500 shadow-[0_8px_32px_0_rgba(9,28,21,0.12)]",
+          "bg-white border-t-2 border-t-bright-500 shadow-[0_8px_32px_0_rgba(15,23,42,0.12)]",
           "transition-all duration-300 ease-out",
           "max-h-[calc(100vh-62px)] overflow-y-auto",
           isOpen

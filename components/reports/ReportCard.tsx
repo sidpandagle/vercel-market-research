@@ -27,7 +27,7 @@ const CATEGORY_PALETTE: Record<string, { bar: string; badge: string; text: strin
   'Healthcare Services':  { bar: '#7C3AED', badge: '#F5F3FF', text: '#5B21B6' },
   'Laboratory Equipment': { bar: '#D97706', badge: '#FFFBEB', text: '#92400E' },
   'Healthcare IT':        { bar: '#10B981', badge: '#ECFDF5', text: '#047857' },
-  'Medical Devices':      { bar: '#1E7252', badge: '#E6F5F0', text: '#1A5C44' },
+  'Medical Devices':      { bar: '#1D4ED8', badge: '#EFF6FF', text: '#1E40AF' },
   'Medical Imaging':      { bar: '#2563EB', badge: '#EFF6FF', text: '#1D4ED8' },
   'Therapeutic Area':     { bar: '#DB2777', badge: '#FDF2F8', text: '#9D174D' },
   'Life Sciences':        { bar: '#6D28D9', badge: '#F5F3FF', text: '#4C1D95' },
@@ -36,7 +36,7 @@ const CATEGORY_PALETTE: Record<string, { bar: string; badge: string; text: strin
   'Animal Health':        { bar: '#78716C', badge: '#FAFAF8', text: '#44403C' },
 };
 
-const DEFAULT_PALETTE = { bar: '#1E7252', badge: '#E6F5F0', text: '#1A5C44' };
+const DEFAULT_PALETTE = { bar: '#1D4ED8', badge: '#EFF6FF', text: '#1E40AF' };
 
 export default function ReportCard({ report, index }: ReportCardProps) {
   const palette = CATEGORY_PALETTE[report.category] ?? DEFAULT_PALETTE;
@@ -83,7 +83,7 @@ export default function ReportCard({ report, index }: ReportCardProps) {
           >
             <span
               style={{ transition: 'color 0.2s' }}
-              className="group-hover:text-[#1E7252]"
+              className="group-hover:text-[#1D4ED8]"
             >
               {report.title}
             </span>

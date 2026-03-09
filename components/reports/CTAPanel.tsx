@@ -10,8 +10,8 @@ interface CTAPanelProps {
 
 const CheckIcon = () => (
   <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 16 16" fill="none">
-    <circle cx="8" cy="8" r="7.5" stroke="#1E7252" strokeOpacity="0.3" />
-    <path d="M5 8l2 2 4-4" stroke="#1E7252" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <circle cx="8" cy="8" r="7.5" stroke="#1D4ED8" strokeOpacity="0.3" />
+    <path d="M5 8l2 2 4-4" stroke="#1D4ED8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
@@ -21,16 +21,16 @@ export const CTAPanel = React.forwardRef<HTMLDivElement, CTAPanelProps>(
     const hasDiscount = Boolean(discounted_price);
 
     return (
-      <div ref={ref} className="rounded-2xl overflow-hidden" style={{ border: '1px solid var(--border)', boxShadow: '0 4px 24px rgba(30,114,82,0.10)' }}>
-        {/* Dark green pricing header */}
+      <div ref={ref} className="rounded-2xl overflow-hidden" style={{ border: '1px solid var(--border)', boxShadow: '0 4px 24px rgba(29,78,216,0.10)' }}>
+        {/* Dark navy/blue pricing header */}
         <div
           className="px-5 pt-6 pb-5 text-center relative overflow-hidden"
-          style={{ background: 'linear-gradient(145deg, #091C15 0%, #0D2820 55%, #163528 100%)' }}
+          style={{ background: 'linear-gradient(145deg, #0F172A 0%, #172554 55%, #1e3a8a 100%)' }}
         >
           {/* Subtle radial glow */}
           <div
             className="absolute top-0 left-1/2 w-40 h-40 rounded-full pointer-events-none"
-            style={{ background: 'radial-gradient(circle, rgba(37,144,106,0.25) 0%, transparent 70%)', transform: 'translate(-50%, -50%)' }}
+            style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.25) 0%, transparent 70%)', transform: 'translate(-50%, -50%)' }}
           />
 
           <p className="text-xs uppercase tracking-widest mb-3 relative" style={{ color: 'rgba(255,255,255,0.45)' }}>
@@ -51,7 +51,7 @@ export const CTAPanel = React.forwardRef<HTMLDivElement, CTAPanelProps>(
           {hasDiscount && (
             <span
               className="inline-block px-2.5 py-1 rounded-full text-xs font-semibold mt-2"
-              style={{ background: 'rgba(132,204,22,0.20)', color: '#A3E635', border: '1px solid rgba(132,204,22,0.30)' }}
+              style={{ background: 'rgba(56,189,248,0.20)', color: '#7DD3FC', border: '1px solid rgba(56,189,248,0.30)' }}
             >
               20% off
             </span>
@@ -67,9 +67,9 @@ export const CTAPanel = React.forwardRef<HTMLDivElement, CTAPanelProps>(
           <Link href={reportSlug ? `/checkout/${reportSlug}` : '/contact'} className="block">
             <button
               className="w-full py-3 px-4 rounded-xl font-semibold text-sm text-white transition-all duration-200"
-              style={{ background: 'linear-gradient(135deg, #1E7252, #25906A)', boxShadow: '0 4px 14px rgba(30,114,82,0.30)' }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = '0 6px 20px rgba(30,114,82,0.40)' }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 14px rgba(30,114,82,0.30)' }}
+              style={{ background: 'linear-gradient(135deg, #1D4ED8, #2563EB)', boxShadow: '0 4px 14px rgba(29,78,216,0.30)' }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = '0 6px 20px rgba(29,78,216,0.40)' }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 14px rgba(29,78,216,0.30)' }}
             >
               Buy Report Now
             </button>
@@ -78,9 +78,9 @@ export const CTAPanel = React.forwardRef<HTMLDivElement, CTAPanelProps>(
           <Link href={`/request-sample${reportTitle ? `?report=${encodeURIComponent(reportTitle)}` : ''}`} className="block">
             <button
               className="w-full py-2.5 px-4 rounded-xl font-semibold text-sm transition-all duration-200"
-              style={{ background: '#E6F5F0', color: '#1E7252', border: '1px solid #8DD5BC' }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = '#C0E8DA' }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = '#E6F5F0' }}
+              style={{ background: '#EFF6FF', color: '#1D4ED8', border: '1px solid #93C5FD' }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = '#BFDBFE' }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = '#EFF6FF' }}
             >
               Request Free Sample
             </button>
@@ -108,7 +108,7 @@ export const CTAPanel = React.forwardRef<HTMLDivElement, CTAPanelProps>(
           >
             {['Secure Checkout', 'Instant Access'].map((badge) => (
               <span key={badge} className="flex items-center gap-1 text-xs" style={{ color: '#78716C' }}>
-                <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#1E7252' }} />
+                <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#1D4ED8' }} />
                 {badge}
               </span>
             ))}

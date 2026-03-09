@@ -73,10 +73,10 @@ export default function SearchBar({ onSearchResults, placeholder }: SearchBarPro
             background: 'rgba(255,255,255,0.08)',
             border: '1px solid rgba(255,255,255,0.14)',
             color: '#F5F4F0',
-            caretColor: '#84CC16',
+            caretColor: '#38BDF8',
           }}
           onFocus={(e) => {
-            e.currentTarget.style.border = '1px solid rgba(132,204,22,0.5)';
+            e.currentTarget.style.border = '1px solid rgba(56,189,248,0.5)';
             e.currentTarget.style.background = 'rgba(255,255,255,0.11)';
           }}
           onBlur={(e) => {
@@ -104,7 +104,7 @@ export default function SearchBar({ onSearchResults, placeholder }: SearchBarPro
         )}
       </div>
       {query && (
-        <p className="mt-2 text-xs" style={{ color: 'rgba(141,213,188,0.7)' }}>
+        <p className="mt-2 text-xs" style={{ color: 'rgba(147,197,253,0.7)' }}>
           Press Enter or wait for results
         </p>
       )}

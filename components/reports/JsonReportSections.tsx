@@ -21,14 +21,14 @@ const SectionHeading = ({ id, num, children }: { id: string; num: number; childr
   <div className="flex items-start gap-4 mb-7">
     <span
       className="flex-shrink-0 mt-0.5 w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold"
-      style={{ background: 'rgba(30,114,82,0.10)', color: '#1E7252', border: '1px solid rgba(30,114,82,0.20)' }}
+      style={{ background: 'rgba(29,78,216,0.10)', color: '#1D4ED8', border: '1px solid rgba(29,78,216,0.20)' }}
     >
       {String(num).padStart(2, '0')}
     </span>
     <h2
       id={id}
       className="font-display text-2xl font-bold scroll-mt-24"
-      style={{ color: '#0D2820', letterSpacing: '-0.01em', lineHeight: '1.25' }}
+      style={{ color: '#172554', letterSpacing: '-0.01em', lineHeight: '1.25' }}
     >
       {children}
     </h2>
@@ -42,7 +42,7 @@ const SubHeading = ({ children }: { children: React.ReactNode }) => (
 )
 
 const SectionDivider = () => (
-  <div className="mb-12 mt-2 h-px" style={{ background: 'linear-gradient(90deg, rgba(30,114,82,0.20) 0%, rgba(30,114,82,0.05) 60%, transparent 100%)' }} />
+  <div className="mb-12 mt-2 h-px" style={{ background: 'linear-gradient(90deg, rgba(29,78,216,0.20) 0%, rgba(29,78,216,0.05) 60%, transparent 100%)' }} />
 )
 
 // ── market dynamics ──────────────────────────────────────────────────────────
@@ -142,14 +142,14 @@ function MarketDynamicsSection({ dynamics }: { dynamics: JsonReport['market_dyna
 // ── segmentation ─────────────────────────────────────────────────────────────
 
 const SEGMENT_COLORS: Record<string, { dot: string; bg: string; border: string }> = {
-  'By Component': { dot: '#1E7252', bg: '#E6F5F0', border: '#8DD5BC' },
+  'By Component': { dot: '#1D4ED8', bg: '#EFF6FF', border: '#93C5FD' },
   'By Type':      { dot: '#2563eb', bg: '#eff6ff', border: '#bfdbfe' },
   'By Application': { dot: '#7c3aed', bg: '#f5f3ff', border: '#ddd6fe' },
   'By End User':  { dot: '#d97706', bg: '#fffbeb', border: '#fde68a' },
 }
 
 function SegmentListCard({ title, items }: { title: string; items: string[] }) {
-  const colors = SEGMENT_COLORS[title] ?? { dot: '#1E7252', bg: '#E6F5F0', border: '#8DD5BC' }
+  const colors = SEGMENT_COLORS[title] ?? { dot: '#1D4ED8', bg: '#EFF6FF', border: '#93C5FD' }
   return (
     <div
       className="rounded-xl p-4"
@@ -233,13 +233,13 @@ function CountryTable({ countries }: { countries: JsonReport['country_analysis']
                     <div className="w-20 h-1.5 rounded-full bg-[var(--border)]">
                       <div
                         className="h-1.5 rounded-full"
-                        style={{ width: `${(c.market_share / maxShare) * 100}%`, background: '#1E7252' }}
+                        style={{ width: `${(c.market_share / maxShare) * 100}%`, background: '#1D4ED8' }}
                       />
                     </div>
                     <span className="font-semibold text-[var(--foreground)]">{c.market_share.toFixed(1)}%</span>
                   </div>
                 </td>
-                <td className="py-3 px-4 text-right font-semibold" style={{ color: '#1E7252' }}>
+                <td className="py-3 px-4 text-right font-semibold" style={{ color: '#1D4ED8' }}>
                   +{c.growth_rate.toFixed(1)}%
                 </td>
               </tr>
@@ -270,7 +270,7 @@ function RegionalSection({ regions, countries }: { regions: JsonReport['regional
               <div className="flex items-center gap-3">
                 <span
                   className="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold flex-shrink-0"
-                  style={{ background: '#E6F5F0', color: '#1E7252' }}
+                  style={{ background: '#EFF6FF', color: '#1D4ED8' }}
                 >
                   {i + 1}
                 </span>
@@ -283,7 +283,7 @@ function RegionalSection({ regions, countries }: { regions: JsonReport['regional
               </div>
               <div className="flex gap-4 text-xs">
                 <span className="text-[var(--muted-foreground)]">
-                  CAGR: <span className="font-bold" style={{ color: '#1E7252' }}>{r.growth_rate.toFixed(1)}%</span>
+                  CAGR: <span className="font-bold" style={{ color: '#1D4ED8' }}>{r.growth_rate.toFixed(1)}%</span>
                 </span>
                 <span className="text-[var(--muted-foreground)]">
                   Share: <span className="font-bold text-[var(--foreground)]">{r.market_share.toFixed(1)}%</span>
@@ -295,7 +295,7 @@ function RegionalSection({ regions, countries }: { regions: JsonReport['regional
             <div className="w-full h-1.5 rounded-full mb-3" style={{ background: '#F5F4F0' }}>
               <div
                 className="h-1.5 rounded-full transition-all duration-700"
-                style={{ width: `${(r.market_share / maxShare) * 100}%`, background: 'linear-gradient(90deg, #1E7252, #25906A)' }}
+                style={{ width: `${(r.market_share / maxShare) * 100}%`, background: 'linear-gradient(90deg, #1D4ED8, #2563EB)' }}
               />
             </div>
 
@@ -313,7 +313,7 @@ function RegionalSection({ regions, countries }: { regions: JsonReport['regional
 // ── competitive landscape ─────────────────────────────────────────────────────
 
 const POSITION_STYLE: Record<string, { bg: string; color: string; border: string }> = {
-  Leader:     { bg: '#E6F5F0', color: '#1A5C44', border: '#8DD5BC' },
+  Leader:     { bg: '#EFF6FF', color: '#1E40AF', border: '#93C5FD' },
   Challenger: { bg: '#eff6ff', color: '#1d4ed8', border: '#bfdbfe' },
   Follower:   { bg: '#F5F4F0', color: '#57534E', border: '#D6D3D1' },
   Niche:      { bg: '#fffbeb', color: '#92400e', border: '#fde68a' },
@@ -338,7 +338,7 @@ function CompetitiveLandscapeSection({
               key={i}
               className="rounded-xl p-5"
               style={{ background: '#fff', border: '1px solid var(--border)', transition: 'box-shadow 0.2s' }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 16px rgba(30,114,82,0.10)' }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 16px rgba(29,78,216,0.10)' }}
               onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = 'none' }}
             >
               <div className="flex items-start justify-between flex-wrap gap-3 mb-3">
@@ -346,7 +346,7 @@ function CompetitiveLandscapeSection({
                   {/* Company initial avatar */}
                   <div
                     className="w-9 h-9 rounded-lg flex items-center justify-center text-sm font-bold flex-shrink-0"
-                    style={{ background: '#E6F5F0', color: '#1E7252' }}
+                    style={{ background: '#EFF6FF', color: '#1D4ED8' }}
                   >
                     {p.company.charAt(0)}
                   </div>
@@ -367,7 +367,7 @@ function CompetitiveLandscapeSection({
                     </span>
                   )}
                   {profile?.revenue && (
-                    <span className="text-xs font-semibold" style={{ color: '#1E7252' }}>
+                    <span className="text-xs font-semibold" style={{ color: '#1D4ED8' }}>
                       {profile.revenue}
                     </span>
                   )}
@@ -410,7 +410,7 @@ function RecentDevelopmentsSection({ developments }: { developments: JsonReport[
     <section className="mb-2">
       <div className="relative">
         {/* Vertical line */}
-        <div className="absolute left-[18px] top-0 bottom-0 w-px" style={{ background: 'linear-gradient(180deg, #1E7252 0%, rgba(30,114,82,0.15) 100%)' }} />
+        <div className="absolute left-[18px] top-0 bottom-0 w-px" style={{ background: 'linear-gradient(180deg, #1D4ED8 0%, rgba(29,78,216,0.15) 100%)' }} />
 
         <div className="space-y-6">
           {sorted.map((d, i) => (
@@ -419,7 +419,7 @@ function RecentDevelopmentsSection({ developments }: { developments: JsonReport[
               <div className="flex-shrink-0 flex flex-col items-center">
                 <div
                   className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold z-10"
-                  style={{ background: i === 0 ? '#1E7252' : '#E6F5F0', color: i === 0 ? '#fff' : '#1E7252', border: `2px solid ${i === 0 ? '#1E7252' : '#8DD5BC'}` }}
+                  style={{ background: i === 0 ? '#1D4ED8' : '#EFF6FF', color: i === 0 ? '#fff' : '#1D4ED8', border: `2px solid ${i === 0 ? '#1D4ED8' : '#93C5FD'}` }}
                 >
                   {String(d.year).slice(2)}
                 </div>
@@ -431,7 +431,7 @@ function RecentDevelopmentsSection({ developments }: { developments: JsonReport[
                 style={{ background: '#fff', border: '1px solid var(--border)' }}
               >
                 <div className="flex items-center gap-2 mb-1.5">
-                  <span className="text-xs font-bold" style={{ color: '#1E7252' }}>{d.year}</span>
+                  <span className="text-xs font-bold" style={{ color: '#1D4ED8' }}>{d.year}</span>
                   <span className="text-xs font-semibold text-[var(--foreground)]">{d.company}</span>
                 </div>
                 <p className="text-sm leading-relaxed" style={{ color: '#57534E' }}>{d.event}</p>
@@ -458,7 +458,7 @@ function RegulatorySection({ items }: { items: string[] }) {
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium"
             style={{ background: '#F5F4F0', color: '#1C1917', border: '1px solid #D6D3D1' }}
           >
-            <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#1E7252' }} />
+            <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#1D4ED8' }} />
             {item}
           </span>
         ))}
@@ -484,14 +484,14 @@ function JsonFAQSection({ faqs }: { faqs: JsonReport['faqs'] }) {
           >
             <button
               className="w-full flex items-center justify-between px-5 py-4 text-left transition-colors"
-              style={{ background: open === i ? '#E6F5F0' : '#fff' }}
+              style={{ background: open === i ? '#EFF6FF' : '#fff' }}
               onClick={() => setOpen(open === i ? null : i)}
             >
               <span className="font-medium text-sm text-[var(--foreground)] pr-4">{faq.question}</span>
               <span
                 className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-sm font-bold transition-transform duration-200"
                 style={{
-                  background: open === i ? '#1E7252' : '#F5F4F0',
+                  background: open === i ? '#1D4ED8' : '#F5F4F0',
                   color: open === i ? '#fff' : '#78716C',
                   transform: open === i ? 'rotate(45deg)' : 'none',
                 }}
@@ -539,7 +539,7 @@ export function JsonReportSections({ report }: JsonReportSectionsProps) {
         {/* Editorial summary */}
         <blockquote
           className="rounded-xl p-5 mb-6 text-base leading-relaxed"
-          style={{ background: '#E6F5F0', borderLeft: '4px solid #1E7252', color: '#1A5C44', fontStyle: 'normal' }}
+          style={{ background: '#EFF6FF', borderLeft: '4px solid #1D4ED8', color: '#1E40AF', fontStyle: 'normal' }}
         >
           {report.market_overview.summary}
         </blockquote>
@@ -554,7 +554,7 @@ export function JsonReportSections({ report }: JsonReportSectionsProps) {
               className="rounded-xl p-4 flex items-start gap-3"
               style={{ background: '#fff', border: '1px solid var(--border)' }}
             >
-              <div className="w-2 h-2 rounded-full mt-1.5 flex-shrink-0" style={{ background: '#1E7252' }} />
+              <div className="w-2 h-2 rounded-full mt-1.5 flex-shrink-0" style={{ background: '#1D4ED8' }} />
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wider mb-1" style={{ color: '#78716C' }}>
                   {label}
@@ -575,7 +575,7 @@ export function JsonReportSections({ report }: JsonReportSectionsProps) {
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm"
                   style={{ background: '#F5F4F0', color: '#1C1917', border: '1px solid #D6D3D1' }}
                 >
-                  <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#1E7252' }} />
+                  <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#1D4ED8' }} />
                   {trend}
                 </span>
               ))}

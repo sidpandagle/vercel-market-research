@@ -4,20 +4,20 @@
 
 /* Synaptic Research — Editorial Intelligence Design System */
 :root {
-  /* Primary: Forest Green */
-  --primary: #1E7252;        /* Forest-600 */
-  --primary-hover: #1A5C44;  /* Forest-700 */
-  --primary-light: #25906A;  /* Forest-500 */
-  --primary-dark: #0D2820;   /* Forest-900 */
+  /* Primary: Ocean Blue */
+  --primary: #1D4ED8;        /* Blue-700 */
+  --primary-hover: #1E40AF;  /* Blue-800 */
+  --primary-light: #2563EB;  /* Blue-600 */
+  --primary-dark: #172554;   /* Blue-950 */
 
   /* Accent Colors */
-  --accent-navy: #091C15;    /* Deep forest near-black */
-  --accent-ocean: #1E7252;   /* Forest-600 */
-  --accent-bright: #84CC16;  /* Lime-500 */
-  --accent-amber: #65A30D;   /* Lime-700 */
+  --accent-navy: #0F172A;    /* Deep slate near-black */
+  --accent-ocean: #1D4ED8;   /* Blue-700 */
+  --accent-bright: #38BDF8;  /* Sky-400 */
+  --accent-sky: #0EA5E9;     /* Sky-500 */
 
-  /* Warm Neutrals (replaces cool slate) */
-  --secondary: #FDF8F0;      /* Warm cream */
+  /* Warm Neutrals (keep the warm cream) */
+  --secondary: #FDF8F0;
   --border: #D6D3D1;         /* Stone-300 */
   --border-light: #E7E5E4;   /* Stone-200 */
   --card: #ffffff;
@@ -26,17 +26,17 @@
   --muted-foreground: #57534E; /* Stone-600 */
 
   /* Solid color replacements (formerly gradients) */
-  --gradient-primary: #1E7252;
-  --gradient-accent: #1E7252;
-  --gradient-warm: #65A30D;
+  --gradient-primary: #1D4ED8;
+  --gradient-accent: #1D4ED8;
+  --gradient-warm: #0EA5E9;
 
-  /* Forest green accent colors for report content */
-  --teal-bright: #34A87E;    /* Forest-400 */
-  --teal-primary: #1E7252;   /* Forest-600 */
-  --teal-steel: #25906A;     /* Forest-500 */
-  --teal-deep: #1A5C44;      /* Forest-700 */
-  --teal-subtle: #E6F5F0;    /* Forest-50 */
-  --teal-border: #8DD5BC;    /* Forest-200 */
+  /* Blue accent colors for report content */
+  --blue-bright: #3B82F6;    /* Blue-500 */
+  --blue-primary: #1D4ED8;   /* Blue-700 */
+  --blue-steel: #2563EB;     /* Blue-600 */
+  --blue-deep: #1E40AF;      /* Blue-800 */
+  --blue-subtle: #EFF6FF;    /* Blue-50 */
+  --blue-border: #93C5FD;    /* Blue-300 */
 }
 
 html {
@@ -59,30 +59,30 @@ body {
 
   /* Solid Color Utilities (formerly gradients) */
   .gradient-primary {
-    background: #1E7252;
+    background: #1D4ED8;
   }
   .gradient-accent {
-    background: #1E7252;
+    background: #1D4ED8;
   }
   .gradient-warm {
-    background: #65A30D;
+    background: #0EA5E9;
   }
 
-  /* Enhanced Shadows with Forest Color Tints */
+  /* Enhanced Shadows with Blue Color Tints */
   .shadow-primary {
-    box-shadow: 0 4px 14px 0 rgba(30, 114, 82, 0.22);
+    box-shadow: 0 4px 14px 0 rgba(29, 78, 216, 0.22);
   }
   .shadow-primary-lg {
-    box-shadow: 0 10px 30px -5px rgba(30, 114, 82, 0.28), 0 8px 12px -6px rgba(30, 114, 82, 0.16);
+    box-shadow: 0 10px 30px -5px rgba(29, 78, 216, 0.28), 0 8px 12px -6px rgba(29, 78, 216, 0.16);
   }
   .shadow-ocean {
-    box-shadow: 0 4px 14px 0 rgba(37, 144, 106, 0.22);
+    box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.22);
   }
   .shadow-soft {
-    box-shadow: 0 2px 10px 0 rgba(9, 28, 21, 0.08);
+    box-shadow: 0 2px 10px 0 rgba(15, 23, 42, 0.08);
   }
   .shadow-amber {
-    box-shadow: 0 4px 14px 0 rgba(132, 204, 22, 0.25);
+    box-shadow: 0 4px 14px 0 rgba(56, 189, 248, 0.25);
   }
 
   /* Auto-scroll animation for partners */
@@ -102,7 +102,7 @@ body {
 
   /* ── Glassmorphism ── */
   .glass-dark {
-    background: rgba(9, 28, 21, 0.60);
+    background: rgba(15, 23, 42, 0.60);
     backdrop-filter: blur(20px) saturate(1.5);
     -webkit-backdrop-filter: blur(20px) saturate(1.5);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -119,14 +119,14 @@ body {
   /* ── Mesh radial-gradient overlay (dark sections) ── */
   .mesh-gradient-dark {
     background-image:
-      radial-gradient(ellipse at 15% 30%, rgba(30, 114, 82, 0.20) 0%, transparent 55%),
-      radial-gradient(ellipse at 85% 15%, rgba(132, 204, 22, 0.06) 0%, transparent 50%),
-      radial-gradient(ellipse at 55% 85%, rgba(37, 144, 106, 0.11) 0%, transparent 55%);
+      radial-gradient(ellipse at 15% 30%, rgba(29, 78, 216, 0.20) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 15%, rgba(56, 189, 248, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 55% 85%, rgba(37, 99, 235, 0.11) 0%, transparent 55%);
   }
 
   /* ── Gradient text ── */
   .text-gradient-amber {
-    background: linear-gradient(135deg, #A3E635 0%, #84CC16 65%);
+    background: linear-gradient(135deg, #7DD3FC 0%, #38BDF8 65%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -191,7 +191,7 @@ body {
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
   /* ── Reports hero search input placeholder ── */
-  .reports-search-input::placeholder { color: rgba(141, 213, 188, 0.45); }
+  .reports-search-input::placeholder { color: rgba(147, 197, 253, 0.45); }
 }
 
 @layer base {
@@ -206,8 +206,8 @@ body {
     --popover: 0 0% 100%;
     --popover-foreground: 20 14% 11%;
 
-    /* Primary: Forest Green */
-    --primary: 158 58% 28%;         /* Forest-600 */
+    /* Primary: Ocean Blue */
+    --primary: 221 83% 53%;         /* Blue-600 */
     --primary-foreground: 0 0% 100%;
 
     /* Secondary: Warm cream */
@@ -218,8 +218,8 @@ body {
     --muted: 40 20% 95%;
     --muted-foreground: 25 6% 35%;  /* Stone-600 */
 
-    /* Accent: Lime/Chartreuse */
-    --accent: 81 80% 44%;           /* Lime-500 */
+    /* Accent: Sky Blue */
+    --accent: 199 89% 48%;          /* Sky-500 */
     --accent-foreground: 20 14% 11%;
 
     --destructive: 0 84% 60%;
@@ -228,13 +228,13 @@ body {
     /* Warm Stone borders */
     --border: 20 6% 82%;            /* Stone-300 */
     --input: 20 6% 82%;
-    --ring: 158 58% 28%;
+    --ring: 221 83% 53%;
 
     /* Chart Colors — varied and vibrant */
-    --chart-1: 158 58% 28%;         /* Forest */
-    --chart-2: 81 80% 44%;          /* Lime */
-    --chart-3: 158 59% 36%;         /* Forest-500 */
-    --chart-4: 142 71% 45%;         /* Emerald */
+    --chart-1: 221 83% 53%;         /* Blue */
+    --chart-2: 199 89% 48%;         /* Sky */
+    --chart-3: 217 91% 60%;         /* Blue-400 */
+    --chart-4: 243 75% 59%;         /* Indigo */
     --chart-5: 0 84% 60%;           /* Red */
 
     --radius: 0.75rem;
@@ -250,39 +250,39 @@ body {
     --popover: 240 18% 12%;
     --popover-foreground: 40 30% 94%;
 
-    /* Primary: Lighter forest for dark mode */
-    --primary: 158 50% 45%;
-    --primary-foreground: 158 58% 8%;
+    /* Primary: Lighter blue for dark mode */
+    --primary: 213 94% 68%;
+    --primary-foreground: 221 83% 15%;
 
-    --secondary: 158 15% 18%;
+    --secondary: 220 30% 18%;
     --secondary-foreground: 40 30% 94%;
 
-    --muted: 158 15% 18%;
+    --muted: 220 30% 18%;
     --muted-foreground: 40 15% 65%;
 
-    --accent: 81 80% 55%;           /* Brighter lime in dark */
+    --accent: 199 89% 60%;          /* Brighter sky in dark */
     --accent-foreground: 20 14% 11%;
 
     --destructive: 0 63% 31%;
     --destructive-foreground: 40 30% 94%;
 
-    --border: 158 15% 20%;
-    --input: 158 15% 20%;
-    --ring: 158 50% 45%;
+    --border: 220 30% 20%;
+    --input: 220 30% 20%;
+    --ring: 213 94% 68%;
 
-    --chart-1: 158 50% 45%;
-    --chart-2: 81 80% 55%;
-    --chart-3: 158 59% 44%;
-    --chart-4: 142 71% 55%;
+    --chart-1: 213 94% 68%;
+    --chart-2: 199 89% 60%;
+    --chart-3: 217 91% 65%;
+    --chart-4: 243 75% 65%;
     --chart-5: 0 84% 70%;
 
-    /* Forest accents for dark mode */
-    --teal-bright: #5BBEA0;
-    --teal-primary: #34A87E;
-    --teal-steel: #25906A;
-    --teal-deep: #1E7252;
-    --teal-subtle: #0D2820;
-    --teal-border: #1A5C44;
+    /* Blue accents for dark mode */
+    --blue-bright: #93C5FD;
+    --blue-primary: #60A5FA;
+    --blue-steel: #3B82F6;
+    --blue-deep: #2563EB;
+    --blue-subtle: #172554;
+    --blue-border: #1E40AF;
   }
 }
 
@@ -433,7 +433,7 @@ body {
   .prose th {
     @apply text-[var(--foreground)] font-semibold text-left;
     padding: 6px 15px;
-    border: 1px solid #8DD5BC;
+    border: 1px solid #93C5FD;
     font-size: 0.875rem;
     text-transform: none;
     letter-spacing: normal;
@@ -454,7 +454,7 @@ body {
   }
 
   .prose tbody tr:hover {
-    background-color: rgba(141, 213, 188, 0.08);
+    background-color: rgba(147, 197, 253, 0.08);
   }
 
   .prose tbody tr:last-child {
@@ -464,7 +464,7 @@ body {
   .prose td {
     @apply text-[var(--foreground)];
     padding: 6px 15px;
-    border: 1px solid #8DD5BC;
+    border: 1px solid #93C5FD;
     font-size: 0.9375rem;
   }
 
@@ -510,7 +510,7 @@ body {
   }
 
   .styled-report-content > ul:first-of-type {
-    @apply bg-[#E6F5F0];
+    @apply bg-[#EFF6FF];
     li {
       @apply border-b border-gray-300;
       p {

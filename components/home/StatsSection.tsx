@@ -56,7 +56,7 @@ export default function StatsSection() {
 
                 {/* Icon chip */}
                 <div className="flex justify-center mb-6">
-                  <div className="w-11 h-11 rounded-xl bg-bright-500/[0.12] flex items-center justify-center shadow-[0_0_22px_-4px_rgba(132,204,22,0.28)]">
+                  <div className="w-11 h-11 rounded-xl bg-bright-500/[0.12] flex items-center justify-center shadow-[0_0_22px_-4px_rgba(56,189,248,0.28)]">
                     <Icon className="w-5 h-5 text-bright-400" strokeWidth={1.5} />
                   </div>
                 </div>

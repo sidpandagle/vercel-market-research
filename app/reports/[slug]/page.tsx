@@ -135,13 +135,13 @@ export default async function ReportPage({
     {
       label: `Revenue, ${baseYearLabel}`,
       value: displayMarketSizeCurrent,
-      bg: 'bg-[var(--teal-subtle)]',
-      labelColor: 'text-[var(--teal-primary)]',
-      valueColor: 'text-[var(--teal-deep)]',
+      bg: 'bg-[var(--blue-subtle)]',
+      labelColor: 'text-[var(--blue-primary)]',
+      valueColor: 'text-[var(--blue-deep)]',
       icon: (
         <svg
           aria-hidden
-          className="w-10 h-10 text-[var(--teal-steel)]"
+          className="w-10 h-10 text-[var(--blue-steel)]"
           viewBox="0 0 64 64"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -169,13 +169,13 @@ export default async function ReportPage({
     {
       label: `Forecast, ${forecastEndYear}`,
       value: displayMarketSizeForecast,
-      bg: 'bg-[var(--teal-subtle)]',
-      labelColor: 'text-[var(--teal-primary)]',
-      valueColor: 'text-[var(--teal-deep)]',
+      bg: 'bg-[var(--blue-subtle)]',
+      labelColor: 'text-[var(--blue-primary)]',
+      valueColor: 'text-[var(--blue-deep)]',
       icon: (
         <svg
           aria-hidden
-          className="w-10 h-10 text-[var(--teal-steel)]"
+          className="w-10 h-10 text-[var(--blue-steel)]"
           viewBox="0 0 64 64"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -198,13 +198,13 @@ export default async function ReportPage({
     {
       label: `CAGR, ${forecastRangeLabel}`,
       value: displayCAGR,
-      bg: 'bg-[var(--teal-subtle)]',
-      labelColor: 'text-[var(--teal-primary)]',
-      valueColor: 'text-[var(--teal-deep)]',
+      bg: 'bg-[var(--blue-subtle)]',
+      labelColor: 'text-[var(--blue-primary)]',
+      valueColor: 'text-[var(--blue-deep)]',
       icon: (
         <svg
           aria-hidden
-          className="w-10 h-10 text-[var(--teal-steel)]"
+          className="w-10 h-10 text-[var(--blue-steel)]"
           viewBox="0 0 64 64"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -235,13 +235,13 @@ export default async function ReportPage({
     {
       label: 'Report Coverage',
       value: report.region,
-      bg: 'bg-[var(--teal-subtle)]',
-      labelColor: 'text-[var(--teal-primary)]',
-      valueColor: 'text-[var(--teal-deep)]',
+      bg: 'bg-[var(--blue-subtle)]',
+      labelColor: 'text-[var(--blue-primary)]',
+      valueColor: 'text-[var(--blue-deep)]',
       icon: (
         <svg
           aria-hidden
-          className="w-10 h-10 text-[var(--teal-steel)]"
+          className="w-10 h-10 text-[var(--blue-steel)]"
           viewBox="0 0 64 64"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -336,7 +336,7 @@ export default async function ReportPage({
           >
             <article>
               {/* ── Dark Forest Hero Header ── */}
-              <header className="relative overflow-hidden rounded-2xl mb-10" style={{ background: 'linear-gradient(145deg, #091C15 0%, #0D2820 55%, #163528 100%)' }}>
+              <header className="relative overflow-hidden rounded-2xl mb-10" style={{ background: 'linear-gradient(145deg, #0F172A 0%, #172554 55%, #1e3a8a 100%)' }}>
                 {/* Crosshatch texture overlay */}
                 <div
                   className="absolute inset-0 pointer-events-none"
@@ -346,14 +346,14 @@ export default async function ReportPage({
                   }}
                 />
                 {/* Ambient glow orbs */}
-                <div className="absolute top-0 right-0 w-80 h-80 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(37,144,106,0.18) 0%, transparent 70%)', transform: 'translate(30%, -30%)' }} />
-                <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(30,114,82,0.12) 0%, transparent 70%)', transform: 'translate(-30%, 30%)' }} />
+                <div className="absolute top-0 right-0 w-80 h-80 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.18) 0%, transparent 70%)', transform: 'translate(30%, -30%)' }} />
+                <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(29,78,216,0.12) 0%, transparent 70%)', transform: 'translate(-30%, 30%)' }} />
 
                 <div className="relative z-10 p-7 md:p-10">
                   {/* Category + Region chips */}
                   <div className="flex flex-wrap items-center gap-2 mb-5">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-widest border" style={{ background: 'rgba(132,204,22,0.15)', color: '#A3E635', borderColor: 'rgba(132,204,22,0.30)' }}>
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#A3E635]" />
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-widest border" style={{ background: 'rgba(56,189,248,0.15)', color: '#7DD3FC', borderColor: 'rgba(56,189,248,0.30)' }}>
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#7DD3FC]" />
                       {report.category}
                     </span>
                     <span className="px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wider" style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.60)', border: '1px solid rgba(255,255,255,0.12)' }}>

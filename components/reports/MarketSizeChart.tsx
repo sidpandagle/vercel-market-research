@@ -45,7 +45,7 @@ export const MarketSizeChart = React.forwardRef<HTMLDivElement, MarketSizeChartP
             <p className="text-sm text-muted-foreground mb-2">
               CAGR (2025-2032)
             </p>
-            <p className="text-3xl font-bold text-green-600">
+            <p className="text-3xl font-bold text-blue-600">
               {cagr}
             </p>
           </div>

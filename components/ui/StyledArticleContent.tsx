@@ -21,16 +21,16 @@ export const StyledArticleContent: React.FC<StyledArticleContentProps> = ({
 
         /* H1 */
         .styled-article-content h1 {
-          color: #22E1B0;
-          color: var(--teal-bright, #22E1B0);
+          color: #3B82F6;
+          color: var(--blue-bright, #3B82F6);
           font-weight: 700;
           margin-top: 2.5rem;
         }
 
         /* H2 - Major sections with bright teal */
         .styled-article-content h2 {
-          color: #22E1B0;
-          color: var(--teal-bright, #22E1B0);
+          color: #3B82F6;
+          color: var(--blue-bright, #3B82F6);
           font-weight: 700;
           margin-top: 2.5rem;
           margin-bottom: 1.5rem;
@@ -38,7 +38,7 @@ export const StyledArticleContent: React.FC<StyledArticleContentProps> = ({
 
         /* H3 - Subsections with muted teal */
         .styled-article-content h3 {
-          color: #00695C;
+          color: #2563EB;
           font-weight: 600;
           margin-top: 1rem;
           margin-bottom: 1rem;
@@ -47,8 +47,8 @@ export const StyledArticleContent: React.FC<StyledArticleContentProps> = ({
         /* H5/H6 - Smallest headings with deep blue */
         .styled-article-content h5,
         .styled-article-content h6 {
-          color: #37448C;
-          color: var(--teal-deep, #37448C);
+          color: #1E40AF;
+          color: var(--blue-deep, #1E40AF);
           font-weight: 600;
           margin-top: 1.5rem;
           margin-bottom: 0.75rem;
@@ -79,8 +79,8 @@ export const StyledArticleContent: React.FC<StyledArticleContentProps> = ({
         }
 
         .styled-article-content strong {
-          color: #37448C;
-          color: var(--teal-deep, #37448C);
+          color: #1E40AF;
+          color: var(--blue-deep, #1E40AF);
           font-weight: 600;
         }
 
@@ -91,9 +91,9 @@ export const StyledArticleContent: React.FC<StyledArticleContentProps> = ({
         /* Table header styling - faint teal background with dark text */
         .styled-article-content th {
           background-color: #E0F5F3;
-          background-color: var(--teal-subtle, #E0F5F3);
-          color: #37448C;
-          color: var(--teal-deep, #37448C);
+          background-color: var(--blue-subtle, #E0F5F3);
+          color: #1E40AF;
+          color: var(--blue-deep, #1E40AF);
           font-weight: 600;
           text-align: left;
           padding: 12px 15px;
@@ -115,7 +115,7 @@ export const StyledArticleContent: React.FC<StyledArticleContentProps> = ({
 
         .styled-article-content.prose tbody tr:hover {
           background-color: #E0F5F3 !important;
-          background-color: var(--teal-subtle, #E0F5F3) !important;
+          background-color: var(--blue-subtle, #E0F5F3) !important;
         }
 
         /* Table header hover effect */
@@ -130,30 +130,30 @@ export const StyledArticleContent: React.FC<StyledArticleContentProps> = ({
 
         /* Links with teal color */
         .styled-article-content a {
-          color: #00695C;
+          color: #2563EB;
           text-decoration: underline;
           text-decoration-color: #B0D9D5;
-          text-decoration-color: var(--teal-border, #B0D9D5);
+          text-decoration-color: var(--blue-border, #B0D9D5);
           transition: color 0.2s ease, text-decoration-color 0.2s ease;
         }
 
         .styled-article-content a:hover {
-          color: #22E1B0;
-          color: var(--teal-bright, #22E1B0);
-          text-decoration-color: #22E1B0;
-          text-decoration-color: var(--teal-bright, #22E1B0);
+          color: #3B82F6;
+          color: var(--blue-bright, #3B82F6);
+          text-decoration-color: #3B82F6;
+          text-decoration-color: var(--blue-bright, #3B82F6);
         }
 
         /* Blockquotes with teal left border */
         .styled-article-content blockquote {
-          border-left: 4px solid #00695C;
+          border-left: 4px solid #2563EB;
           padding-left: 1.25rem;
           margin-left: 0;
           margin-right: 0;
           font-style: italic;
           color: var(--muted-foreground);
           background: #E0F5F3;
-          background: var(--teal-subtle, #E0F5F3);
+          background: var(--blue-subtle, #E0F5F3);
           padding: 1rem 1.25rem;
           border-radius: 0 0.5rem 0.5rem 0;
         }
