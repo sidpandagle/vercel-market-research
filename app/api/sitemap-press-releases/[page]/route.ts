@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getPressReleases } from '@/lib/api/press-releases';
 
 const BASE_URL = 'https://www.healthcareforesights.com';
-const ITEMS_PER_SITEMAP = 500;
+const ITEMS_PER_SITEMAP = 1000;
 
 export async function GET(
   request: Request,

@@ -4,7 +4,7 @@ import { getBlogs } from '@/lib/api/blogs';
 import { getPressReleases } from '@/lib/api/press-releases';
 
 const BASE_URL = 'https://www.healthcareforesights.com';
-const ITEMS_PER_SITEMAP = 500;
+const ITEMS_PER_SITEMAP = 1000;
 
 /**
  * Sitemap Index
@@ -13,9 +13,9 @@ const ITEMS_PER_SITEMAP = 500;
  *
  * Sub-sitemaps:
  * - /sitemap-pages.xml - Static pages (home, about, services, etc.)
- * - /sitemap-reports-1.xml, /sitemap-reports-2.xml, ... - Published research reports (500 per file)
- * - /sitemap-blogs-1.xml, /sitemap-blogs-2.xml, ... - Published blog posts (500 per file)
- * - /sitemap-press-releases-1.xml, /sitemap-press-releases-2.xml, ... - Published press releases (500 per file)
+ * - /sitemap-reports-1.xml, /sitemap-reports-2.xml, ... - Published research reports (1000 per file)
+ * - /sitemap-blogs-1.xml, /sitemap-blogs-2.xml, ... - Published blog posts (1000 per file)
+ * - /sitemap-press-releases-1.xml, /sitemap-press-releases-2.xml, ... - Published press releases (1000 per file)
  * - /sitemap-consulting.xml - Consulting services pages
  * - /news-sitemap.xml - Google News sitemap (all blogs + press releases)
  */
@@ -30,11 +30,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]);
 
   const reportsTotalPages =
-    reportsRes.success && reportsRes.meta?.totalPages ? reportsRes.meta.totalPages : 1;
+    reportsRes.success && reportsRes.meta?.totalItems
+      ? Math.ceil(reportsRes.meta.totalItems / ITEMS_PER_SITEMAP)
+      : 1;
   const blogsTotalPages =
-    blogsRes.success && blogsRes.meta?.totalPages ? blogsRes.meta.totalPages : 1;
+    blogsRes.success && blogsRes.meta?.totalItems
+      ? Math.ceil(blogsRes.meta.totalItems / ITEMS_PER_SITEMAP)
+      : 1;
   const prTotalPages =
-    prRes.success && prRes.meta?.totalPages ? prRes.meta.totalPages : 1;
+    prRes.success && prRes.meta?.totalItems
+      ? Math.ceil(prRes.meta.totalItems / ITEMS_PER_SITEMAP)
+      : 1;
 
   const entries: MetadataRoute.Sitemap = [
     {
