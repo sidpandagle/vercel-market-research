@@ -7,6 +7,10 @@ import type { Metadata } from "next";
 
 export const revalidate = 300;
 
+function formatSlug(slug: string): string {
+  return slug.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+}
+
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
@@ -21,8 +25,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const response = await getCategories({ limit: 200 });
   const categoryName = isApiError(response) || !response.data
-    ? slug
-    : (response.data.find((c) => c.slug === slug)?.name ?? slug);
+    ? formatSlug(slug)
+    : (response.data.find((c) => c.slug === slug)?.name ?? formatSlug(slug));
 
   return {
     title: `${categoryName} Press Releases | Healthcare Foresights`,
