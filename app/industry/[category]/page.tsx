@@ -47,7 +47,8 @@ async function CategoryReportsContent({ categorySlug }: { categorySlug: string }
   const response = await getReports({
     status: 'published',
     category: categorySlug,
-    limit: 1000,
+    page: 1,
+    limit: 10,
   });
 
   if (isApiError(response)) {
@@ -68,12 +69,14 @@ async function CategoryReportsContent({ categorySlug }: { categorySlug: string }
   }
 
   const totalItems = response.meta?.totalItems ?? response.data.length;
+  const totalPages = response.meta?.totalPages ?? 1;
 
   return (
     <ReportsListingClient
       reports={response.data}
       activeCategorySlug={categorySlug}
       totalItems={totalItems}
+      totalPages={totalPages}
     />
   );
 }

@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 async function PressReleaseCategoryContent({ categorySlug }: { categorySlug: string }) {
-  const response = await getPressReleasesByCategory(categorySlug, { limit: 1000 });
+  const response = await getPressReleasesByCategory(categorySlug, { page: 1, limit: 10 });
 
   if (isApiError(response)) {
     console.error("Failed to fetch press releases by category:", response.message);
@@ -56,10 +56,14 @@ async function PressReleaseCategoryContent({ categorySlug }: { categorySlug: str
     notFound();
   }
 
+  const totalItems = response.meta?.totalItems ?? response.data.length;
+  const totalPages = response.meta?.totalPages ?? 1;
+
   return (
     <PressReleaseListingClient
       pressReleases={response.data}
-      totalItems={response.data.length}
+      totalItems={totalItems}
+      totalPages={totalPages}
       activeCategorySlug={categorySlug}
     />
   );

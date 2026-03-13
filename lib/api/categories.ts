@@ -115,12 +115,25 @@ export async function getBlogsByCategory(
     return response;
   }
 
-  const apiBlogs = (response.data as unknown as { blogs: BlogsListData['blogs'] }).blogs ?? [];
+  const rawData = response.data as unknown as { blogs?: BlogsListData['blogs']; total?: number; page?: number; limit?: number; totalPages?: number };
+  const apiBlogs = rawData.blogs ?? [];
   const mappedBlogs = mapApiBlogsToblogs(apiBlogs);
+
+  const mappedMeta = rawData.total !== undefined
+    ? {
+        currentPage: rawData.page ?? 1,
+        totalPages: rawData.totalPages ?? 1,
+        totalItems: Number(rawData.total ?? 0),
+        itemsPerPage: rawData.limit ?? 10,
+        hasNextPage: (rawData.page ?? 1) < (rawData.totalPages ?? 1),
+        hasPreviousPage: (rawData.page ?? 1) > 1,
+      }
+    : undefined;
 
   return {
     success: true,
     data: mappedBlogs,
+    meta: mappedMeta,
   };
 }
 
@@ -149,11 +162,24 @@ export async function getPressReleasesByCategory(
     return response;
   }
 
-  const apiPressReleases = (response.data as unknown as { pressReleases: PressReleasesListData['pressReleases'] }).pressReleases ?? [];
+  const rawPRData = response.data as unknown as { pressReleases?: PressReleasesListData['pressReleases']; total?: number; page?: number; limit?: number; totalPages?: number };
+  const apiPressReleases = rawPRData.pressReleases ?? [];
   const mappedPressReleases = mapApiPressReleasesToPressReleases(apiPressReleases);
+
+  const mappedPRMeta = rawPRData.total !== undefined
+    ? {
+        currentPage: rawPRData.page ?? 1,
+        totalPages: rawPRData.totalPages ?? 1,
+        totalItems: Number(rawPRData.total ?? 0),
+        itemsPerPage: rawPRData.limit ?? 10,
+        hasNextPage: (rawPRData.page ?? 1) < (rawPRData.totalPages ?? 1),
+        hasPreviousPage: (rawPRData.page ?? 1) > 1,
+      }
+    : undefined;
 
   return {
     success: true,
     data: mappedPressReleases,
+    meta: mappedPRMeta,
   };
 }

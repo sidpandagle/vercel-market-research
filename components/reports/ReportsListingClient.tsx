@@ -6,6 +6,8 @@ import ReportCard from './ReportCard';
 import FilterSidebar, { type FilterState } from './FilterSidebar';
 import Pagination from './Pagination';
 import categories from '@/data/categories.json';
+import { getReports, isApiError } from '@/lib/api';
+import type { ReportType } from '@/lib/api/reports.types';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -28,6 +30,7 @@ interface ReportsListingClientProps {
   reports: Report[];
   activeCategorySlug?: string;
   totalItems: number;
+  totalPages: number;
 }
 
 const CATEGORY_ICONS: Record<string, string> = {
@@ -46,13 +49,18 @@ const CATEGORY_ICONS: Record<string, string> = {
 };
 
 export default function ReportsListingClient({
-  reports,
+  reports: initialReports,
   activeCategorySlug,
-  totalItems,
+  totalItems: initialTotalItems,
+  totalPages: initialTotalPages,
 }: ReportsListingClientProps) {
   const storageKey = activeCategorySlug ? `industry_${activeCategorySlug}_page` : 'industry_page';
 
+  const [reports, setReports] = useState<Report[]>(initialReports);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(initialTotalPages);
+  const [totalItems, setTotalItems] = useState(initialTotalItems);
+  const [isLoading, setIsLoading] = useState(false);
   const [filters, setFilters] = useState<FilterState>({
     industries: [],
     regions: [],
@@ -60,26 +68,52 @@ export default function ReportsListingClient({
     priceRanges: [],
   });
 
-  // Restore page from sessionStorage on mount
+  // Restore page from sessionStorage and fetch that page on mount
   useEffect(() => {
     const saved = sessionStorage.getItem(storageKey);
-    if (saved) setCurrentPage(Math.max(1, parseInt(saved, 10) || 1));
+    const savedPage = saved ? Math.max(1, parseInt(saved, 10) || 1) : 1;
+    if (savedPage !== 1) {
+      setCurrentPage(savedPage);
+      fetchPage(savedPage, filters);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storageKey]);
 
-  const handlePageChange = (page: number) => {
+  async function fetchPage(page: number, currentFilters: FilterState) {
+    setIsLoading(true);
+    const response = await getReports({
+      status: 'published',
+      page,
+      limit: ITEMS_PER_PAGE,
+      ...(activeCategorySlug && { category: activeCategorySlug }),
+      ...(currentFilters.regions.length > 0 && { geography: currentFilters.regions[0] }),
+      ...(currentFilters.reportTypes.length > 0 && { report_type: currentFilters.reportTypes[0] as ReportType }),
+    });
+    if (!isApiError(response)) {
+      setReports(response.data);
+      if (response.meta) {
+        setTotalPages(response.meta.totalPages);
+        setTotalItems(response.meta.totalItems);
+      }
+    }
+    setIsLoading(false);
+  }
+
+  const handlePageChange = async (page: number) => {
     setCurrentPage(page);
     sessionStorage.setItem(storageKey, String(page));
+    await fetchPage(page, filters);
     document.getElementById('reports-list')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const handleFilterChange = (newFilters: FilterState) => {
+  const handleFilterChange = async (newFilters: FilterState) => {
     setFilters(newFilters);
     setCurrentPage(1);
     sessionStorage.setItem(storageKey, '1');
+    await fetchPage(1, newFilters);
   };
 
   const activeCategory = categories.find((c) => c.slug === activeCategorySlug) || null;
-
   const categoryCounts = activeCategory ? { [activeCategory.name]: totalItems } : {};
 
   const isPriceInRange = (price: string, range: string): boolean => {
@@ -93,21 +127,13 @@ export default function ReportsListingClient({
     }
   };
 
-  const filteredReports = useMemo(() => {
-    return reports.filter((report) => {
-      if (filters.regions.length > 0 && !filters.regions.includes(report.region)) return false;
-      if (filters.reportTypes.length > 0 && !filters.reportTypes.includes(report.reportType)) return false;
-      if (filters.priceRanges.length > 0 && !filters.priceRanges.some((r) => isPriceInRange(report.price, r)))
-        return false;
-      return true;
-    });
-  }, [reports, filters]);
-
-  const totalPages = Math.ceil(filteredReports.length / ITEMS_PER_PAGE);
-  const paginatedReports = filteredReports.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  );
+  // Price range filtering is applied client-side on the current page's data
+  const displayedReports = useMemo(() => {
+    if (filters.priceRanges.length === 0) return reports;
+    return reports.filter((report) =>
+      filters.priceRanges.some((r) => isPriceInRange(report.price, r))
+    );
+  }, [reports, filters.priceRanges]);
 
   const categoryIcon = activeCategory ? (CATEGORY_ICONS[activeCategory.name] || '📊') : '📊';
 
@@ -172,15 +198,21 @@ export default function ReportsListingClient({
             {/* Meta row */}
             <div className="flex items-center justify-between pb-3 border-b border-slate-200 mb-1">
               <p className="text-xs text-slate-400 font-medium uppercase tracking-wide">
-                {`${filteredReports.length} of ${totalItems} reports`}
+                {`${totalItems} reports`}
               </p>
             </div>
 
-            {/* Report list */}
-            {filteredReports.length > 0 ? (
+            {/* Loading overlay */}
+            {isLoading ? (
+              <div className="space-y-4 mt-4">
+                {Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
+                  <div key={i} className="h-32 bg-slate-100 animate-pulse rounded-xl" />
+                ))}
+              </div>
+            ) : displayedReports.length > 0 ? (
               <>
                 <div>
-                  {paginatedReports.map((report) => (
+                  {displayedReports.map((report) => (
                     <ReportCard key={report.id} report={report} />
                   ))}
                 </div>

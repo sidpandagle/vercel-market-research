@@ -20,7 +20,8 @@ export const fetchCache = 'default-cache';
 async function ReportsContent() {
   const response = await getReports({
     status: 'published',
-    limit: 1000,
+    page: 1,
+    limit: 10,
   });
 
   if (isApiError(response)) {
@@ -41,11 +42,13 @@ async function ReportsContent() {
   }
 
   const totalItems = response.meta?.totalItems ?? response.data.length;
+  const totalPages = response.meta?.totalPages ?? 1;
 
   return (
     <ReportsListingClient
       reports={response.data}
       totalItems={totalItems}
+      totalPages={totalPages}
     />
   );
 }

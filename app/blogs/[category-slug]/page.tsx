@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 async function BlogCategoryContent({ categorySlug }: { categorySlug: string }) {
-  const response = await getBlogsByCategory(categorySlug, { limit: 1000 });
+  const response = await getBlogsByCategory(categorySlug, { page: 1, limit: 10 });
 
   if (isApiError(response)) {
     console.error("Failed to fetch blogs by category:", response.message);
@@ -51,10 +51,14 @@ async function BlogCategoryContent({ categorySlug }: { categorySlug: string }) {
     );
   }
 
+  const totalItems = response.meta?.totalItems ?? response.data.length;
+  const totalPages = response.meta?.totalPages ?? 1;
+
   return (
     <BlogListingClient
       blogs={response.data}
-      totalItems={response.data.length}
+      totalItems={totalItems}
+      totalPages={totalPages}
       activeCategorySlug={categorySlug}
     />
   );

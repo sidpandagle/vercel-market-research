@@ -6,39 +6,65 @@ import type { PressRelease } from '@/lib/api/press-releases.types';
 import PressReleaseListCard from './PressReleaseListCard';
 import Pagination from '@/components/reports/Pagination';
 import CategorySidebar from '@/components/CategorySidebar';
+import { getPressReleases, isApiError } from '@/lib/api';
 
 const ITEMS_PER_PAGE = 10;
 
 interface PressReleaseListingClientProps {
   pressReleases: PressRelease[];
   totalItems: number;
+  totalPages: number;
   activeCategorySlug?: string;
 }
 
 export default function PressReleaseListingClient({
-  pressReleases,
-  totalItems,
+  pressReleases: initialPressReleases,
+  totalItems: initialTotalItems,
+  totalPages: initialTotalPages,
   activeCategorySlug,
 }: PressReleaseListingClientProps) {
   const storageKey = activeCategorySlug ? `press_releases_${activeCategorySlug}_page` : 'press_releases_page';
+  const [pressReleases, setPressReleases] = useState<PressRelease[]>(initialPressReleases);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(initialTotalPages);
+  const [totalItems, setTotalItems] = useState(initialTotalItems);
+  const [isLoading, setIsLoading] = useState(false);
 
+  // Restore page from sessionStorage and fetch on mount if not page 1
   useEffect(() => {
     const saved = sessionStorage.getItem(storageKey);
-    if (saved) setCurrentPage(Math.max(1, parseInt(saved, 10) || 1));
+    const savedPage = saved ? Math.max(1, parseInt(saved, 10) || 1) : 1;
+    if (savedPage !== 1) {
+      setCurrentPage(savedPage);
+      fetchPage(savedPage);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storageKey]);
 
-  const handlePageChange = (page: number) => {
+  async function fetchPage(page: number) {
+    setIsLoading(true);
+    const response = await getPressReleases({
+      status: 'published',
+      page,
+      limit: ITEMS_PER_PAGE,
+      ...(activeCategorySlug && { category: activeCategorySlug }),
+    });
+    if (!isApiError(response)) {
+      setPressReleases(response.data);
+      if (response.meta) {
+        setTotalPages(response.meta.totalPages);
+        setTotalItems(response.meta.totalItems);
+      }
+    }
+    setIsLoading(false);
+  }
+
+  const handlePageChange = async (page: number) => {
     setCurrentPage(page);
     sessionStorage.setItem(storageKey, String(page));
+    await fetchPage(page);
     document.getElementById('press-releases-list')?.scrollIntoView({ behavior: 'smooth' });
   };
-
-  const totalPages = Math.ceil(pressReleases.length / ITEMS_PER_PAGE);
-  const paginatedPressReleases = pressReleases.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  );
 
   return (
     <>
@@ -93,10 +119,16 @@ export default function PressReleaseListingClient({
               </p>
             </div>
 
-            {pressReleases.length > 0 ? (
+            {isLoading ? (
+              <div className="space-y-4 mt-4">
+                {Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
+                  <div key={i} className="h-32 bg-slate-100 animate-pulse rounded-xl" />
+                ))}
+              </div>
+            ) : pressReleases.length > 0 ? (
               <>
                 <div>
-                  {paginatedPressReleases.map((pr) => (
+                  {pressReleases.map((pr) => (
                     <PressReleaseListCard key={pr.id} pressRelease={pr} />
                   ))}
                 </div>

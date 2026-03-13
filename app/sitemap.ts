@@ -1,10 +1,23 @@
 import { MetadataRoute } from 'next';
-import { getReports } from '@/lib/api/reports';
-import { getBlogs } from '@/lib/api/blogs';
-import { getPressReleases } from '@/lib/api/press-releases';
+import { apiFetch } from '@/lib/api/config';
 
 const BASE_URL = 'https://www.healthcareforesights.com';
 const ITEMS_PER_SITEMAP = 1000;
+
+interface SitemapMeta {
+  page: number;
+  limit: number;
+  total: number;
+  total_pages: number;
+}
+
+async function getSitemapTotalPages(type: 'reports' | 'blogs' | 'press-releases'): Promise<number> {
+  const res = await apiFetch<unknown>(`/api/v1/sitemap/${type}?page=1&limit=${ITEMS_PER_SITEMAP}`);
+  if (!res.success) return 1;
+  const meta = (res as unknown as { meta?: SitemapMeta }).meta;
+  if (!meta?.total) return 1;
+  return Math.ceil(meta.total / ITEMS_PER_SITEMAP);
+}
 
 /**
  * Sitemap Index
@@ -22,25 +35,11 @@ const ITEMS_PER_SITEMAP = 1000;
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
-  // Fetch page 1 of each type to get total page counts from meta
-  const [reportsRes, blogsRes, prRes] = await Promise.all([
-    getReports({ status: 'published', page: 1, limit: ITEMS_PER_SITEMAP }),
-    getBlogs({ status: 'published', page: 1, limit: ITEMS_PER_SITEMAP }),
-    getPressReleases({ status: 'published', page: 1, limit: ITEMS_PER_SITEMAP }),
+  const [reportsTotalPages, blogsTotalPages, prTotalPages] = await Promise.all([
+    getSitemapTotalPages('reports'),
+    getSitemapTotalPages('blogs'),
+    getSitemapTotalPages('press-releases'),
   ]);
-
-  const reportsTotalPages =
-    reportsRes.success && reportsRes.meta?.totalItems
-      ? Math.ceil(reportsRes.meta.totalItems / ITEMS_PER_SITEMAP)
-      : 1;
-  const blogsTotalPages =
-    blogsRes.success && blogsRes.meta?.totalItems
-      ? Math.ceil(blogsRes.meta.totalItems / ITEMS_PER_SITEMAP)
-      : 1;
-  const prTotalPages =
-    prRes.success && prRes.meta?.totalItems
-      ? Math.ceil(prRes.meta.totalItems / ITEMS_PER_SITEMAP)
-      : 1;
 
   const entries: MetadataRoute.Sitemap = [
     {

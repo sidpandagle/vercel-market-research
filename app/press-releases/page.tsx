@@ -22,7 +22,8 @@ interface PageProps {
 async function PressReleasesContent({ categorySlug }: { categorySlug?: string }) {
   const response = await getPressReleases({
     status: 'published',
-    limit: 1000,
+    page: 1,
+    limit: 10,
     ...(categorySlug && { category: categorySlug }),
   });
 
@@ -39,11 +40,13 @@ async function PressReleasesContent({ categorySlug }: { categorySlug?: string })
   }
 
   const totalItems = response.meta?.totalItems ?? response.data.length;
+  const totalPages = response.meta?.totalPages ?? 1;
 
   return (
     <PressReleaseListingClient
       pressReleases={response.data}
       totalItems={totalItems}
+      totalPages={totalPages}
       activeCategorySlug={categorySlug}
     />
   );

@@ -65,10 +65,23 @@ export async function getPressReleases(
   // Map API press releases to UI format
   const mappedPressReleases = mapApiPressReleasesToPressReleases(apiPressReleases);
 
+  // Backend returns { pressReleases: [...], total, page, limit, totalPages }
+  const rawData = response.data as { total?: number; page?: number; limit?: number; totalPages?: number };
+  const mappedMeta: PaginationMeta | undefined = rawData.total !== undefined
+    ? {
+        currentPage: rawData.page ?? 1,
+        totalPages: rawData.totalPages ?? 1,
+        totalItems: Number(rawData.total ?? 0),
+        itemsPerPage: rawData.limit ?? 10,
+        hasNextPage: (rawData.page ?? 1) < (rawData.totalPages ?? 1),
+        hasPreviousPage: (rawData.page ?? 1) > 1,
+      }
+    : undefined;
+
   return {
     success: true,
     data: mappedPressReleases,
-    meta: (response.data as { meta?: PaginationMeta })?.meta,
+    meta: mappedMeta,
   };
 }
 

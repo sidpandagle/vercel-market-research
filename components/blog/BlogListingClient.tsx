@@ -6,39 +6,62 @@ import type { Blog } from '@/lib/api/blogs.types';
 import BlogListCard from './BlogListCard';
 import Pagination from '@/components/reports/Pagination';
 import CategorySidebar from '@/components/CategorySidebar';
+import { getBlogs, getBlogsByCategory, isApiError } from '@/lib/api';
 
 const ITEMS_PER_PAGE = 10;
 
 interface BlogListingClientProps {
   blogs: Blog[];
   totalItems: number;
+  totalPages: number;
   activeCategorySlug?: string;
 }
 
 export default function BlogListingClient({
-  blogs,
-  totalItems,
+  blogs: initialBlogs,
+  totalItems: initialTotalItems,
+  totalPages: initialTotalPages,
   activeCategorySlug,
 }: BlogListingClientProps) {
   const storageKey = activeCategorySlug ? `blog_${activeCategorySlug}_page` : 'blog_page';
+  const [blogs, setBlogs] = useState<Blog[]>(initialBlogs);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(initialTotalPages);
+  const [totalItems, setTotalItems] = useState(initialTotalItems);
+  const [isLoading, setIsLoading] = useState(false);
 
+  // Restore page from sessionStorage and fetch on mount if not page 1
   useEffect(() => {
     const saved = sessionStorage.getItem(storageKey);
-    if (saved) setCurrentPage(Math.max(1, parseInt(saved, 10) || 1));
+    const savedPage = saved ? Math.max(1, parseInt(saved, 10) || 1) : 1;
+    if (savedPage !== 1) {
+      setCurrentPage(savedPage);
+      fetchPage(savedPage);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storageKey]);
 
-  const handlePageChange = (page: number) => {
+  async function fetchPage(page: number) {
+    setIsLoading(true);
+    const response = activeCategorySlug
+      ? await getBlogsByCategory(activeCategorySlug, { page, limit: ITEMS_PER_PAGE })
+      : await getBlogs({ status: 'published', page, limit: ITEMS_PER_PAGE });
+    if (!isApiError(response)) {
+      setBlogs(response.data);
+      if (response.meta) {
+        setTotalPages(response.meta.totalPages);
+        setTotalItems(response.meta.totalItems);
+      }
+    }
+    setIsLoading(false);
+  }
+
+  const handlePageChange = async (page: number) => {
     setCurrentPage(page);
     sessionStorage.setItem(storageKey, String(page));
+    await fetchPage(page);
     document.getElementById('blogs-list')?.scrollIntoView({ behavior: 'smooth' });
   };
-
-  const totalPages = Math.ceil(blogs.length / ITEMS_PER_PAGE);
-  const paginatedBlogs = blogs.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  );
 
   return (
     <>
@@ -93,10 +116,16 @@ export default function BlogListingClient({
               </p>
             </div>
 
-            {blogs.length > 0 ? (
+            {isLoading ? (
+              <div className="space-y-4 mt-4">
+                {Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
+                  <div key={i} className="h-32 bg-slate-100 animate-pulse rounded-xl" />
+                ))}
+              </div>
+            ) : blogs.length > 0 ? (
               <>
                 <div>
-                  {paginatedBlogs.map((blog) => (
+                  {blogs.map((blog) => (
                     <BlogListCard key={blog.id} blog={blog} />
                   ))}
                 </div>

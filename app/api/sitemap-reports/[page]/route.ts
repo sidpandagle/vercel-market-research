@@ -1,8 +1,14 @@
 import { NextResponse } from 'next/server';
-import { getReports } from '@/lib/api/reports';
+import { apiFetch } from '@/lib/api/config';
 
 const BASE_URL = 'https://www.healthcareforesights.com';
 const ITEMS_PER_SITEMAP = 1000;
+
+interface SitemapItem {
+  slug: string;
+  updated_at: string;
+  publish_date?: string;
+}
 
 export async function GET(
   request: Request,
@@ -16,39 +22,31 @@ export async function GET(
   }
 
   try {
-    const reportsResponse = await getReports({
-      status: 'published',
-      page,
-      limit: ITEMS_PER_SITEMAP,
-    });
+    const res = await apiFetch<SitemapItem[]>(
+      `/api/v1/sitemap/reports?page=${page}&limit=${ITEMS_PER_SITEMAP}`
+    );
 
-    if (!reportsResponse.success || !reportsResponse.data) {
+    if (!res.success || !res.data) {
       console.error('Error fetching reports for sitemap');
       return new NextResponse('Error generating sitemap', { status: 500 });
     }
 
-    if (reportsResponse.data.length === 0) {
+    if (res.data.length === 0) {
       return new NextResponse('Not Found', { status: 404 });
     }
 
-    const reportUrls = reportsResponse.data.map((report) => ({
-      url: `${BASE_URL}/reports/${report.slug}`,
-      lastModified: new Date(report.date).toISOString(),
-      changeFrequency: 'daily',
-      priority: 0.7,
-    }));
-
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${reportUrls
-  .map(
-    (item) => `  <url>
-    <loc>${item.url}</loc>
-    <lastmod>${item.lastModified}</lastmod>
-    <changefreq>${item.changeFrequency}</changefreq>
-    <priority>${item.priority}</priority>
-  </url>`
-  )
+${res.data
+  .map((item) => {
+    const lastmod = new Date(item.publish_date || item.updated_at).toISOString();
+    return `  <url>
+    <loc>${BASE_URL}/reports/${item.slug}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>`;
+  })
   .join('\n')}
 </urlset>`;
 

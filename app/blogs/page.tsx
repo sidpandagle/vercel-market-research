@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export const revalidate = 300;
 
 async function BlogsContent() {
-  const response = await getBlogs({ status: 'published', limit: 1000 });
+  const response = await getBlogs({ status: 'published', page: 1, limit: 10 });
 
   if (isApiError(response)) {
     console.error('Failed to fetch blogs:', response.message);
@@ -31,11 +31,13 @@ async function BlogsContent() {
   }
 
   const totalItems = response.meta?.totalItems ?? response.data.length;
+  const totalPages = response.meta?.totalPages ?? 1;
 
   return (
     <BlogListingClient
       blogs={response.data}
       totalItems={totalItems}
+      totalPages={totalPages}
     />
   );
 }

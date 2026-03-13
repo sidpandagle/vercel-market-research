@@ -65,10 +65,23 @@ export async function getBlogs(
   // Map API blogs to UI format
   const mappedBlogs = mapApiBlogsToblogs(apiBlogs);
 
+  // Backend returns { blogs: [...], total, page, limit, totalPages }
+  const rawData = response.data as { total?: number; page?: number; limit?: number; totalPages?: number };
+  const mappedMeta: PaginationMeta | undefined = rawData.total !== undefined
+    ? {
+        currentPage: rawData.page ?? 1,
+        totalPages: rawData.totalPages ?? 1,
+        totalItems: Number(rawData.total ?? 0),
+        itemsPerPage: rawData.limit ?? 10,
+        hasNextPage: (rawData.page ?? 1) < (rawData.totalPages ?? 1),
+        hasPreviousPage: (rawData.page ?? 1) > 1,
+      }
+    : undefined;
+
   return {
     success: true,
     data: mappedBlogs,
-    meta: (response.data as { meta?: PaginationMeta })?.meta,
+    meta: mappedMeta,
   };
 }
 
