@@ -60,6 +60,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Preconnect to third-party origins to reduce connection latency */}
+        <link rel="preconnect" href="https://js.hs-scripts.com" />
+        <link rel="dns-prefetch" href="https://js.hs-scripts.com" />
+        <link rel="preconnect" href="https://translate.google.com" />
+        <link rel="dns-prefetch" href="https://translate.google.com" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <StructuredData data={generateOrganizationSchema()} />
         <StructuredData data={generateWebSiteSchema()} />
         <StructuredData data={generateLocalBusinessSchema()} />

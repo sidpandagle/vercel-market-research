@@ -6,7 +6,11 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lhci": "lhci autorun",
+    "lhci:collect": "lhci collect",
+    "lhci:assert": "lhci assert",
+    "lighthouse": "npm run build && npm run lhci"
   },
   "dependencies": {
     "@next/third-parties": "^16.1.6",
@@ -23,6 +27,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@lhci/cli": "^0.15.1",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
