@@ -102,6 +102,27 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
       )}
     >
       <div className="flex flex-col flex-1 min-h-0">
+        {onShowFullTOC && (
+          <button
+            onClick={onShowFullTOC}
+            className="mb-4 w-full inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-[var(--foreground)] bg-[var(--card)] border border-[var(--border)] rounded-md hover:bg-[var(--muted)] transition-colors duration-200 flex-shrink-0"
+          >
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+            Table of Contents
+          </button>
+        )}
         <h3 className="text-sm font-semibold text-[var(--foreground)] mb-4 uppercase tracking-wide flex-shrink-0">
           Report Details
         </h3>
@@ -133,28 +154,6 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
             ))}
           </ul>
         </div>
-
-        {onShowFullTOC && (
-          <button
-            onClick={onShowFullTOC}
-            className="mt-4 w-full inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-[var(--foreground)] bg-[var(--card)] border border-[var(--border)] rounded-md hover:bg-[var(--muted)] transition-colors duration-200 flex-shrink-0"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-            Table of Contents
-          </button>
-        )}
       </div>
     </nav>
   );
