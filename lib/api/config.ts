@@ -51,6 +51,16 @@ export function isApiError<T>(
 }
 
 /**
+ * Extended fetch init type that includes Next.js-specific caching options
+ */
+type NextFetchRequestInit = RequestInit & {
+  next?: {
+    revalidate?: number | false;
+    tags?: string[];
+  };
+};
+
+/**
  * Generic fetch wrapper with error handling
  *
  * @param endpoint - API endpoint path (e.g., '/api/v1/reports')
@@ -59,12 +69,13 @@ export function isApiError<T>(
  */
 export async function apiFetch<T>(
   endpoint: string,
-  options: RequestInit = {}
+  options: NextFetchRequestInit = {}
 ): Promise<ApiResponse<T>> {
   try {
     const url = `${API_BASE_URL}${endpoint}`;
 
     const response = await fetch(url, {
+      next: { revalidate: 300 },
       ...options,
       headers: {
         'Content-Type': 'application/json',
