@@ -35,6 +35,7 @@ export default function TrustedPartnersSidebar() {
               width={80}
               height={40}
               className="object-contain max-w-full h-auto"
+              sizes="80px"
             />
           </div>
         ))}

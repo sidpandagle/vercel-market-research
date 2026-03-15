@@ -56,6 +56,7 @@ export default function TrustedPartnersSection() {
                     width={160}
                     height={80}
                     className="object-contain max-w-full max-h-full"
+                    sizes="160px"
                   />
                 </div>
               ))}

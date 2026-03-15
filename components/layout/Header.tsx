@@ -21,6 +21,8 @@ export default function Header() {
             width={180}
             height={50}
             priority
+            fetchPriority="high"
+            sizes="180px"
             className="h-10 w-auto md:h-10 transform group-hover:scale-105 transition-transform duration-200"
           />
         </Link>

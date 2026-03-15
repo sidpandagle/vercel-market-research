@@ -17,6 +17,7 @@ export default function Footer() {
                 alt="Healthcare Foresights - Predict. Research. Intelligence"
                 width={180}
                 height={50}
+                sizes="180px"
                 className="h-16 w-auto hover:opacity-80 transition-opacity"
               />
             </Link>

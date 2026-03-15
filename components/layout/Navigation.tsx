@@ -125,20 +125,18 @@ export default function Navigation() {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 z-40 md:hidden"
+          className="fixed inset-0 z-40 md:hidden bg-black/50"
           onClick={() => setIsMobileMenuOpen(false)}
           aria-hidden="true"
         />
       )}
 
       {/* Mobile Menu Drawer */}
-      <div
+      {isMobileMenuOpen && <div
         className={cn(
           "fixed top-16 right-0 h-[calc(100vh-4rem)] w-72 bg-white z-50 md:hidden",
           "border-l border-slate-200 shadow-xl",
-          "transform transition-transform duration-300 ease-out",
           "overflow-y-auto",
-          isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         )}
       >
         <nav className="flex flex-col p-4">
@@ -306,7 +304,7 @@ export default function Navigation() {
             </div>
           </div>
         </nav>
-      </div>
+      </div>}
     </>
   );
 }

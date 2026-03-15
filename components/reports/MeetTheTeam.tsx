@@ -2,6 +2,7 @@
 
 // import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Grid, Card, CardContent, CardTitle, CardDescription } from '@/components/ui';
 
 interface TeamMember {
@@ -37,10 +38,13 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
         <div className="flex items-start gap-4">
           <div className="flex-shrink-0">
             {member.imageUrl ? (
-              <img
+              <Image
                 src={member.imageUrl}
                 alt={member.name}
-                className="w-16 h-16 rounded-full object-cover border-2 border-[var(--primary)]"
+                width={64}
+                height={64}
+                className="rounded-full object-cover border-2 border-[var(--primary)]"
+                unoptimized
               />
             ) : (
               <div className="w-16 h-16 rounded-full bg-[var(--primary)] text-white flex items-center justify-center text-xl font-semibold">

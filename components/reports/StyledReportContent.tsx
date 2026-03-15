@@ -27,9 +27,11 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
       img.setAttribute('loading', 'lazy');
       img.setAttribute('decoding', 'async');
 
-      // Route CDN images through Next.js image optimization for responsive delivery
+      // Route CDN images through Next.js image optimization for responsive delivery.
+      // Server-side processing in page.tsx already handles this for SSR HTML, so we
+      // only apply here as a fallback for images not yet optimized (e.g. client navigation).
       const src = img.getAttribute('src');
-      if (src && src.includes('cdn.healthcareforesights.com')) {
+      if (src && src.includes('cdn.healthcareforesights.com') && !src.startsWith('/_next/image')) {
         const encodedSrc = encodeURIComponent(src);
         img.setAttribute('src', `/_next/image?url=${encodedSrc}&w=828&q=75`);
         img.setAttribute(
@@ -39,10 +41,15 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
         img.setAttribute('sizes', '(max-width: 768px) 100vw, 768px');
       }
 
-      // Reserve space to prevent CLS if natural dimensions are available
-      if (!img.getAttribute('width') && img.naturalWidth) {
-        img.setAttribute('width', String(img.naturalWidth));
-        img.setAttribute('height', String(img.naturalHeight));
+      // Prevent CLS: set aspect-ratio from HTML attributes (naturalWidth is 0 for
+      // lazy images that haven't loaded yet, so we must read from the element attributes)
+      const attrW = img.getAttribute('width');
+      const attrH = img.getAttribute('height');
+      if (attrW && attrH) {
+        img.style.aspectRatio = `${attrW} / ${attrH}`;
+      } else {
+        // Fallback: reserve 16:9 space so page doesn't reflow when image loads
+        img.style.aspectRatio = '16 / 9';
       }
 
       // Create wrapper div for image
@@ -279,7 +286,6 @@ export const StyledReportContent: React.FC<StyledReportContentProps> = ({
           display: block;
           box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
           border: 1px solid var(--border);
-          aspect-ratio: attr(width) / attr(height);
         }
 
         .image-cta-section {

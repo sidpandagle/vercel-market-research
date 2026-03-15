@@ -14,6 +14,38 @@ import type { SidebarTOCItem } from "@/lib/toc-utils";
 import { StructuredData, generateArticleSchema, generateBreadcrumbSchema, generateFAQSchema, generateProductSchema, generateDatasetSchema } from "@/components/seo/StructuredData";
 import categories from "@/data/categories.json";
 
+/**
+ * Processes raw HTML content server-side to route CDN images through Next.js
+ * image optimization. This ensures the SSR output already has optimized URLs,
+ * avoiding the double-fetch that occurs when useEffect modifies src client-side.
+ */
+function processHtmlImages(html: string): string {
+  return html.replace(
+    /<img([^>]*?)>/gi,
+    (match, attrs: string) => {
+      const srcMatch = attrs.match(/src="(https:\/\/cdn\.healthcareforesights\.com\/[^"]+)"/i);
+      if (!srcMatch) return match;
+
+      const src = srcMatch[1];
+      const encoded = encodeURIComponent(src);
+      const optimizedSrc = `/_next/image?url=${encoded}&w=828&q=75`;
+      const srcset = [
+        `/_next/image?url=${encoded}&w=640&q=75 640w`,
+        `/_next/image?url=${encoded}&w=828&q=75 828w`,
+        `/_next/image?url=${encoded}&w=1080&q=75 1080w`,
+      ].join(', ');
+
+      let newAttrs = attrs.replace(/src="[^"]*"/i, `src="${optimizedSrc}"`);
+      if (!newAttrs.includes('srcset=')) newAttrs += ` srcset="${srcset}"`;
+      if (!newAttrs.includes('sizes=')) newAttrs += ` sizes="(max-width: 768px) 100vw, 768px"`;
+      if (!newAttrs.includes('loading=')) newAttrs += ` loading="lazy"`;
+      if (!newAttrs.includes('decoding=')) newAttrs += ` decoding="async"`;
+
+      return `<img${newAttrs}>`;
+    }
+  );
+}
+
 // Enable ISR with 10-minute revalidation
 export const revalidate = 600;
 
@@ -176,7 +208,7 @@ export default async function ReportPage({
 
   if (hasFullContent && report.marketDetails) {
     const { toc, htmlWithIds } = parseHTMLAndGenerateTOC(report.marketDetails);
-    marketDetailsWithIds = htmlWithIds;
+    marketDetailsWithIds = processHtmlImages(htmlWithIds);
 
     // Add static sections from the page to TOC
     const staticSections: SidebarTOCItem[] = [];
