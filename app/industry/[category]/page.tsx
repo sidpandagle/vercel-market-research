@@ -1,10 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import { getReports, isApiError } from '@/lib/api';
 import { ReportsListingClient } from '@/components/reports';
-import ReportsSkeleton from '@/components/reports/ReportsSkeleton';
 import categories from '@/data/categories.json';
 
 interface PageProps {
@@ -43,10 +41,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export const revalidate = 300;
 export const fetchCache = 'default-cache';
 
-async function CategoryReportsContent({ categorySlug }: { categorySlug: string }) {
+export default async function CategoryPage({ params }: PageProps) {
+  const { category } = await params;
+  const categoryData = categories.find((c) => c.slug === category);
+
+  if (!categoryData) {
+    notFound();
+  }
+
   const response = await getReports({
     status: 'published',
-    category: categorySlug,
+    category,
     page: 1,
     limit: 10,
   });
@@ -58,7 +63,7 @@ async function CategoryReportsContent({ categorySlug }: { categorySlug: string }
           <h2 className="text-2xl font-bold text-gray-900">Unable to Load Reports</h2>
           <p className="text-gray-600">{response.message}</p>
           <Link
-            href={`/industry/${categorySlug}`}
+            href={`/industry/${category}`}
             className="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             Try Again
@@ -68,30 +73,12 @@ async function CategoryReportsContent({ categorySlug }: { categorySlug: string }
     );
   }
 
-  const totalItems = response.meta?.totalItems ?? response.data.length;
-  const totalPages = response.meta?.totalPages ?? 1;
-
   return (
     <ReportsListingClient
       reports={response.data}
-      activeCategorySlug={categorySlug}
-      totalItems={totalItems}
-      totalPages={totalPages}
+      activeCategorySlug={category}
+      totalItems={response.meta?.totalItems ?? response.data.length}
+      totalPages={response.meta?.totalPages ?? 1}
     />
-  );
-}
-
-export default async function CategoryPage({ params }: PageProps) {
-  const { category } = await params;
-  const categoryData = categories.find((c) => c.slug === category);
-
-  if (!categoryData) {
-    notFound();
-  }
-
-  return (
-    <Suspense fallback={<ReportsSkeleton />}>
-      <CategoryReportsContent categorySlug={category} />
-    </Suspense>
   );
 }

@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Suspense } from 'react';
 import { getReports, isApiError } from '@/lib/api';
 import { ReportsListingClient } from '@/components/reports';
-import ReportsSkeleton from '@/components/reports/ReportsSkeleton';
 
 export const metadata: Metadata = {
   title: "Healthcare Market Research Reports & Industry Analysis",
@@ -17,7 +15,7 @@ export const metadata: Metadata = {
 export const revalidate = 300;
 export const fetchCache = 'default-cache';
 
-async function ReportsContent() {
+export default async function IndustryPage() {
   const response = await getReports({
     status: 'published',
     page: 1,
@@ -41,22 +39,11 @@ async function ReportsContent() {
     );
   }
 
-  const totalItems = response.meta?.totalItems ?? response.data.length;
-  const totalPages = response.meta?.totalPages ?? 1;
-
   return (
     <ReportsListingClient
       reports={response.data}
-      totalItems={totalItems}
-      totalPages={totalPages}
+      totalItems={response.meta?.totalItems ?? response.data.length}
+      totalPages={response.meta?.totalPages ?? 1}
     />
-  );
-}
-
-export default async function IndustryPage() {
-  return (
-    <Suspense fallback={<ReportsSkeleton />}>
-      <ReportsContent />
-    </Suspense>
   );
 }

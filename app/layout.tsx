@@ -75,8 +75,8 @@ export default function RootLayout({
         <Header />
         <main className="min-h-screen">{children}</main>
         <Footer />
+        <GoogleAnalytics gaId="G-NJ1DNL58KB" />
       </body>
-      <GoogleAnalytics gaId="G-NJ1DNL58KB" />
     </html>
   );
 }

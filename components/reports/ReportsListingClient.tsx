@@ -103,7 +103,9 @@ export default function ReportsListingClient({
     setCurrentPage(page);
     sessionStorage.setItem(storageKey, String(page));
     await fetchPage(page, filters);
-    document.getElementById('reports-list')?.scrollIntoView({ behavior: 'smooth' });
+    requestAnimationFrame(() => {
+      document.getElementById('reports-list')?.scrollIntoView({ behavior: 'smooth' });
+    });
   };
 
   const handleFilterChange = async (newFilters: FilterState) => {
