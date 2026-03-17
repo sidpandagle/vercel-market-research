@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Section, Container, Grid, Card, CardHeader, CardTitle, CardDescription } from '@/components/ui';
 import { truncate } from '@/lib/utils';
 import categories from '@/data/categories.json';
@@ -18,14 +19,16 @@ export default function IndustryCategoriesSection() {
 
           <Grid cols={3} gap="md">
             {categories.map((category) => (
-              <Card key={category.id} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <CardTitle className="text-lg">{category.name}</CardTitle>
-                  <CardDescription>
-                    {truncate(category.description, 80)}
-                  </CardDescription>
-                </CardHeader>
-              </Card>
+              <Link key={category.id} href={`/industry/${category.slug}`} className="block">
+                <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+                  <CardHeader>
+                    <CardTitle className="text-lg">{category.name}</CardTitle>
+                    <CardDescription>
+                      {truncate(category.description, 80)}
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+              </Link>
             ))}
           </Grid>
         </div>

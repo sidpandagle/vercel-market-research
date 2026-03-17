@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Link from "next/link";
 import { Section, Container, Card, CardHeader, CardTitle, CardDescription, CardContent, Button, Badge, Captcha, type CaptchaRef } from "@/components/ui";
 import { CountrySelect } from "@/components/ui/country-select";
 import { CONTACT_INFO } from "@/lib/contact";
@@ -92,6 +93,19 @@ export default function RequestCustomizationForm({ reportTitle = "", reportSlug 
     <>
       <Section padding="lg" background="muted" className="pb-8">
         <Container size="lg">
+          {reportSlug && (
+            <div className="mb-6">
+              <Link
+                href={`/reports/${reportSlug}`}
+                className="inline-flex items-center gap-2 text-sm font-medium text-[var(--primary)] hover:underline"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                Back to Report
+              </Link>
+            </div>
+          )}
           <div className="text-center space-y-4">
             <Badge variant="primary" size="md">
               Request Customisation

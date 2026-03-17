@@ -1,10 +1,12 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Section, Container, Badge, StyledArticleContent, Button, Card, CardContent } from "@/components/ui";
+import { Section, Container, Badge, StyledArticleContent, Button, Card, CardContent, Breadcrumb } from "@/components/ui";
 import { getPressReleases, getPressReleaseBySlug, isApiError } from "@/lib/api";
 import type { Metadata } from "next";
 import { StructuredData, generateArticleSchema, generateBreadcrumbSchema } from "@/components/seo/StructuredData";
 import { TrustedPartnersSidebar } from "@/components/contact";
+
+export const revalidate = 300;
 
 interface PressReleasePageProps {
   params: Promise<{
@@ -107,25 +109,13 @@ export default async function PressReleaseDetailPage({ params }: PressReleasePag
       <Section className="bg-[var(--muted)] pb-0">
         <Container size="lg">
           <div className="mb-6">
-            <Link
-              href="/press-releases"
-              className="text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors inline-flex items-center gap-1"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="m15 18-6-6 6-6"/>
-              </svg>
-              Back to Press Releases
-            </Link>
+            <Breadcrumb
+              items={[
+                { label: 'Home', href: '/' },
+                { label: 'Press Releases', href: '/press-releases' },
+                { label: pressRelease.title },
+              ]}
+            />
           </div>
 
           <div className="mb-6">

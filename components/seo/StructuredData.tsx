@@ -40,8 +40,10 @@ export const generateOrganizationSchema = () => ({
     email: 'support@healthcareforesights.com',
   },
   sameAs: [
-    'https://twitter.com/HealthcareForesights',
-    'https://www.linkedin.com/company/healthcare-foresights',
+    'https://x.com/Healthcare_F',
+    'https://www.linkedin.com/company/healthcare-foresights/',
+    'https://www.instagram.com/healthcareforesights',
+    'https://www.facebook.com/people/Healthcare-Foresights/61588605652792/',
   ],
 });
 
@@ -293,8 +295,10 @@ export const generateLocalBusinessSchema = () => ({
   priceRange: '$$$$',
   description: 'Healthcare Foresights delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.',
   sameAs: [
-    'https://twitter.com/HealthcareForesights',
-    'https://www.linkedin.com/company/healthcare-foresights',
+    'https://x.com/Healthcare_F',
+    'https://www.linkedin.com/company/healthcare-foresights/',
+    'https://www.instagram.com/healthcareforesights',
+    'https://www.facebook.com/people/Healthcare-Foresights/61588605652792/',
   ],
   address: {
     '@type': 'PostalAddress',

@@ -157,7 +157,9 @@ export default async function ConsultingServicePage({ params }: ConsultingServic
               and drive strategic growth for your organization.
             </p>
             <div className="flex gap-4 justify-center flex-wrap">
-              <Button size="lg">Request Consultation</Button>
+              <Link href="/request-analyst-meeting">
+                <Button size="lg">Request Consultation</Button>
+              </Link>
               <Link href="/consulting">
                 <Button size="lg" variant="outline">View All Services</Button>
               </Link>

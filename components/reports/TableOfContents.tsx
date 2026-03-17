@@ -105,22 +105,41 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
         {onShowFullTOC && (
           <button
             onClick={onShowFullTOC}
-            className="mb-4 w-full inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-[var(--foreground)] bg-[var(--card)] border border-[var(--border)] rounded-md hover:bg-[var(--muted)] transition-colors duration-200 flex-shrink-0"
+            className="mb-5 w-full group relative flex-shrink-0 overflow-hidden rounded-lg active:scale-[0.985] transition-all duration-200"
+            style={{ boxShadow: '0 4px 14px 0 rgba(37,99,163,0.28)' }}
           >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
+            {/* Ocean-navy gradient base — matches site's --gradient-primary */}
+            <div className="relative flex items-center gap-3 px-4 py-3.5 bg-gradient-to-br from-[#0F2D52] via-[#2563A3] to-[#3B7CB8] rounded-lg">
+              {/* Bright-cyan inner highlight edge at top */}
+              <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-[#00D4FF]/50 to-transparent" />
+              {/* Shine sweep on hover */}
+              <div
+                className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/[0.09] to-transparent pointer-events-none"
+                style={{ transition: 'transform 0.7s ease' }}
               />
-            </svg>
-            Table of Contents
+              {/* Icon — cyan accent */}
+              <svg
+                className="w-4 h-4 text-[#00D4FF] flex-shrink-0"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 11h16M4 16h10" />
+              </svg>
+              {/* Label */}
+              <span className="text-white text-[12px] font-semibold uppercase tracking-[0.1em] leading-none">
+                Table of Contents
+              </span>
+              {/* Chevron — lights up cyan on hover */}
+              <svg
+                className="w-3.5 h-3.5 text-white/40 ml-auto flex-shrink-0 group-hover:text-[#00D4FF] group-hover:translate-x-0.5 transition-all duration-200"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
           </button>
         )}
         <h3 className="text-sm font-semibold text-[var(--foreground)] mb-4 uppercase tracking-wide flex-shrink-0">

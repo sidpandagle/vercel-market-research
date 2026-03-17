@@ -70,11 +70,11 @@ export default function RequestAnalystMeetingPage() {
 
   return (
     <>
-      <Section padding="lg" background="muted">
+      <Section padding="lg" background="muted" className="pb-8">
         <Container size="lg">
           <div className="text-center space-y-4">
             <Badge variant="primary" size="md">
-              Schedule a Demo
+              Request Analyst Meeting
             </Badge>
             <h1 className="text-4xl md:text-5xl font-bold">See Our Platform in Action</h1>
             <p className="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">
@@ -85,14 +85,14 @@ export default function RequestAnalystMeetingPage() {
         </Container>
       </Section>
 
-      <Section>
+      <Section className="pt-8">
         <Container size="lg">
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Left Column – Form (2/3 width) */}
             <div className="lg:col-span-2">
               <Card>
                 <CardHeader>
-                  <CardTitle>Schedule Your Demo</CardTitle>
+                  <CardTitle>Request Analyst Meeting</CardTitle>
                   <CardDescription>
                     Fill out the form below and our team will contact you to schedule a convenient
                     time.
@@ -116,10 +116,10 @@ export default function RequestAnalystMeetingPage() {
                           />
                         </svg>
                       </div>
-                      <h3 className="text-xl font-semibold mb-2">Demo Request Received!</h3>
+                      <h3 className="text-xl font-semibold mb-2">Meeting Request Received!</h3>
                       <p className="text-[var(--muted-foreground)] mb-4">
                         Thank you for your interest. Our team will reach out within 24 hours to
-                        schedule your personalized demo.
+                        schedule your analyst meeting.
                       </p>
                       <p className="text-sm text-[var(--muted-foreground)]">
                         We will contact you at {formData.email}
@@ -310,7 +310,7 @@ export default function RequestAnalystMeetingPage() {
                         fullWidth
                         isLoading={isSubmitting}
                       >
-                        {isSubmitting ? "Submitting..." : "Request Demo"}
+                        {isSubmitting ? "Submitting..." : "Request Analyst Meeting"}
                       </Button>
                     </form>
                   )}

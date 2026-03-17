@@ -27,7 +27,7 @@ export default function Footer() {
 
             <div className="flex gap-4">
               <Link
-                href="https://facebook.com/healthcareforesights"
+                href="https://www.facebook.com/people/Healthcare-Foresights/61588605652792/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-slate-600 hover:text-ocean-600 transition-colors"
@@ -36,7 +36,7 @@ export default function Footer() {
                 <Facebook className="w-5 h-5" />
               </Link>
               <Link
-                href="https://instagram.com/healthcareforesights"
+                href="https://www.instagram.com/healthcareforesights"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-slate-600 hover:text-ocean-600 transition-colors"
@@ -45,7 +45,7 @@ export default function Footer() {
                 <Instagram className="w-5 h-5" />
               </Link>
               <Link
-                href="https://linkedin.com/company/healthcareforesights"
+                href="https://www.linkedin.com/company/healthcare-foresights/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-slate-600 hover:text-ocean-600 transition-colors"
@@ -54,7 +54,7 @@ export default function Footer() {
                 <Linkedin className="w-5 h-5" />
               </Link>
               <Link
-                href="https://twitter.com/healthcareforesights"
+                href="https://x.com/Healthcare_F"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-slate-600 hover:text-ocean-600 transition-colors"

@@ -64,6 +64,17 @@ export default async function CheckoutPage({
       </div>
 
       <div className="max-w-5xl mx-auto px-4 py-10 md:px-6">
+        <div className="mb-6">
+          <Link
+            href={`/reports/${report.slug}`}
+            className="inline-flex items-center gap-2 text-sm font-medium text-[var(--primary)] hover:underline"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to Report
+          </Link>
+        </div>
         <h1 className="text-2xl font-bold text-[var(--foreground)] mb-8">Secure Checkout</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
