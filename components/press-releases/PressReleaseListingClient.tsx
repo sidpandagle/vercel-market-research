@@ -49,6 +49,7 @@ export default function PressReleaseListingClient({
       status: 'published',
       page,
       limit: ITEMS_PER_PAGE,
+      sort_by: 'publish_date_desc',
       ...(activeCategorySlug && { category: activeCategorySlug }),
     });
     if (!isApiError(response)) {

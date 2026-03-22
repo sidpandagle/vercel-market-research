@@ -55,6 +55,7 @@ export default async function CategoryPage({ params }: PageProps) {
     category,
     page: 1,
     limit: 10,
+    sort_by: 'publish_date_desc',
   });
 
   if (isApiError(response)) {

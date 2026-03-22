@@ -167,6 +167,7 @@ export interface ReportFilters {
   geography?: string;
   search?: string;
   is_featured?: boolean;
+  sort_by?: string;
 }
 
 /**

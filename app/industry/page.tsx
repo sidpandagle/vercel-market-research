@@ -22,6 +22,7 @@ async function ReportsContent() {
     status: 'published',
     page: 1,
     limit: 10,
+    sort_by: 'publish_date_desc',
   });
 
   if (isApiError(response)) {

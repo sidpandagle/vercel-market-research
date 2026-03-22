@@ -45,7 +45,7 @@ export default function BlogListingClient({
     setIsLoading(true);
     const response = activeCategorySlug
       ? await getBlogsByCategory(activeCategorySlug, { page, limit: ITEMS_PER_PAGE })
-      : await getBlogs({ status: 'published', page, limit: ITEMS_PER_PAGE });
+      : await getBlogs({ status: 'published', page, limit: ITEMS_PER_PAGE, sort_by: 'publish_date_desc' });
     if (!isApiError(response)) {
       setBlogs(response.data);
       if (response.meta) {

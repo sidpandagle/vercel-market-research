@@ -72,6 +72,7 @@ export default function ReportsListingClient({
       status: 'published',
       page,
       limit: ITEMS_PER_PAGE,
+      sort_by: 'publish_date_desc',
       ...(activeCategorySlug && { category: activeCategorySlug }),
       ...(currentFilters.regions.length > 0 && { geography: currentFilters.regions[0] }),
       ...(currentFilters.reportTypes.length > 0 && { report_type: currentFilters.reportTypes[0] as ReportType }),

@@ -94,6 +94,7 @@ export interface PressReleaseFilters {
   categoryId?: number;
   authorId?: number;
   search?: string;
+  sort_by?: string;
 }
 
 /**

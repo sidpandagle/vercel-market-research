@@ -92,6 +92,7 @@ export interface BlogFilters {
   categoryId?: number;
   authorId?: number;
   search?: string;
+  sort_by?: string;
 }
 
 /**
