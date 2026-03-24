@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getReports, isApiError } from '@/lib/api';
+import { getReports, getBlogsByCategory, getPressReleasesByCategory, isApiError } from '@/lib/api';
 import { ReportsListingClient } from '@/components/reports';
 import IndustryHero from '@/components/reports/IndustryHero';
+import IndustryContentPreview from '@/components/industry/IndustryContentPreview';
 import categories from '@/data/categories.json';
 
 interface PageProps {
@@ -80,6 +82,9 @@ export default async function CategoryPage({ params }: PageProps) {
   return (
     <>
       <IndustryHero totalItems={totalItems} activeCategory={categoryData} />
+      <Suspense fallback={null}>
+        <ContentPreviewSection categorySlug={category} />
+      </Suspense>
       <ReportsListingClient
         reports={response.data}
         activeCategorySlug={category}
@@ -88,4 +93,16 @@ export default async function CategoryPage({ params }: PageProps) {
       />
     </>
   );
+}
+
+async function ContentPreviewSection({ categorySlug }: { categorySlug: string }) {
+  const [blogsResponse, pressReleasesResponse] = await Promise.all([
+    getBlogsByCategory(categorySlug, { page: 1, limit: 2 }),
+    getPressReleasesByCategory(categorySlug, { page: 1, limit: 2 }),
+  ]);
+
+  const blogs = isApiError(blogsResponse) ? [] : blogsResponse.data;
+  const pressReleases = isApiError(pressReleasesResponse) ? [] : pressReleasesResponse.data;
+
+  return <IndustryContentPreview blogs={blogs} pressReleases={pressReleases} />;
 }

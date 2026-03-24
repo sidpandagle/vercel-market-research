@@ -5,8 +5,7 @@ import Link from 'next/link';
 import type { Blog } from '@/lib/api/blogs.types';
 import BlogListCard from './BlogListCard';
 import Pagination from '@/components/reports/Pagination';
-import CategorySidebar from '@/components/CategorySidebar';
-import { getBlogs, getBlogsByCategory, isApiError } from '@/lib/api';
+import { getBlogs, isApiError } from '@/lib/api';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -14,16 +13,14 @@ interface BlogListingClientProps {
   blogs: Blog[];
   totalItems: number;
   totalPages: number;
-  activeCategorySlug?: string;
 }
 
 export default function BlogListingClient({
   blogs: initialBlogs,
   totalItems: initialTotalItems,
   totalPages: initialTotalPages,
-  activeCategorySlug,
 }: BlogListingClientProps) {
-  const storageKey = activeCategorySlug ? `blog_${activeCategorySlug}_page` : 'blog_page';
+  const storageKey = 'blog_page';
   const [blogs, setBlogs] = useState<Blog[]>(initialBlogs);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(initialTotalPages);
@@ -38,14 +35,11 @@ export default function BlogListingClient({
       setCurrentPage(savedPage);
       fetchPage(savedPage);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storageKey]);
 
   async function fetchPage(page: number) {
     setIsLoading(true);
-    const response = activeCategorySlug
-      ? await getBlogsByCategory(activeCategorySlug, { page, limit: ITEMS_PER_PAGE })
-      : await getBlogs({ status: 'published', page, limit: ITEMS_PER_PAGE, sort_by: 'publish_date_desc' });
+    const response = await getBlogs({ status: 'published', page, limit: ITEMS_PER_PAGE, sort_by: 'publish_date_desc' });
     if (!isApiError(response)) {
       setBlogs(response.data);
       if (response.meta) {
@@ -103,50 +97,39 @@ export default function BlogListingClient({
         </div>
       </div>
 
-      {/* ── Two-column layout ─────────────────────────────────────── */}
+      {/* ── Blog List ─────────────────────────────────────────────── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid lg:grid-cols-[1fr_288px] gap-10">
+        <main id="blogs-list">
+          {/* Meta row */}
+          <div className="flex items-center justify-between pb-3 border-b border-slate-200 mb-1">
+            <p className="text-xs text-slate-400 font-medium uppercase tracking-wide">
+              {`${totalItems} articles`}
+            </p>
+          </div>
 
-          {/* ── Main: Blog List ────────────────────────────────────── */}
-          <main id="blogs-list">
-            {/* Meta row */}
-            <div className="flex items-center justify-between pb-3 border-b border-slate-200 mb-1">
-              <p className="text-xs text-slate-400 font-medium uppercase tracking-wide">
-                {`${totalItems} articles`}
-              </p>
+          {isLoading ? (
+            <div className="space-y-4 mt-4">
+              {Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
+                <div key={i} className="h-32 bg-slate-100 animate-pulse rounded-xl" />
+              ))}
             </div>
-
-            {isLoading ? (
-              <div className="space-y-4 mt-4">
-                {Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
-                  <div key={i} className="h-32 bg-slate-100 animate-pulse rounded-xl" />
+          ) : blogs.length > 0 ? (
+            <>
+              <div>
+                {blogs.map((blog) => (
+                  <BlogListCard key={blog.id} blog={blog} />
                 ))}
               </div>
-            ) : blogs.length > 0 ? (
-              <>
-                <div>
-                  {blogs.map((blog) => (
-                    <BlogListCard key={blog.id} blog={blog} />
-                  ))}
-                </div>
-                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
-              </>
-            ) : (
-              <div className="text-center py-20 border border-dashed border-slate-200 rounded-xl mt-4">
-                <div className="text-5xl mb-4">📝</div>
-                <h3 className="text-lg font-semibold text-slate-700 mb-2">No articles found</h3>
-                <p className="text-sm text-slate-400">Check back later for new content</p>
-              </div>
-            )}
-          </main>
-
-          {/* ── Right Sidebar ──────────────────────────────────────── */}
-          <aside className="hidden lg:block">
-            <div className="sticky top-24">
-              <CategorySidebar basePath="/blogs" categoryBasePath="/blogs" activeCategorySlug={activeCategorySlug} />
+              <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+            </>
+          ) : (
+            <div className="text-center py-20 border border-dashed border-slate-200 rounded-xl mt-4">
+              <div className="text-5xl mb-4">📝</div>
+              <h3 className="text-lg font-semibold text-slate-700 mb-2">No articles found</h3>
+              <p className="text-sm text-slate-400">Check back later for new content</p>
             </div>
-          </aside>
-        </div>
+          )}
+        </main>
       </div>
     </>
   );

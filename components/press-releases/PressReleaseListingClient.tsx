@@ -5,7 +5,6 @@ import Link from 'next/link';
 import type { PressRelease } from '@/lib/api/press-releases.types';
 import PressReleaseListCard from './PressReleaseListCard';
 import Pagination from '@/components/reports/Pagination';
-import CategorySidebar from '@/components/CategorySidebar';
 import { getPressReleases, isApiError } from '@/lib/api';
 
 const ITEMS_PER_PAGE = 10;
@@ -14,18 +13,14 @@ interface PressReleaseListingClientProps {
   pressReleases: PressRelease[];
   totalItems: number;
   totalPages: number;
-  activeCategorySlug?: string;
-  categoryName?: string;
 }
 
 export default function PressReleaseListingClient({
   pressReleases: initialPressReleases,
   totalItems: initialTotalItems,
   totalPages: initialTotalPages,
-  activeCategorySlug,
-  categoryName,
 }: PressReleaseListingClientProps) {
-  const storageKey = activeCategorySlug ? `press_releases_${activeCategorySlug}_page` : 'press_releases_page';
+  const storageKey = 'press_releases_page';
   const [pressReleases, setPressReleases] = useState<PressRelease[]>(initialPressReleases);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(initialTotalPages);
@@ -40,7 +35,6 @@ export default function PressReleaseListingClient({
       setCurrentPage(savedPage);
       fetchPage(savedPage);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storageKey]);
 
   async function fetchPage(page: number) {
@@ -50,7 +44,6 @@ export default function PressReleaseListingClient({
       page,
       limit: ITEMS_PER_PAGE,
       sort_by: 'publish_date_desc',
-      ...(activeCategorySlug && { category: activeCategorySlug }),
     });
     if (!isApiError(response)) {
       setPressReleases(response.data);
@@ -90,7 +83,7 @@ export default function PressReleaseListingClient({
             </div>
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2 leading-tight">
-                {categoryName ? `${categoryName} Press Releases` : 'Press Releases'}
+                Press Releases
               </h1>
               <p className="text-sm sm:text-base text-slate-500 max-w-2xl mb-4">
                 Latest news and announcements from Healthcare Foresights. Stay informed about our research publications and industry insights.
@@ -109,50 +102,39 @@ export default function PressReleaseListingClient({
         </div>
       </div>
 
-      {/* ── Two-column layout ─────────────────────────────────────── */}
+      {/* ── Press Release List ───────────────────────────────────── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid lg:grid-cols-[1fr_288px] gap-10">
+        <main id="press-releases-list">
+          {/* Meta row */}
+          <div className="flex items-center justify-between pb-3 border-b border-slate-200 mb-1">
+            <p className="text-xs text-slate-400 font-medium uppercase tracking-wide">
+              {`${totalItems} releases`}
+            </p>
+          </div>
 
-          {/* ── Main: Press Release List ───────────────────────────── */}
-          <main id="press-releases-list">
-            {/* Meta row */}
-            <div className="flex items-center justify-between pb-3 border-b border-slate-200 mb-1">
-              <p className="text-xs text-slate-400 font-medium uppercase tracking-wide">
-                {`${totalItems} releases`}
-              </p>
+          {isLoading ? (
+            <div className="space-y-4 mt-4">
+              {Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
+                <div key={i} className="h-32 bg-slate-100 animate-pulse rounded-xl" />
+              ))}
             </div>
-
-            {isLoading ? (
-              <div className="space-y-4 mt-4">
-                {Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
-                  <div key={i} className="h-32 bg-slate-100 animate-pulse rounded-xl" />
+          ) : pressReleases.length > 0 ? (
+            <>
+              <div>
+                {pressReleases.map((pr) => (
+                  <PressReleaseListCard key={pr.id} pressRelease={pr} />
                 ))}
               </div>
-            ) : pressReleases.length > 0 ? (
-              <>
-                <div>
-                  {pressReleases.map((pr) => (
-                    <PressReleaseListCard key={pr.id} pressRelease={pr} />
-                  ))}
-                </div>
-                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
-              </>
-            ) : (
-              <div className="text-center py-20 border border-dashed border-slate-200 rounded-xl mt-4">
-                <div className="text-5xl mb-4">📢</div>
-                <h3 className="text-lg font-semibold text-slate-700 mb-2">No press releases found</h3>
-                <p className="text-sm text-slate-400">Check back later for new announcements</p>
-              </div>
-            )}
-          </main>
-
-          {/* ── Right Sidebar ──────────────────────────────────────── */}
-          <aside className="hidden lg:block">
-            <div className="sticky top-24">
-              <CategorySidebar basePath="/press-releases" activeCategorySlug={activeCategorySlug} />
+              <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+            </>
+          ) : (
+            <div className="text-center py-20 border border-dashed border-slate-200 rounded-xl mt-4">
+              <div className="text-5xl mb-4">📢</div>
+              <h3 className="text-lg font-semibold text-slate-700 mb-2">No press releases found</h3>
+              <p className="text-sm text-slate-400">Check back later for new announcements</p>
             </div>
-          </aside>
-        </div>
+          )}
+        </main>
       </div>
     </>
   );

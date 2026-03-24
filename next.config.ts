@@ -45,6 +45,16 @@ const nextConfig: NextConfig = {
         destination: 'https://www.healthcareforesights.com/:path*',
         permanent: true,
       },
+      {
+        source: '/blogs/:category',
+        destination: '/blogs',
+        permanent: true,
+      },
+      {
+        source: '/press-releases/:category',
+        destination: '/press-releases',
+        permanent: true,
+      },
     ];
   },
 };

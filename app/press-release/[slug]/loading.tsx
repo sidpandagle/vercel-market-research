@@ -1,1 +1,1 @@
-export { default } from "@/app/press-releases/[slug]/loading";
+export { default } from "@/app/press-releases/loading";

@@ -15,17 +15,12 @@ export const metadata: Metadata = {
 
 export const revalidate = 300;
 
-interface PageProps {
-  searchParams: Promise<{ category?: string }>;
-}
-
-async function PressReleasesContent({ categorySlug }: { categorySlug?: string }) {
+async function PressReleasesContent() {
   const response = await getPressReleases({
     status: 'published',
     page: 1,
     limit: 10,
     sort_by: 'publish_date_desc',
-    ...(categorySlug && { category: categorySlug }),
   });
 
   if (isApiError(response)) {
@@ -48,17 +43,14 @@ async function PressReleasesContent({ categorySlug }: { categorySlug?: string })
       pressReleases={response.data}
       totalItems={totalItems}
       totalPages={totalPages}
-      activeCategorySlug={categorySlug}
     />
   );
 }
 
-export default async function PressReleasesPage({ searchParams }: PageProps) {
-  const { category } = await searchParams;
-
+export default function PressReleasesPage() {
   return (
     <Suspense fallback={<PressReleasesLoading />}>
-      <PressReleasesContent categorySlug={category} />
+      <PressReleasesContent />
     </Suspense>
   );
 }

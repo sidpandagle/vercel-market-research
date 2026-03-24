@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import Link from 'next/link';
-import { getReports, isApiError } from '@/lib/api';
+import { getReports, getBlogs, getPressReleases, isApiError } from '@/lib/api';
 import { ReportsListingClient } from '@/components/reports';
 import IndustryHero from '@/components/reports/IndustryHero';
+import IndustryContentPreview from '@/components/industry/IndustryContentPreview';
 
 export const metadata: Metadata = {
   title: "Healthcare Market Research Reports & Industry Analysis",
@@ -97,10 +98,25 @@ function ReportsListSkeleton() {
   );
 }
 
+async function ContentPreviewSection() {
+  const [blogsResponse, pressReleasesResponse] = await Promise.all([
+    getBlogs({ status: 'published', page: 1, limit: 2, sort_by: 'publish_date_desc' }),
+    getPressReleases({ status: 'published', page: 1, limit: 2, sort_by: 'publish_date_desc' }),
+  ]);
+
+  const blogs = isApiError(blogsResponse) ? [] : blogsResponse.data;
+  const pressReleases = isApiError(pressReleasesResponse) ? [] : pressReleasesResponse.data;
+
+  return <IndustryContentPreview blogs={blogs} pressReleases={pressReleases} />;
+}
+
 export default function IndustryPage() {
   return (
     <>
       <IndustryHero />
+      <Suspense fallback={null}>
+        <ContentPreviewSection />
+      </Suspense>
       <Suspense fallback={<ReportsListSkeleton />}>
         <ReportsContent />
       </Suspense>
