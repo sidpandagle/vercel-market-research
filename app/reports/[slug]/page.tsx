@@ -37,7 +37,15 @@ export async function generateMetadata({
       title,
       description,
       type: "article",
-      publishedTime: String(jsonReport.published_year),
+      publishedTime: new Date(Number(jsonReport.published_year), 0, 1).toISOString(),
+      images: [
+        {
+          url: "/assets/images/mr.webp",
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
@@ -259,7 +267,7 @@ export default async function ReportPage({
   // TODO: Fetch related reports from API when relatedReportIds are provided
   // const relatedReports: Report[] = [];
 
-  const reportUrl = `https://www.synapticresearch.com/reports/${report.slug}`;
+  const reportUrl = `https://www.neographanalytics.com/reports/${report.slug}`;
   const reportKeywords = report.meta_keywords?.split(',').map(k => k.trim()).filter(Boolean);
 
   // Generate structured data schemas
@@ -302,8 +310,8 @@ export default async function ReportPage({
   });
 
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: 'Home', url: 'https://www.synapticresearch.com' },
-    { name: 'Reports', url: 'https://www.synapticresearch.com/reports' },
+    { name: 'Home', url: 'https://www.neographanalytics.com' },
+    { name: 'Reports', url: 'https://www.neographanalytics.com/reports' },
     { name: report.title, url: reportUrl },
   ]);
 

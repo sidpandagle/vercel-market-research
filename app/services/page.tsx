@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Container } from "@/components/ui";
 
 export const metadata: Metadata = {
-  title: "Healthcare Research & Consulting Services | Synaptic Research",
+  title: "Healthcare Research & Consulting Services | NeoGraph Analytics",
   description: "Explore healthcare research services including market analysis, custom reports, consulting, forecasting, and strategic insights.",
   keywords: ["healthcare research services", "healthcare consulting", "custom healthcare reports", "market analysis services"],
   alternates: {

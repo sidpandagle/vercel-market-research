@@ -61,7 +61,7 @@ export default function CTASection() {
 
             {/* Subtext */}
             <p className="text-lg text-white/50 max-w-xl leading-[1.80]">
-              Join 1,000+ healthcare organizations that trust Synaptic Research for
+              Join 1,000+ healthcare organizations that trust NeoGraph Analytics for
               comprehensive market intelligence, strategic analysis, and actionable insights.
             </p>
 
@@ -113,7 +113,7 @@ export default function CTASection() {
 
               {/* Panel header */}
               <div className="flex items-center justify-between mb-8">
-                <h3 className="text-white font-semibold text-base">Why Synaptic Research?</h3>
+                <h3 className="text-white font-semibold text-base">Why NeoGraph Analytics?</h3>
                 <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-bright-500/[0.12] border border-bright-500/20">
                   <span className="relative flex h-1.5 w-1.5 shrink-0">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-bright-400 opacity-60" />

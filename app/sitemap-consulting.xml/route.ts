@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getAllConsultingServices } from '@/lib/api/consulting';
 
-const BASE_URL = 'https://www.synapticresearch.com';
+const BASE_URL = 'https://www.neographanalytics.com';
 
 export async function GET() {
   try {

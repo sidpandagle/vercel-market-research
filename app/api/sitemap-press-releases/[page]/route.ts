@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
-import { getPressReleases } from '@/lib/api/press-releases';
+import pressReleasesData from '@/data/press-releases.json';
 
-const BASE_URL = 'https://www.synapticresearch.com';
+const BASE_URL = 'https://www.neographanalytics.com';
 const ITEMS_PER_SITEMAP = 500;
 
 export async function GET(
-  request: Request,
+  _request: Request,
   { params }: { params: Promise<{ page?: string }> }
 ) {
   const { page: pageParam } = await params;
@@ -15,30 +15,21 @@ export async function GET(
     return new NextResponse('Not Found', { status: 404 });
   }
 
-  try {
-    const pressReleasesResponse = await getPressReleases({
-      status: 'published',
-      page,
-      limit: ITEMS_PER_SITEMAP,
-    });
+  const start = (page - 1) * ITEMS_PER_SITEMAP;
+  const pressReleases = pressReleasesData.slice(start, start + ITEMS_PER_SITEMAP);
 
-    if (!pressReleasesResponse.success || !pressReleasesResponse.data) {
-      console.error('Error fetching press releases for sitemap');
-      return new NextResponse('Error generating sitemap', { status: 500 });
-    }
+  if (pressReleases.length === 0) {
+    return new NextResponse('Not Found', { status: 404 });
+  }
 
-    if (pressReleasesResponse.data.length === 0) {
-      return new NextResponse('Not Found', { status: 404 });
-    }
+  const pressReleaseUrls = pressReleases.map((pr) => ({
+    url: `${BASE_URL}/press-releases/${pr.slug}`,
+    lastModified: new Date(pr.date).toISOString(),
+    changeFrequency: 'weekly',
+    priority: 0.6,
+  }));
 
-    const pressReleaseUrls = pressReleasesResponse.data.map((pressRelease) => ({
-      url: `${BASE_URL}/press-releases/${pressRelease.slug}`,
-      lastModified: new Date(pressRelease.date).toISOString(),
-      changeFrequency: 'weekly',
-      priority: 0.6,
-    }));
-
-    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${pressReleaseUrls
   .map(
@@ -52,14 +43,10 @@ ${pressReleaseUrls
   .join('\n')}
 </urlset>`;
 
-    return new NextResponse(sitemap, {
-      headers: {
-        'Content-Type': 'application/xml',
-        'Cache-Control': 'public, max-age=3600, s-maxage=3600',
-      },
-    });
-  } catch (error) {
-    console.error('Error generating press releases sitemap:', error);
-    return new NextResponse('Error generating sitemap', { status: 500 });
-  }
+  return new NextResponse(sitemap, {
+    headers: {
+      'Content-Type': 'application/xml',
+      'Cache-Control': 'public, max-age=3600, s-maxage=3600',
+    },
+  });
 }

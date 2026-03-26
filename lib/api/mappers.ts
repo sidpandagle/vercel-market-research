@@ -385,7 +385,7 @@ export function mapApiBlogToBlog(apiBlog: ApiBlog): Blog {
   const category = apiBlog.category?.name || 'Healthcare Insights';
 
   // Use populated author from API or fallback
-  const author = apiBlog.author?.name || 'Synaptic Research';
+  const author = apiBlog.author?.name || 'NeoGraph Analytics';
 
   // Format date
   const date = formatDate(apiBlog.publishDate || apiBlog.createdAt);

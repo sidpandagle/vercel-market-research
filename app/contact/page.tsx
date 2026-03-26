@@ -120,7 +120,7 @@ export default function ContactPage() {
               Get in Touch
             </span>
             <h1 className="text-[2.75rem] md:text-5xl text-white leading-[1.1] tracking-[-0.02em]">
-              Contact <span className="text-bright-400">Synaptic Research</span>
+              Contact <span className="text-bright-400">NeoGraph Analytics</span>
             </h1>
             <p className="text-lg text-white/55 max-w-2xl mx-auto leading-[1.8]">
               Have questions about our research? We are here to help. Reach out for inquiries, demos, or custom research needs.

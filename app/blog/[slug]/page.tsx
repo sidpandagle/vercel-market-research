@@ -54,6 +54,14 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
         type: "article",
         publishedTime: blog.publishDate || blog.createdAt,
         authors: blog.authorDetails ? [blog.authorDetails.name] : [blog.author],
+        images: [
+          {
+            url: "/assets/images/mr.webp",
+            width: 1200,
+            height: 630,
+            alt: blog.title,
+          },
+        ],
       },
       twitter: {
         card: 'summary_large_image',
@@ -90,7 +98,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
     type: 'Article',
     title: blog.title,
     description: blog.excerpt,
-    url: `https://www.synapticresearch.com/blog/${blog.slug}`,
+    url: `https://www.neographanalytics.com/blog/${blog.slug}`,
     datePublished: blog.publishDate || blog.createdAt || blog.date,
     dateModified: blog.updatedAt,
     author: blog.authorDetails?.name || blog.author,
@@ -98,9 +106,9 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
   });
 
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: 'Home', url: 'https://www.synapticresearch.com' },
-    { name: 'Blog', url: 'https://www.synapticresearch.com/blog' },
-    { name: blog.title, url: `https://www.synapticresearch.com/blog/${blog.slug}` },
+    { name: 'Home', url: 'https://www.neographanalytics.com' },
+    { name: 'Blog', url: 'https://www.neographanalytics.com/blog' },
+    { name: blog.title, url: `https://www.neographanalytics.com/blog/${blog.slug}` },
   ]);
 
   return (

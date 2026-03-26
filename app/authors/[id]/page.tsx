@@ -5,16 +5,11 @@ import AuthorProfile from '@/components/authors/AuthorProfile';
 import AuthorReportsListing from '@/components/authors/AuthorReportsListing';
 import type { Metadata } from 'next';
 
-// Enable ISR with 10-minute revalidation
-export const revalidate = 600;
+import teamMembersData from '@/data/team-members.json';
 
 export async function generateStaticParams() {
-  // Generate static pages for top 50 authors
-  // In production, fetch from API or database
-  const authorIds = Array.from({ length: 50 }, (_, i) => i + 1);
-
-  return authorIds.map((id) => ({
-    id: id.toString(),
+  return teamMembersData.map((_, index) => ({
+    id: (index + 1).toString(),
   }));
 }
 

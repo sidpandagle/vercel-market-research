@@ -27,7 +27,7 @@ export interface ContactInfo {
 }
 
 export const CONTACT_INFO: ContactInfo = {
-  email: 'support@synapticresearch.com',
+  email: 'support@neographanalytics.com',
   whatsapp: {
     number: '+18016399061',
     formatted: '+1 801-639-9061',
@@ -50,7 +50,7 @@ export const CONTACT_INFO: ContactInfo = {
     },
     india: {
       name: 'Asia-Pacific Centre',
-      company: 'Synaptic Research Pvt. Ltd.',
+      company: 'NeoGraph Analytics Pvt. Ltd.',
       addressLine1: 'B-701, Basileo, MS Kate Chowk',
       addressLine2: 'Pimple Gurav',
       city: 'Pune',

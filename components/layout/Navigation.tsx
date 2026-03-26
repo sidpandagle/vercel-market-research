@@ -264,7 +264,7 @@ export default function Navigation() {
             </span>
             <div className="mt-3 flex gap-4">
               <Link
-                href="https://facebook.com/synapticresearch"
+                href="https://facebook.com/neographanalytics"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-stone-400 hover:text-bright-400 transition-colors"
@@ -273,7 +273,7 @@ export default function Navigation() {
                 <Facebook className="w-5 h-5" />
               </Link>
               <Link
-                href="https://instagram.com/synapticresearch"
+                href="https://instagram.com/neographanalytics"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-stone-400 hover:text-bright-400 transition-colors"
@@ -282,7 +282,7 @@ export default function Navigation() {
                 <Instagram className="w-5 h-5" />
               </Link>
               <Link
-                href="https://linkedin.com/company/synapticresearch"
+                href="https://linkedin.com/company/neographanalytics"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-stone-400 hover:text-bright-400 transition-colors"
@@ -291,7 +291,7 @@ export default function Navigation() {
                 <Linkedin className="w-5 h-5" />
               </Link>
               <Link
-                href="https://twitter.com/synapticresearch"
+                href="https://twitter.com/neographanalytics"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-stone-400 hover:text-bright-400 transition-colors"

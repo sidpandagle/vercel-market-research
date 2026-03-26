@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Mail, Phone, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
+import Logo from "./Logo";
 import { CONTACT_INFO } from "@/lib/contact";
 
 const quickLinks = [
@@ -28,22 +28,22 @@ const legalLinks = [
 
 const socialLinks = [
   {
-    href: "https://facebook.com/synapticresearch",
+    href: "https://facebook.com/neographanalytics",
     label: "Facebook",
     Icon: Facebook,
   },
   {
-    href: "https://instagram.com/synapticresearch",
+    href: "https://instagram.com/neographanalytics",
     label: "Instagram",
     Icon: Instagram,
   },
   {
-    href: "https://linkedin.com/company/synapticresearch",
+    href: "https://linkedin.com/company/neographanalytics",
     label: "LinkedIn",
     Icon: Linkedin,
   },
   {
-    href: "https://twitter.com/synapticresearch",
+    href: "https://twitter.com/neographanalytics",
     label: "X (Twitter)",
     Icon: Twitter,
   },
@@ -61,15 +61,7 @@ export default function Footer() {
 
           {/* Brand column */}
           <div className="flex flex-col gap-5">
-            <Link href="/" className="inline-block">
-              <Image
-                src="/assets/images/logo.png"
-                alt="Synaptic Research - Research. Insights. Intelligence."
-                width={160}
-                height={45}
-                className="h-9 w-auto brightness-0 invert opacity-90 hover:opacity-100 transition-opacity"
-              />
-            </Link>
+            <Logo variant="light" />
             <p className="text-sm text-slate-500 leading-relaxed max-w-[220px]">
               Comprehensive market intelligence and strategic insights for the global healthcare industry.
             </p>
@@ -156,7 +148,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-slate-500">
-            &copy; {currentYear} Synaptic Research Pvt. Ltd. All rights reserved.
+            &copy; {currentYear} NeoGraph Analytics Pvt. Ltd. All rights reserved.
           </p>
           <div className="flex items-center gap-5">
             {legalLinks.map(({ href, label }) => (

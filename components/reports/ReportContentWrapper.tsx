@@ -116,9 +116,9 @@ export const ReportContentWrapper: React.FC<ReportContentWrapperProps> = ({
 
       {/* Right Sidebar - CTA Panel */}
       <aside className={hasFullContent ? 'lg:col-span-3 2xl:col-span-2' : 'lg:col-span-3 2xl:col-span-4'}>
-        <div className="sticky top-24 space-y-4 max-h-[calc(100vh-6rem)] overflow-y-auto">
-          <CustomizeReportCard reportTitle={reportTitle} />
+        <div className="sticky top-24 space-y-4 max-h-[calc(100vh-6rem)] overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
           <CTAPanel discounted_price={discounted_price} price={price} reportTitle={reportTitle} reportSlug={reportSlug} />
+          <CustomizeReportCard reportTitle={reportTitle} />
         </div>
       </aside>
     </div>

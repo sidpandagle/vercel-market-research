@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'cdn.synapticresearch.com',
+        hostname: 'cdn.neographanalytics.com',
       },
     ],
   },
@@ -34,10 +34,10 @@ const nextConfig: NextConfig = {
         has: [
           {
             type: 'host',
-            value: 'synapticresearch.com',
+            value: 'neographanalytics.com',
           },
         ],
-        destination: 'https://www.synapticresearch.com/:path*',
+        destination: 'https://www.neographanalytics.com/:path*',
         permanent: true,
       },
     ];

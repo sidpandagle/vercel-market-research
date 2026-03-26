@@ -3,8 +3,8 @@ import Link from "next/link";
 import { Container } from "@/components/ui";
 
 export const metadata: Metadata = {
-  title: "About Synaptic Research | Healthcare Consulting Experts",
-  description: "Synaptic Research is a specialized healthcare consulting firm offering comprehensive advisory services to healthcare providers, life sciences companies, payers, and health technology organizations.",
+  title: "About NeoGraph Analytics | Healthcare Consulting Experts",
+  description: "NeoGraph Analytics is a specialized healthcare consulting firm offering comprehensive advisory services to healthcare providers, life sciences companies, payers, and health technology organizations.",
   keywords: ["about synaptic research", "healthcare consulting firm", "healthcare advisory services", "healthcare transformation", "healthcare analytics"],
   alternates: {
     canonical: '/about',
@@ -205,7 +205,7 @@ export default function AboutPage() {
         <div className="relative mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl text-center">
           <div className="space-y-6">
             <h2 className="text-3xl md:text-[2.75rem] text-white leading-[1.15] tracking-[-0.02em]">
-              Ready to Work With <span className="text-bright-400">Synaptic Research?</span>
+              Ready to Work With <span className="text-bright-400">NeoGraph Analytics?</span>
             </h2>
             <p className="text-lg text-white/55 leading-[1.8]">
               Join leading healthcare organizations that trust our research to drive their strategic initiatives.

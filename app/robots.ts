@@ -5,8 +5,16 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: '*',
-        disallow: '/',
+        allow: '/',
+        disallow: [
+          '/checkout/',
+          '/order-success',
+          '/design-system',
+          '/request-sample',
+          '/request-demo',
+        ],
       },
     ],
+    sitemap: 'https://www.neographanalytics.com/sitemap.xml',
   };
 }

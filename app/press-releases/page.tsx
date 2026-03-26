@@ -12,8 +12,6 @@ export const metadata: Metadata = {
   },
 };
 
-export const revalidate = 300;
-
 export default async function PressReleasesPage() {
   const response = await getPressReleases({ status: 'published', limit: 100 });
 
@@ -59,7 +57,7 @@ export default async function PressReleasesPage() {
               <span className="text-bright-400">Announcements</span>
             </h1>
             <p className="text-lg text-white/55 max-w-2xl mx-auto leading-[1.8]">
-              Latest research publications, industry announcements, and developments from Synaptic Research.
+              Latest research publications, industry announcements, and developments from NeoGraph Analytics.
             </p>
             <div className="flex items-center justify-center gap-2 text-sm text-white/35">
               <div className="w-1.5 h-1.5 rounded-full bg-ocean-400 shrink-0" />

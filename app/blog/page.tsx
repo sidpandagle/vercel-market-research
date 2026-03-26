@@ -12,8 +12,6 @@ export const metadata: Metadata = {
   },
 };
 
-export const revalidate = 300;
-
 export default async function BlogPage() {
   const response = await getBlogs({ status: 'published', limit: 100 });
 

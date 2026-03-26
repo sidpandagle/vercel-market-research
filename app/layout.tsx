@@ -23,23 +23,31 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.synapticresearch.com'),
+  metadataBase: new URL('https://www.neographanalytics.com'),
   title: {
-    default: "Synaptic Research | Healthcare Market Insights & Research Reports",
-    template: "%s | Synaptic Research",
+    default: "NeoGraph Analytics | Healthcare Market Insights & Research Reports",
+    template: "%s | NeoGraph Analytics",
   },
-  description: "Synaptic Research delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.",
+  description: "NeoGraph Analytics delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.",
   keywords: ["synaptic research", "healthcare market research", "healthcare insights", "healthcare industry trends", "medical market analysis", "healthcare reports"],
-  authors: [{ name: "Synaptic Research Team" }],
+  authors: [{ name: "NeoGraph Analytics Team" }],
   icons: {
-    icon: "/assets/images/favicon.png",
+    icon: "/favicon.svg",
   },
   openGraph: {
     type: "website",
     locale: "en_US",
-    siteName: "Synaptic Research",
-    title: "Synaptic Research | Healthcare Market Insights & Research Reports",
-    description: "Synaptic Research delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.",
+    siteName: "NeoGraph Analytics",
+    title: "NeoGraph Analytics | Healthcare Market Insights & Research Reports",
+    description: "NeoGraph Analytics delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.",
+    images: [
+      {
+        url: "/assets/images/mr.webp",
+        width: 1200,
+        height: 630,
+        alt: "NeoGraph Analytics – Healthcare Market Research & Insights",
+      },
+    ],
   },
   robots: {
     index: true,
@@ -52,8 +60,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    site: '@SynapticResearch',
-    creator: '@SynapticResearch',
+    site: '@NeoGraphAnalytics',
+    creator: '@NeoGraphAnalytics',
   },
   alternates: {
     canonical: '/',

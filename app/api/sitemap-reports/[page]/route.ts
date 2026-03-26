@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getAllJsonReports } from '@/lib/jsonReports';
 
-const BASE_URL = 'https://www.synapticresearch.com';
+const BASE_URL = 'https://www.neographanalytics.com';
 const ITEMS_PER_SITEMAP = 500;
 
 export async function GET(

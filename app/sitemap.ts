@@ -3,83 +3,60 @@ import { getAllJsonReports } from '@/lib/jsonReports';
 import { getBlogs } from '@/lib/api/blogs';
 import { getPressReleases } from '@/lib/api/press-releases';
 
-const BASE_URL = 'https://www.synapticresearch.com';
-const ITEMS_PER_SITEMAP = 500;
+const BASE_URL = 'https://www.neographanalytics.com';
 
-/**
- * Sitemap Index
- *
- * This is the main sitemap that references all sub-sitemaps.
- *
- * Sub-sitemaps:
- * - /sitemap-pages.xml - Static pages (home, about, services, etc.)
- * - /sitemap-reports-1.xml, /sitemap-reports-2.xml, ... - Published research reports (500 per file)
- * - /sitemap-blogs-1.xml, /sitemap-blogs-2.xml, ... - Published blog posts (500 per file)
- * - /sitemap-press-releases-1.xml, /sitemap-press-releases-2.xml, ... - Published press releases (500 per file)
- * - /sitemap-consulting.xml - Consulting services pages
- */
+const STATIC_PAGES = [
+  { path: '/',                changeFrequency: 'daily'   as const, priority: 1.0 },
+  { path: '/reports',         changeFrequency: 'daily'   as const, priority: 0.9 },
+  { path: '/blog',            changeFrequency: 'daily'   as const, priority: 0.8 },
+  { path: '/press-releases',  changeFrequency: 'weekly'  as const, priority: 0.7 },
+  { path: '/about',           changeFrequency: 'monthly' as const, priority: 0.7 },
+  { path: '/services',        changeFrequency: 'monthly' as const, priority: 0.7 },
+  { path: '/contact',         changeFrequency: 'monthly' as const, priority: 0.5 },
+];
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
-  // Get reports count from local JSON; fetch blogs/press-releases from API
-  const [blogsRes, prRes] = await Promise.all([
-    getBlogs({ status: 'published', page: 1, limit: ITEMS_PER_SITEMAP }),
-    getPressReleases({ status: 'published', page: 1, limit: ITEMS_PER_SITEMAP }),
-  ]);
+  // Static pages
+  const pageEntries: MetadataRoute.Sitemap = STATIC_PAGES.map(({ path, changeFrequency, priority }) => ({
+    url: `${BASE_URL}${path}`,
+    lastModified: now,
+    changeFrequency,
+    priority,
+  }));
 
-  const reportsTotalPages = Math.max(
-    1,
-    Math.ceil(getAllJsonReports().length / ITEMS_PER_SITEMAP)
-  );
-  const blogsTotalPages =
-    blogsRes.success && blogsRes.meta?.totalPages ? blogsRes.meta.totalPages : 1;
-  const prTotalPages =
-    prRes.success && prRes.meta?.totalPages ? prRes.meta.totalPages : 1;
+  // Report pages from local JSON
+  const reportEntries: MetadataRoute.Sitemap = getAllJsonReports().map((report) => ({
+    url: `${BASE_URL}/reports/${report.slug}`,
+    lastModified: now,
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }));
 
-  const entries: MetadataRoute.Sitemap = [
-    {
-      url: `${BASE_URL}/sitemap-pages.xml`,
-      lastModified: now,
-      changeFrequency: 'daily' as const,
-      priority: 1.0,
-    },
-    {
-      url: `${BASE_URL}/sitemap-consulting.xml`,
-      lastModified: now,
-      changeFrequency: 'monthly' as const,
-      priority: 1.0,
-    },
-  ];
+  // Blog pages from API (graceful fallback)
+  const blogsRes = await getBlogs({ status: 'published', page: 1, limit: 500 });
+  const blogEntries: MetadataRoute.Sitemap =
+    blogsRes.success && blogsRes.data
+      ? blogsRes.data.map((blog: { slug: string; updatedAt?: string }) => ({
+          url: `${BASE_URL}/blog/${blog.slug}`,
+          lastModified: blog.updatedAt ? new Date(blog.updatedAt) : now,
+          changeFrequency: 'monthly' as const,
+          priority: 0.7,
+        }))
+      : [];
 
-  // Reports paginated sitemaps: sitemap-reports-1.xml, sitemap-reports-2.xml, ...
-  for (let i = 1; i <= reportsTotalPages; i++) {
-    entries.push({
-      url: `${BASE_URL}/sitemap-reports-${i}.xml`,
-      lastModified: now,
-      changeFrequency: 'daily' as const,
-      priority: 1.0,
-    });
-  }
+  // Press release pages from API (graceful fallback)
+  const prRes = await getPressReleases({ status: 'published', page: 1, limit: 500 });
+  const pressReleaseEntries: MetadataRoute.Sitemap =
+    prRes.success && prRes.data
+      ? prRes.data.map((pr: { slug: string; updatedAt?: string }) => ({
+          url: `${BASE_URL}/press-releases/${pr.slug}`,
+          lastModified: pr.updatedAt ? new Date(pr.updatedAt) : now,
+          changeFrequency: 'monthly' as const,
+          priority: 0.6,
+        }))
+      : [];
 
-  // Blogs paginated sitemaps: sitemap-blogs-1.xml, sitemap-blogs-2.xml, ...
-  for (let i = 1; i <= blogsTotalPages; i++) {
-    entries.push({
-      url: `${BASE_URL}/sitemap-blogs-${i}.xml`,
-      lastModified: now,
-      changeFrequency: 'daily' as const,
-      priority: 1.0,
-    });
-  }
-
-  // Press releases paginated sitemaps: sitemap-press-releases-1.xml, sitemap-press-releases-2.xml, ...
-  for (let i = 1; i <= prTotalPages; i++) {
-    entries.push({
-      url: `${BASE_URL}/sitemap-press-releases-${i}.xml`,
-      lastModified: now,
-      changeFrequency: 'daily' as const,
-      priority: 1.0,
-    });
-  }
-
-  return entries;
+  return [...pageEntries, ...reportEntries, ...blogEntries, ...pressReleaseEntries];
 }

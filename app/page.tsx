@@ -13,11 +13,11 @@ import {
 } from '@/components/home';
 
 export const metadata: Metadata = {
-  title: "Synaptic Research | Healthcare Market Insights & Research Reports",
-  description: "Synaptic Research delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.",
+  title: "NeoGraph Analytics | Healthcare Market Insights & Research Reports",
+  description: "NeoGraph Analytics delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.",
   keywords: ["synaptic research", "healthcare market research", "healthcare insights", "healthcare industry trends", "medical market analysis", "healthcare reports"],
   alternates: {
-    canonical: 'https://www.synapticresearch.com',
+    canonical: 'https://www.neographanalytics.com',
   },
 };
 

@@ -41,9 +41,6 @@ const SubHeading = ({ children }: { children: React.ReactNode }) => (
   </h3>
 )
 
-const SectionDivider = () => (
-  <div className="mb-12 mt-2 h-px" style={{ background: 'linear-gradient(90deg, rgba(29,78,216,0.20) 0%, rgba(29,78,216,0.05) 60%, transparent 100%)' }} />
-)
 
 // ── market dynamics ──────────────────────────────────────────────────────────
 
@@ -94,7 +91,7 @@ function MarketDynamicsSection({ dynamics }: { dynamics: JsonReport['market_dyna
   const items = dynamics[active]
 
   return (
-    <section className="mb-2">
+    <section className="mb-14">
       {/* Pill tabs */}
       <div className="flex flex-wrap gap-2 mb-5">
         {DYNAMICS_TABS.map((tab) => (
@@ -188,7 +185,7 @@ function MarketSegmentationSection({ segmentation }: { segmentation: JsonReport[
   const byEnd = splitSegmentField(segmentation.by_end_user ?? [])
 
   return (
-    <section className="mb-2">
+    <section className="mb-14">
       {comp.segments.length > 0 && (
         <div className="mb-8">
           <ComponentSharePieChart title="By Component" segments={comp.segments} />
@@ -258,7 +255,7 @@ function RegionalSection({ regions, countries }: { regions: JsonReport['regional
   const maxShare = Math.max(...regions.map((r) => r.market_share))
 
   return (
-    <section className="mb-2">
+    <section className="mb-14">
       <div className="space-y-3 mb-6">
         {regions.map((r, i) => (
           <div
@@ -327,7 +324,7 @@ function CompetitiveLandscapeSection({
   profiles: JsonReport['company_profiles']
 }) {
   return (
-    <section className="mb-2">
+    <section className="mb-14">
       <div className="grid gap-3">
         {players.map((p, i) => {
           const profile = profiles.find((pr) => pr.company === p.company)
@@ -407,7 +404,7 @@ function RecentDevelopmentsSection({ developments }: { developments: JsonReport[
   const sorted = [...developments].sort((a, b) => b.year - a.year)
 
   return (
-    <section className="mb-2">
+    <section className="mb-14">
       <div className="relative">
         {/* Vertical line */}
         <div className="absolute left-[18px] top-0 bottom-0 w-px" style={{ background: 'linear-gradient(180deg, #1D4ED8 0%, rgba(29,78,216,0.15) 100%)' }} />
@@ -450,7 +447,7 @@ function RegulatorySection({ items }: { items: string[] }) {
   if (!items.length) return null
 
   return (
-    <section className="mb-2">
+    <section className="mb-14">
       <div className="flex flex-wrap gap-2">
         {items.map((item, i) => (
           <span
@@ -474,7 +471,7 @@ function JsonFAQSection({ faqs }: { faqs: JsonReport['faqs'] }) {
   if (!faqs.length) return null
 
   return (
-    <section className="mb-2">
+    <section className="mb-14">
       <div className="space-y-2">
         {faqs.map((faq, i) => (
           <div
@@ -533,7 +530,7 @@ export function JsonReportSections({ report }: JsonReportSectionsProps) {
   return (
     <div>
       {/* ── Market Overview ── */}
-      <section className="mb-2">
+      <section className="mb-14">
         <SectionHeading id="json-overview" num={nextSection()}>Market Overview</SectionHeading>
 
         {/* Editorial summary */}
@@ -584,10 +581,9 @@ export function JsonReportSections({ report }: JsonReportSectionsProps) {
         )}
       </section>
 
-      <SectionDivider />
 
       {/* ── Charts ── */}
-      <section className="mb-2">
+      <section className="mb-14">
         <SectionHeading id="charts" num={nextSection()}>Market Forecast & Data</SectionHeading>
         <div className="space-y-6">
           {report.market_forecast.length > 0 && (
@@ -622,74 +618,59 @@ export function JsonReportSections({ report }: JsonReportSectionsProps) {
         </div>
       </section>
 
-      <SectionDivider />
 
       {/* ── Market Dynamics ── */}
-      <section className="mb-2">
+      <section className="mb-14">
         <SectionHeading id="market-dynamics" num={nextSection()}>Market Dynamics</SectionHeading>
         <MarketDynamicsSection dynamics={report.market_dynamics} />
       </section>
 
-      <SectionDivider />
 
       {/* ── Segmentation ── */}
-      <section className="mb-2">
+      <section className="mb-14">
         <SectionHeading id="segmentation" num={nextSection()}>Market Segmentation</SectionHeading>
         <MarketSegmentationSection segmentation={report.market_segmentation} />
       </section>
 
-      <SectionDivider />
 
       {/* ── Regional + Country ── */}
       {report.regional_analysis.length > 0 && (
-        <>
-          <section className="mb-2">
-            <SectionHeading id="regional" num={nextSection()}>Regional Analysis</SectionHeading>
-            <RegionalSection regions={report.regional_analysis} countries={report.country_analysis} />
-          </section>
-          <SectionDivider />
-        </>
+        <section className="mb-14">
+          <SectionHeading id="regional" num={nextSection()}>Regional Analysis</SectionHeading>
+          <RegionalSection regions={report.regional_analysis} countries={report.country_analysis} />
+        </section>
       )}
 
       {/* ── Competitive Landscape ── */}
       {report.competitive_landscape.length > 0 && (
-        <>
-          <section className="mb-2">
-            <SectionHeading id="competitive" num={nextSection()}>Competitive Landscape</SectionHeading>
-            <CompetitiveLandscapeSection
-              players={report.competitive_landscape}
-              profiles={report.company_profiles}
-            />
-          </section>
-          <SectionDivider />
-        </>
+        <section className="mb-14">
+          <SectionHeading id="competitive" num={nextSection()}>Competitive Landscape</SectionHeading>
+          <CompetitiveLandscapeSection
+            players={report.competitive_landscape}
+            profiles={report.company_profiles}
+          />
+        </section>
       )}
 
       {/* ── Recent Developments ── */}
       {report.recent_developments.length > 0 && (
-        <>
-          <section className="mb-2">
-            <SectionHeading id="developments" num={nextSection()}>Recent Developments</SectionHeading>
-            <RecentDevelopmentsSection developments={report.recent_developments} />
-          </section>
-          <SectionDivider />
-        </>
+        <section className="mb-14">
+          <SectionHeading id="developments" num={nextSection()}>Recent Developments</SectionHeading>
+          <RecentDevelopmentsSection developments={report.recent_developments} />
+        </section>
       )}
 
       {/* ── Regulatory ── */}
       {report.regulatory_landscape.length > 0 && (
-        <>
-          <section className="mb-2">
-            <SectionHeading id="regulatory" num={nextSection()}>Regulatory Landscape</SectionHeading>
-            <RegulatorySection items={report.regulatory_landscape} />
-          </section>
-          <SectionDivider />
-        </>
+        <section className="mb-14">
+          <SectionHeading id="regulatory" num={nextSection()}>Regulatory Landscape</SectionHeading>
+          <RegulatorySection items={report.regulatory_landscape} />
+        </section>
       )}
 
       {/* ── FAQs ── */}
       {report.faqs.length > 0 && (
-        <section className="mb-2">
+        <section className="mb-14">
           <SectionHeading id="faq" num={nextSection()}>Frequently Asked Questions</SectionHeading>
           <JsonFAQSection faqs={report.faqs} />
         </section>

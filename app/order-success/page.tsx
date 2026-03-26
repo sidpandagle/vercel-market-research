@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui';
 
 export const metadata: Metadata = {
-  title: 'Order Confirmed — SynapticResearch',
+  title: 'Order Confirmed — NeoGraphAnalytics',
   description: 'Your order has been confirmed. Your report will be delivered within 2–3 business days.',
   robots: { index: false, follow: false },
 };

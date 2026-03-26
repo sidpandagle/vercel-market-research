@@ -53,6 +53,14 @@ export async function generateMetadata({ params }: PressReleasePageProps): Promi
         type: "article",
         publishedTime: pressRelease.publishDate || pressRelease.createdAt,
         authors: pressRelease.authorDetails ? [pressRelease.authorDetails.name] : [pressRelease.author],
+        images: [
+          {
+            url: "/assets/images/mr.webp",
+            width: 1200,
+            height: 630,
+            alt: pressRelease.title,
+          },
+        ],
       },
       twitter: {
         card: 'summary_large_image',
@@ -89,7 +97,7 @@ export default async function PressReleaseDetailPage({ params }: PressReleasePag
     type: 'NewsArticle',
     title: pressRelease.title,
     description: pressRelease.excerpt,
-    url: `https://www.synapticresearch.com/press-releases/${pressRelease.slug}`,
+    url: `https://www.neographanalytics.com/press-releases/${pressRelease.slug}`,
     datePublished: pressRelease.publishDate || pressRelease.createdAt || pressRelease.date,
     dateModified: pressRelease.updatedAt,
     author: pressRelease.authorDetails?.name || pressRelease.author,
@@ -97,9 +105,9 @@ export default async function PressReleaseDetailPage({ params }: PressReleasePag
   });
 
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: 'Home', url: 'https://www.synapticresearch.com' },
-    { name: 'Press Releases', url: 'https://www.synapticresearch.com/press-releases' },
-    { name: pressRelease.title, url: `https://www.synapticresearch.com/press-releases/${pressRelease.slug}` },
+    { name: 'Home', url: 'https://www.neographanalytics.com' },
+    { name: 'Press Releases', url: 'https://www.neographanalytics.com/press-releases' },
+    { name: pressRelease.title, url: `https://www.neographanalytics.com/press-releases/${pressRelease.slug}` },
   ]);
 
   return (

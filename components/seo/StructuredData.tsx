@@ -30,18 +30,18 @@ export const StructuredData: FC<StructuredDataProps> = ({ data }) => {
 export const generateOrganizationSchema = () => ({
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'Synaptic Research',
-  url: 'https://www.synapticresearch.com',
-  logo: 'https://www.synapticresearch.com/assets/images/logo.png',
-  description: 'Synaptic Research delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.',
+  name: 'NeoGraph Analytics',
+  url: 'https://www.neographanalytics.com',
+  logo: 'https://www.neographanalytics.com/assets/images/logo.png',
+  description: 'NeoGraph Analytics delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.',
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'Customer Service',
-    email: 'support@synapticresearch.com',
+    email: 'support@neographanalytics.com',
   },
   sameAs: [
-    'https://twitter.com/SynapticResearch',
-    'https://www.linkedin.com/company/synaptic-research',
+    'https://twitter.com/NeoGraphAnalytics',
+    'https://www.linkedin.com/company/neograph-analytics',
   ],
 });
 
@@ -51,12 +51,12 @@ export const generateOrganizationSchema = () => ({
 export const generateWebSiteSchema = () => ({
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'Synaptic Research',
-  url: 'https://www.synapticresearch.com',
-  description: 'Synaptic Research delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.',
+  name: 'NeoGraph Analytics',
+  url: 'https://www.neographanalytics.com',
+  description: 'NeoGraph Analytics delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.',
   potentialAction: {
     '@type': 'SearchAction',
-    target: 'https://www.synapticresearch.com/search?q={search_term_string}',
+    target: 'https://www.neographanalytics.com/search?q={search_term_string}',
     'query-input': 'required name=search_term_string',
   },
 });
@@ -94,14 +94,14 @@ export const generateArticleSchema = (params: {
       }
     : {
         '@type': 'Organization',
-        name: 'Synaptic Research',
+        name: 'NeoGraph Analytics',
       },
   publisher: {
     '@type': 'Organization',
-    name: 'Synaptic Research',
+    name: 'NeoGraph Analytics',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://www.synapticresearch.com/assets/images/logo.png',
+      url: 'https://www.neographanalytics.com/assets/images/logo.png',
     },
   },
   ...(params.image && {
@@ -172,7 +172,7 @@ export const generateProductSchema = (params: {
     description: params.description,
     brand: {
       '@type': 'Brand',
-      name: 'Synaptic Research',
+      name: 'NeoGraph Analytics',
     },
     category: params.category || 'Healthcare Market Research Report',
     ...(params.reportCode && { sku: params.reportCode }),
@@ -188,8 +188,8 @@ export const generateProductSchema = (params: {
       itemCondition: 'https://schema.org/NewCondition',
       seller: {
         '@type': 'Organization',
-        name: 'Synaptic Research',
-        url: 'https://www.synapticresearch.com',
+        name: 'NeoGraph Analytics',
+        url: 'https://www.neographanalytics.com',
       },
     },
     aggregateRating: {
@@ -222,15 +222,15 @@ export const generateDatasetSchema = (params: {
   url: params.url,
   publisher: {
     '@type': 'Organization',
-    name: 'Synaptic Research',
-    url: 'https://www.synapticresearch.com',
+    name: 'NeoGraph Analytics',
+    url: 'https://www.neographanalytics.com',
   },
   creator: {
     '@type': 'Organization',
-    name: 'Synaptic Research',
+    name: 'NeoGraph Analytics',
   },
   datePublished: params.datePublished,
-  license: 'https://www.synapticresearch.com/legal/terms-of-use',
+  license: 'https://www.neographanalytics.com/legal/terms-of-use',
   ...(params.keywords && params.keywords.length > 0 && {
     keywords: params.keywords.join(', '),
   }),
@@ -250,13 +250,13 @@ export const generateDatasetSchema = (params: {
 export const generateLocalBusinessSchema = () => ({
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
-  name: 'Synaptic Research',
-  url: 'https://www.synapticresearch.com',
-  email: 'support@synapticresearch.com',
-  description: 'Synaptic Research delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.',
+  name: 'NeoGraph Analytics',
+  url: 'https://www.neographanalytics.com',
+  email: 'support@neographanalytics.com',
+  description: 'NeoGraph Analytics delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.',
   sameAs: [
-    'https://twitter.com/SynapticResearch',
-    'https://www.linkedin.com/company/synaptic-research',
+    'https://twitter.com/NeoGraphAnalytics',
+    'https://www.linkedin.com/company/neograph-analytics',
   ],
   address: {
     '@type': 'PostalAddress',

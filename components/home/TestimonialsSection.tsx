@@ -79,7 +79,7 @@ export default function TestimonialsSection() {
             Trusted by Industry Leaders
           </h2>
           <p className="text-base text-stone-500 max-w-2xl mx-auto leading-relaxed">
-            What healthcare executives and research teams say about Synaptic Research.
+            What healthcare executives and research teams say about NeoGraph Analytics.
           </p>
         </div>
 
