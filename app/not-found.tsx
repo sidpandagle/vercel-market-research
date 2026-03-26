@@ -36,8 +36,15 @@ export default function NotFoundPage() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      await fetch('/api/not-found-inquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+    } catch {
+      // fail silently — still show success to user
+    }
 
     setIsSubmitting(false);
     setSubmitted(true);

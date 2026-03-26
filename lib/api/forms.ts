@@ -15,37 +15,47 @@ export function isFormError(
 }
 
 /**
- * Submit contact form — static site stub (no network call)
+ * Submit contact form — sends email via Resend through API route
  */
 export async function submitContactForm(
-  _data: ContactFormData
+  data: ContactFormData
 ): Promise<ApiResponse<FormSubmissionResponse>> {
-  return {
-    success: true,
-    data: {
-      success: true,
-      submissionId: 'static',
-      category: 'contact',
-      message: 'Thank you for your inquiry. We will get back to you shortly.',
-      createdAt: new Date().toISOString(),
-    },
-  };
+  try {
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    const json = await res.json();
+    return json;
+  } catch {
+    return {
+      success: false,
+      error: 'network_error',
+      message: 'Unable to send message. Please check your connection and try again.',
+    };
+  }
 }
 
 /**
- * Submit request sample form — static site stub (no network call)
+ * Submit request sample form — sends email via Resend through API route
  */
 export async function submitRequestSampleForm(
-  _data: RequestSampleFormData
+  data: RequestSampleFormData
 ): Promise<ApiResponse<FormSubmissionResponse>> {
-  return {
-    success: true,
-    data: {
-      success: true,
-      submissionId: 'static',
-      category: 'request-sample',
-      message: 'Thank you for your request. We will send you the sample shortly.',
-      createdAt: new Date().toISOString(),
-    },
-  };
+  try {
+    const res = await fetch('/api/request-sample', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    const json = await res.json();
+    return json;
+  } catch {
+    return {
+      success: false,
+      error: 'network_error',
+      message: 'Unable to send request. Please check your connection and try again.',
+    };
+  }
 }
