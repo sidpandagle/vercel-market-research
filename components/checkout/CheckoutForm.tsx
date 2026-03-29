@@ -6,7 +6,8 @@ import { Button } from '@/components/ui';
 import { CountrySelect } from '@/components/ui/country-select';
 import { getDefaultCountry, type Country } from '@/lib/data/countries';
 import { PayPalButton } from './PayPalButton';
-import { createOrder, captureOrder } from '@/lib/api/orders';
+import { StripePaymentForm } from './StripePaymentForm';
+import { createOrder, captureOrder, confirmStripeOrder } from '@/lib/api/orders';
 
 type Step = 'details' | 'payment' | 'processing';
 
@@ -21,6 +22,7 @@ interface CustomerDetails {
   customer_company: string;
   customer_phone: string;
   customer_country: string;
+  billing_address: string;
 }
 
 const getInitialDetails = (): CustomerDetails => {
@@ -31,6 +33,7 @@ const getInitialDetails = (): CustomerDetails => {
     customer_company: '',
     customer_phone: '',
     customer_country: defaultCountry.name,
+    billing_address: '',
   };
 };
 
@@ -39,8 +42,10 @@ export function CheckoutForm({ reportSlug, reportTitle }: CheckoutFormProps) {
   const [step, setStep] = useState<Step>('details');
   const [details, setDetails] = useState<CustomerDetails>(getInitialDetails);
   const [countryCode, setCountryCode] = useState<string>(getDefaultCountry().code);
+  const [paymentMethod, setPaymentMethod] = useState<'paypal' | 'stripe'>('paypal');
   const [orderId, setOrderId] = useState<number | null>(null);
   const [paypalOrderId, setPaypalOrderId] = useState<string>('');
+  const [stripeClientSecret, setStripeClientSecret] = useState<string>('');
   const [error, setError] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -53,10 +58,15 @@ export function CheckoutForm({ reportSlug, reportTitle }: CheckoutFormProps) {
       const result = await createOrder({
         ...details,
         report_slug: reportSlug,
+        payment_method: paymentMethod,
       });
 
       setOrderId(result.order_id);
-      setPaypalOrderId(result.paypal_order_id);
+      if (result.payment_method === 'stripe' && result.stripe_client_secret) {
+        setStripeClientSecret(result.stripe_client_secret);
+      } else if (result.paypal_order_id) {
+        setPaypalOrderId(result.paypal_order_id);
+      }
       setStep('payment');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to create order. Please try again.');
@@ -83,6 +93,23 @@ export function CheckoutForm({ reportSlug, reportTitle }: CheckoutFormProps) {
     console.error('PayPal error:', err);
     setError('Payment failed. Please try again or use a different payment method.');
     setStep('payment');
+  };
+
+  const handleStripeSuccess = async () => {
+    if (!orderId) return;
+    setStep('processing');
+    setError('');
+    try {
+      await confirmStripeOrder(orderId);
+      router.push('/order-success');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Payment verification failed. Please contact support.');
+      setStep('payment');
+    }
+  };
+
+  const handleStripeError = (message: string) => {
+    setError(message);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -170,6 +197,21 @@ export function CheckoutForm({ reportSlug, reportTitle }: CheckoutFormProps) {
             />
           </div>
 
+          <div>
+            <label className="block text-sm font-medium text-[var(--foreground)] mb-1">
+              Billing Address <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              name="billing_address"
+              value={details.billing_address}
+              onChange={handleChange}
+              required
+              placeholder="123 Main Street, Suite 4"
+              className="w-full border border-[var(--border)] rounded-md px-3 py-2 text-sm bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
+            />
+          </div>
+
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-[var(--foreground)] mb-1">
@@ -196,6 +238,35 @@ export function CheckoutForm({ reportSlug, reportTitle }: CheckoutFormProps) {
             </div>
           </div>
 
+          {/* Payment method selector */}
+          <div>
+            <p className="text-sm font-medium text-[var(--foreground)] mb-2">Payment method</p>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => setPaymentMethod('paypal')}
+                className={`py-2 px-3 rounded-md border text-sm font-medium transition-colors ${
+                  paymentMethod === 'paypal'
+                    ? 'border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)]'
+                    : 'border-[var(--border)] text-[var(--muted-foreground)] hover:border-[var(--primary)]'
+                }`}
+              >
+                PayPal
+              </button>
+              <button
+                type="button"
+                onClick={() => setPaymentMethod('stripe')}
+                className={`py-2 px-3 rounded-md border text-sm font-medium transition-colors ${
+                  paymentMethod === 'stripe'
+                    ? 'border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)]'
+                    : 'border-[var(--border)] text-[var(--muted-foreground)] hover:border-[var(--primary)]'
+                }`}
+              >
+                Credit / Debit Card
+              </button>
+            </div>
+          </div>
+
           <div className="pt-2">
             <Button
               type="submit"
@@ -208,7 +279,7 @@ export function CheckoutForm({ reportSlug, reportTitle }: CheckoutFormProps) {
           </div>
 
           <p className="text-xs text-center text-[var(--muted-foreground)]">
-            By proceeding you agree to our Terms of Service. Payment is processed securely by PayPal.
+            By proceeding you agree to our Terms of Service. Payments are processed securely.
           </p>
         </form>
       )}
@@ -229,18 +300,34 @@ export function CheckoutForm({ reportSlug, reportTitle }: CheckoutFormProps) {
 
           <div>
             <p className="text-sm font-medium text-[var(--foreground)] mb-3">
-              Select payment method
+              {paymentMethod === 'stripe' ? 'Enter your card details' : 'Complete payment with PayPal'}
             </p>
-            <PayPalButton
-              paypalOrderId={paypalOrderId}
-              onApprove={handlePayPalApprove}
-              onError={handlePayPalError}
-            />
-          </div>
 
-          <p className="text-xs text-center text-[var(--muted-foreground)]">
-            You can pay with PayPal or a credit/debit card — no PayPal account required.
-          </p>
+            {paymentMethod === 'stripe' ? (
+              <StripePaymentForm
+                clientSecret={stripeClientSecret}
+                billingDetails={{
+                  name: details.customer_name,
+                  email: details.customer_email,
+                  countryCode,
+                  line1: details.billing_address,
+                }}
+                onSuccess={handleStripeSuccess}
+                onError={handleStripeError}
+              />
+            ) : (
+              <>
+                <PayPalButton
+                  paypalOrderId={paypalOrderId}
+                  onApprove={handlePayPalApprove}
+                  onError={handlePayPalError}
+                />
+                <p className="text-xs text-center text-[var(--muted-foreground)] mt-2">
+                  You can pay with PayPal or a credit/debit card — no PayPal account required.
+                </p>
+              </>
+            )}
+          </div>
         </div>
       )}
     </div>

@@ -61,8 +61,6 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {/* Preconnect to third-party origins to reduce connection latency */}
-        <link rel="preconnect" href="https://js.hs-scripts.com" />
-        <link rel="dns-prefetch" href="https://js.hs-scripts.com" />
         <link rel="preconnect" href="https://translate.google.com" />
         <link rel="dns-prefetch" href="https://translate.google.com" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
@@ -70,12 +68,6 @@ export default function RootLayout({
         <StructuredData data={generateOrganizationSchema()} />
         <StructuredData data={generateWebSiteSchema()} />
         <StructuredData data={generateLocalBusinessSchema()} />
-        {/* HubSpot Embed Code */}
-        <Script
-          id="hs-script-loader"
-          src="//js.hs-scripts.com/22449271.js"
-          strategy="lazyOnload"
-        />
       </head>
       <body className={`${geistSans.variable} antialiased`}>
         <div id="google_translate_element" className="hidden" />

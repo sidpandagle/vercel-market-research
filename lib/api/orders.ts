@@ -1,5 +1,5 @@
 import { API_BASE_URL } from './config';
-import type { CreateOrderRequest, CreateOrderResponse, CaptureOrderResponse } from './orders.types';
+import type { CreateOrderRequest, CreateOrderResponse, CaptureOrderResponse, ConfirmStripeOrderResponse } from './orders.types';
 
 /**
  * Creates an order on the backend and returns a PayPal order ID.
@@ -19,6 +19,29 @@ export async function createOrder(req: CreateOrderRequest): Promise<CreateOrderR
   }
 
   return data as CreateOrderResponse;
+}
+
+/**
+ * Verifies the Stripe PaymentIntent server-side and marks the order as paid.
+ * Call this after stripe.confirmPayment() succeeds on the client.
+ */
+export async function confirmStripeOrder(orderId: number): Promise<ConfirmStripeOrderResponse> {
+  const res = await fetch(`${API_BASE_URL}/api/v1/orders/${orderId}/stripe-capture`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.error || data.message || 'Failed to confirm Stripe payment');
+  }
+
+  if (data.success && data.data) {
+    return data.data as ConfirmStripeOrderResponse;
+  }
+
+  return data as ConfirmStripeOrderResponse;
 }
 
 /**
