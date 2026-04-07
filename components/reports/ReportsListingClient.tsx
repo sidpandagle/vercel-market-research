@@ -133,12 +133,6 @@ export default function ReportsListingClient({
 
           {/* ── Main: Report List ──────────────────────────────────── */}
           <main id="reports-list">
-            {/* Meta row */}
-            <div className="flex items-center justify-between pb-3 border-b border-slate-200 mb-1">
-              <p className="text-xs text-slate-400 font-medium uppercase tracking-wide">
-                {`${totalItems} reports`}
-              </p>
-            </div>
 
             {/* Loading overlay */}
             {isLoading ? (

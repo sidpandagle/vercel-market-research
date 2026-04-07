@@ -81,7 +81,7 @@ export default async function CategoryPage({ params }: PageProps) {
 
   return (
     <>
-      <IndustryHero totalItems={totalItems} activeCategory={categoryData} />
+      <IndustryHero activeCategory={categoryData} />
       <Suspense fallback={null}>
         <ContentPreviewSection categorySlug={category} />
       </Suspense>

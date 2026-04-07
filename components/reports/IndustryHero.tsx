@@ -8,7 +8,6 @@ interface Category {
 }
 
 interface IndustryHeroProps {
-  totalItems?: number;
   activeCategory?: Category | null;
 }
 
@@ -27,7 +26,7 @@ const CATEGORY_ICONS: Record<string, string> = {
   'Animal Health': '🐾',
 };
 
-export default function IndustryHero({ totalItems, activeCategory }: IndustryHeroProps) {
+export default function IndustryHero({ activeCategory }: IndustryHeroProps) {
   const categoryIcon = activeCategory ? (CATEGORY_ICONS[activeCategory.name] || '📊') : null;
 
   return (
@@ -71,17 +70,6 @@ export default function IndustryHero({ totalItems, activeCategory }: IndustryHer
                 ? activeCategory.description
                 : 'Browse comprehensive healthcare market research reports across all industry segments.'}
             </p>
-            {totalItems !== undefined && (
-              <div className="flex items-center gap-3 flex-wrap">
-                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#2563A3] bg-blue-100 px-3 py-1.5 rounded-full">
-                  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
-                    <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
-                  </svg>
-                  {`${totalItems} ${totalItems === 1 ? 'report' : 'reports'}`}
-                </span>
-              </div>
-            )}
           </div>
         </div>
       </div>
