@@ -75,6 +75,13 @@ export default function RootLayout({
         <main className="min-h-screen">{children}</main>
         <Footer />
         <GoogleAnalytics gaId="G-NJ1DNL58KB" />
+        <Script
+          type="text/javascript"
+          id="hs-script-loader"
+          async
+          defer
+          src="//js.hs-scripts.com/22449271.js"
+        />
       </body>
     </html>
   );
