@@ -4,6 +4,8 @@ import { getReports } from '@/lib/api/reports';
 import { ReportsListingClient } from '@/components/reports';
 import ReportsSkeleton from '@/components/reports/ReportsSkeleton';
 
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: "Neograph Analytics Reports & Industry Analysis",
   description: "Browse in-depth neograph analytics reports covering industry trends, competitive analysis, forecasts, and strategic insights.",
