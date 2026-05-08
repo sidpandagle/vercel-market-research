@@ -5,12 +5,11 @@ import AuthorProfile from '@/components/authors/AuthorProfile';
 import AuthorReportsListing from '@/components/authors/AuthorReportsListing';
 import type { Metadata } from 'next';
 
-import teamMembersData from '@/data/team-members.json';
+import { supabase } from '@/lib/supabase/client';
 
 export async function generateStaticParams() {
-  return teamMembersData.map((_, index) => ({
-    id: (index + 1).toString(),
-  }));
+  const { data } = await supabase.from('neograph_team_members').select('id');
+  return (data ?? []).map((_, index) => ({ id: (index + 1).toString() }));
 }
 
 export async function generateMetadata({

@@ -82,7 +82,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
 - `meta_title` → `<title>` tag and Open Graph title (fallback to `title`)
 - `meta_description` → meta description and Open Graph description (fallback to `description`)
 - `meta_keywords` → meta keywords (comma-separated string, split into array)
-  - If `meta_keywords` not provided: fallback to `["healthcare market research", "healthcare industry analysis", category, region]`
+  - If `meta_keywords` not provided: fallback to `["neograph analytics", "healthcare industry analysis", category, region]`
 
 ### 2. Report Header Section
 

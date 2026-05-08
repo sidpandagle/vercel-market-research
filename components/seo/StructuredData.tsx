@@ -33,7 +33,7 @@ export const generateOrganizationSchema = () => ({
   name: 'NeoGraph Analytics',
   url: 'https://www.neographanalytics.com',
   logo: 'https://www.neographanalytics.com/assets/images/logo.png',
-  description: 'NeoGraph Analytics delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.',
+  description: 'NeoGraph Analytics delivers trusted neograph analytics, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.',
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'Customer Service',
@@ -53,7 +53,7 @@ export const generateWebSiteSchema = () => ({
   '@type': 'WebSite',
   name: 'NeoGraph Analytics',
   url: 'https://www.neographanalytics.com',
-  description: 'NeoGraph Analytics delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.',
+  description: 'NeoGraph Analytics delivers trusted neograph analytics, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.',
   potentialAction: {
     '@type': 'SearchAction',
     target: 'https://www.neographanalytics.com/search?q={search_term_string}',
@@ -174,7 +174,7 @@ export const generateProductSchema = (params: {
       '@type': 'Brand',
       name: 'NeoGraph Analytics',
     },
-    category: params.category || 'Healthcare Market Research Report',
+    category: params.category || 'Neograph Analytics Report',
     ...(params.reportCode && { sku: params.reportCode }),
     ...(params.keywords && params.keywords.length > 0 && {
       keywords: params.keywords.join(', '),
@@ -253,7 +253,7 @@ export const generateLocalBusinessSchema = () => ({
   name: 'NeoGraph Analytics',
   url: 'https://www.neographanalytics.com',
   email: 'support@neographanalytics.com',
-  description: 'NeoGraph Analytics delivers trusted healthcare market research, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.',
+  description: 'NeoGraph Analytics delivers trusted neograph analytics, industry insights, trends, forecasts, and data-driven analysis across global healthcare sectors.',
   sameAs: [
     'https://twitter.com/NeoGraphAnalytics',
     'https://www.linkedin.com/company/neograph-analytics',

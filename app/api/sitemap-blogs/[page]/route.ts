@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import blogsData from '@/data/blogs.json';
+import { getBlogs } from '@/lib/api/blogs';
 
 const BASE_URL = 'https://www.neographanalytics.com';
 const ITEMS_PER_SITEMAP = 500;
@@ -15,8 +15,10 @@ export async function GET(
     return new NextResponse('Not Found', { status: 404 });
   }
 
+  const blogsRes = await getBlogs();
+  const allBlogs = blogsRes.success ? blogsRes.data : [];
   const start = (page - 1) * ITEMS_PER_SITEMAP;
-  const blogs = blogsData.slice(start, start + ITEMS_PER_SITEMAP);
+  const blogs = allBlogs.slice(start, start + ITEMS_PER_SITEMAP);
 
   if (blogs.length === 0) {
     return new NextResponse('Not Found', { status: 404 });

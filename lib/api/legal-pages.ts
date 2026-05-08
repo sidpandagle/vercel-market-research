@@ -1,56 +1,57 @@
+import { supabase } from '@/lib/supabase/client';
 import type { ApiResponse } from './config';
-import type { LegalPageFilters, LegalPage, ApiLegalPage } from './legal-pages.types';
-import legalPagesData from '@/data/legal-pages.json';
-
-// Cast imported data to correct type
-const allLegalPages = legalPagesData as ApiLegalPage[];
+import type { LegalPageFilters, LegalPage } from './legal-pages.types';
 
 export async function getLegalPages(
   filters?: LegalPageFilters
 ): Promise<ApiResponse<LegalPage[]>> {
-  try {
-    // Apply pagination if needed
-    const page = filters?.page || 1;
-    const limit = filters?.limit || 100;
-    const start = (page - 1) * limit;
-    const end = start + limit;
+  const { data, error } = await supabase
+    .from('neograph_legal_pages')
+    .select('*')
+    .order('id');
 
-    const paginatedPages = allLegalPages.slice(start, end);
+  if (error) return { success: false, error: 'fetch_error', message: error.message };
 
-    return {
-      success: true,
-      data: paginatedPages
-    };
-  } catch (error) {
-    return {
-      success: false,
-      error: 'load_error',
-      message: 'Failed to load legal pages',
-    };
-  }
+  const pages: LegalPage[] = (data ?? []).map(row => ({
+    id: row.id,
+    slug: row.slug,
+    title: row.title,
+    excerpt: row.excerpt,
+    content: row.content,
+    lastUpdated: row.last_updated,
+    category: row.category,
+    metadata: row.metadata,
+  }));
+
+  const page = filters?.page ?? 1;
+  const limit = filters?.limit ?? 100;
+  const start = (page - 1) * limit;
+
+  return { success: true, data: pages.slice(start, start + limit) };
 }
 
 export async function getLegalPageBySlug(slug: string): Promise<ApiResponse<LegalPage>> {
-  try {
-    const page = allLegalPages.find(p => p.slug === slug);
+  const { data, error } = await supabase
+    .from('neograph_legal_pages')
+    .select('*')
+    .eq('slug', slug)
+    .single();
 
-    if (!page) {
-      return {
-        success: false,
-        error: 'not_found',
-        message: `Legal page with slug "${slug}" not found`,
-      };
-    }
-
-    return {
-      success: true,
-      data: page
-    };
-  } catch (error) {
-    return {
-      success: false,
-      error: 'load_error',
-      message: 'Failed to load legal page',
-    };
+  if (error || !data) {
+    return { success: false, error: 'not_found', message: `Legal page "${slug}" not found` };
   }
+
+  return {
+    success: true,
+    data: {
+      id: data.id,
+      slug: data.slug,
+      title: data.title,
+      excerpt: data.excerpt,
+      content: data.content,
+      lastUpdated: data.last_updated,
+      category: data.category,
+      metadata: data.metadata,
+    },
+  };
 }

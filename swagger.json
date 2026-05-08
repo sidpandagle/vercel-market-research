@@ -5,8 +5,8 @@
     ],
     "swagger": "2.0",
     "info": {
-        "description": "RESTful API for healthcare market research reports and categories with caching and pagination support",
-        "title": "Healthcare Market Research API",
+        "description": "RESTful API for neograph analytics reports and categories with caching and pagination support",
+        "title": "Neograph Analytics API",
         "termsOfService": "https://example.com/terms/",
         "contact": {
             "name": "API Support",
@@ -3693,7 +3693,7 @@
         },
         "/api/v1/reports": {
             "get": {
-                "description": "Get a paginated list of healthcare market research reports with optional filters for status, category, geography, and search. Admin users can use additional filters for user tracking and date ranges. Admin-only fields are automatically included in responses for authenticated admin/editor users.",
+                "description": "Get a paginated list of neograph analytics reports with optional filters for status, category, geography, and search. Admin users can use additional filters for user tracking and date ranges. Admin-only fields are automatically included in responses for authenticated admin/editor users.",
                 "consumes": [
                     "application/json"
                 ],
@@ -3841,7 +3841,7 @@
                         "BearerAuth": []
                     }
                 ],
-                "description": "Create a new healthcare market research report. Automatically sets created_by and updated_by to the authenticated user. Requires admin or editor role.",
+                "description": "Create a new neograph analytics report. Automatically sets created_by and updated_by to the authenticated user. Requires admin or editor role.",
                 "consumes": [
                     "application/json"
                 ],
@@ -4371,7 +4371,7 @@
                         "BearerAuth": []
                     }
                 ],
-                "description": "Update an existing healthcare market research report by ID. Automatically updates updated_by field. Creates version history when status changes to 'published'. Requires admin or editor role.",
+                "description": "Update an existing neograph analytics report by ID. Automatically updates updated_by field. Creates version history when status changes to 'published'. Requires admin or editor role.",
                 "consumes": [
                     "application/json"
                 ],
@@ -4517,7 +4517,7 @@
                         "BearerAuth": []
                     }
                 ],
-                "description": "Delete a healthcare market research report by ID. Permanently removes the report and all associated data. Requires admin role.",
+                "description": "Delete a neograph analytics report by ID. Permanently removes the report and all associated data. Requires admin role.",
                 "consumes": [
                     "application/json"
                 ],
@@ -4934,7 +4934,7 @@
         },
         "/api/v1/reports/{slug}": {
             "get": {
-                "description": "Get a single healthcare market research report by its unique slug or numeric ID. If the parameter is numeric, it will be treated as an ID; otherwise, it will be treated as a slug.",
+                "description": "Get a single neograph analytics report by its unique slug or numeric ID. If the parameter is numeric, it will be treated as an ID; otherwise, it will be treated as a slug.",
                 "consumes": [
                     "application/json"
                 ],
@@ -5136,7 +5136,7 @@
         },
         "/api/v1/search": {
             "get": {
-                "description": "Search for healthcare market research reports by query text (searches in title, description, and summary)",
+                "description": "Search for neograph analytics reports by query text (searches in title, description, and summary)",
                 "consumes": [
                     "application/json"
                 ],
@@ -7521,7 +7521,7 @@
             "name": "Users"
         },
         {
-            "description": "Operations related to healthcare market research reports",
+            "description": "Operations related to neograph analytics reports",
             "name": "Reports"
         },
         {

@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { getJsonReportBySlug, jsonReportToUIReport } from '@/lib/jsonReports';
+import { getReportBySlug } from '@/lib/api/reports';
 import { CheckoutForm } from '@/components/checkout/CheckoutForm';
 import { OrderSummary } from '@/components/checkout/OrderSummary';
 import { Breadcrumb } from '@/components/ui';
@@ -12,10 +12,10 @@ export async function generateMetadata({
   params: Promise<{ reportSlug: string }>;
 }): Promise<Metadata> {
   const { reportSlug } = await params;
-  const jsonReport = getJsonReportBySlug(reportSlug);
-  if (!jsonReport) return { title: 'Checkout' };
+  const result = await getReportBySlug(reportSlug);
+  if (!result.success) return { title: 'Checkout' };
   return {
-    title: `Checkout — ${jsonReport.title}`,
+    title: `Checkout — ${result.data.title}`,
     robots: { index: false, follow: false },
   };
 }
@@ -27,10 +27,10 @@ export default async function CheckoutPage({
 }) {
   const { reportSlug } = await params;
 
-  const jsonReport = getJsonReportBySlug(reportSlug);
-  if (!jsonReport) notFound();
+  const result = await getReportBySlug(reportSlug);
+  if (!result.success) notFound();
 
-  const report = jsonReportToUIReport(jsonReport, 0);
+  const report = result.data;
 
   const parsePriceString = (val: string | number | undefined | null): number => {
     if (typeof val === 'number') return val;

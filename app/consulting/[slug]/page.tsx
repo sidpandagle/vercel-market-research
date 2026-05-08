@@ -11,7 +11,7 @@ interface ConsultingServicePageProps {
 }
 
 export async function generateStaticParams() {
-  const services = getAllConsultingServices();
+  const services = await getAllConsultingServices();
   return services.map((service) => ({
     slug: service.slug,
   }));
@@ -19,7 +19,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: ConsultingServicePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const service = getConsultingServiceBySlug(slug);
+  const service = await getConsultingServiceBySlug(slug);
 
   if (!service) {
     return {
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: ConsultingServicePageProps): 
 
 export default async function ConsultingServicePage({ params }: ConsultingServicePageProps) {
   const { slug } = await params;
-  const service = getConsultingServiceBySlug(slug);
+  const service = await getConsultingServiceBySlug(slug);
 
   if (!service) {
     notFound();

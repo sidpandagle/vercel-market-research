@@ -1,40 +1,35 @@
-// Author data functions — reads from static JSON (team-members.json)
-
-import teamMembersData from '@/data/team-members.json';
+import { supabase } from '@/lib/supabase/client';
 import type { ApiAuthor } from './common.types';
 import type { Report, ReportFilters } from './reports.types';
 import type { ApiResponse } from './config';
 
-interface TeamMember {
-  id: string;
-  name: string;
-  role: string;
-  imageUrl: string;
-  shortBio: string;
-  fullBio: string;
-  expertise: string[];
-  credentials: string[];
-}
-
-function toApiAuthor(member: TeamMember, numericId: number): ApiAuthor {
-  return {
-    id: numericId,
-    name: member.name,
-    role: member.role,
-    bio: member.shortBio,
-    imageUrl: member.imageUrl || undefined,
-    createdAt: '',
-    updatedAt: '',
-  };
-}
-
 export async function getAuthorById(id: number): Promise<ApiResponse<ApiAuthor>> {
-  const members = teamMembersData as TeamMember[];
+  const { data, error } = await supabase
+    .from('neograph_team_members')
+    .select('*')
+    .order('id');
+
+  if (error) return { success: false, error: 'fetch_error', message: error.message };
+
+  const members = data ?? [];
   const index = id - 1;
   if (index < 0 || index >= members.length) {
     return { success: false, error: 'not_found', message: 'Author not found' };
   }
-  return { success: true, data: toApiAuthor(members[index], id) };
+
+  const m = members[index];
+  return {
+    success: true,
+    data: {
+      id,
+      name: m.name,
+      role: m.role,
+      bio: m.short_bio,
+      imageUrl: m.image_url || undefined,
+      createdAt: '',
+      updatedAt: '',
+    },
+  };
 }
 
 export async function getReportsByAuthorId(

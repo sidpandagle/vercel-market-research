@@ -1,6 +1,6 @@
 # Form API Integration
 
-This directory contains the frontend API integration for form submissions in the Healthcare Market Research application.
+This directory contains the frontend API integration for form submissions in the Neograph Analytics application.
 
 ## Overview
 

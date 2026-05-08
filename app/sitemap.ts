@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { getAllJsonReports } from '@/lib/jsonReports';
+import { getReports } from '@/lib/api/reports';
 import { getBlogs } from '@/lib/api/blogs';
 import { getPressReleases } from '@/lib/api/press-releases';
 
@@ -26,13 +26,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority,
   }));
 
-  // Report pages from local JSON
-  const reportEntries: MetadataRoute.Sitemap = getAllJsonReports().map((report) => ({
-    url: `${BASE_URL}/reports/${report.slug}`,
-    lastModified: now,
-    changeFrequency: 'monthly' as const,
-    priority: 0.8,
-  }));
+  // Report pages from Supabase
+  const reportsRes = await getReports();
+  const reportEntries: MetadataRoute.Sitemap = reportsRes.success
+    ? reportsRes.data.map((report) => ({
+        url: `${BASE_URL}/reports/${report.slug}`,
+        lastModified: now,
+        changeFrequency: 'monthly' as const,
+        priority: 0.8,
+      }))
+    : [];
 
   // Blog pages from API (graceful fallback)
   const blogsRes = await getBlogs({ status: 'published', page: 1, limit: 500 });

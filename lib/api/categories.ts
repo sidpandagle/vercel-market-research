@@ -1,32 +1,27 @@
-// Category data functions — reads from static JSON
-
-import categoriesData from '@/data/categories.json';
+import { supabase } from '@/lib/supabase/client';
 import type { ApiCategory, CategoryFilters } from './categories.types';
 import type { Report, ReportFilters } from './reports.types';
 import type { ApiResponse } from './config';
 
-interface StaticCategory {
-  id: number;
-  name: string;
-  slug: string;
-  description: string;
-}
-
-function toApiCategory(cat: StaticCategory): ApiCategory {
-  return {
-    id: cat.id,
-    name: cat.name,
-    slug: cat.slug,
-    description: cat.description,
-    created_at: '',
-    updated_at: '',
-  };
-}
-
 export async function getCategories(
   _filters?: CategoryFilters
 ): Promise<ApiResponse<ApiCategory[]>> {
-  const categories = (categoriesData as StaticCategory[]).map(toApiCategory);
+  const { data, error } = await supabase
+    .from('neograph_categories')
+    .select('*')
+    .order('id');
+
+  if (error) return { success: false, error: 'fetch_error', message: error.message };
+
+  const categories: ApiCategory[] = (data ?? []).map(row => ({
+    id: row.id,
+    name: row.name,
+    slug: row.slug,
+    description: row.description,
+    created_at: '',
+    updated_at: '',
+  }));
+
   return { success: true, data: categories };
 }
 

@@ -56,9 +56,9 @@ export function generateLLMTxt(): string {
   let content = '';
 
   // Site Overview
-  content += '# Healthcare Market Research\n\n';
+  content += '# Neograph Analytics\n\n';
   content += '## Site Overview\n\n';
-  content += 'A comprehensive healthcare market research and consulting firm delivering business insights, market research reports, and strategic advisory services to organizations across the healthcare and life sciences ecosystem. We provide data-driven intelligence covering pharmaceuticals, biotechnology, medical devices, diagnostics, healthcare IT, and therapeutic areas.\n\n';
+  content += 'A comprehensive neograph analytics and consulting firm delivering business insights, market research reports, and strategic advisory services to organizations across the healthcare and life sciences ecosystem. We provide data-driven intelligence covering pharmaceuticals, biotechnology, medical devices, diagnostics, healthcare IT, and therapeutic areas.\n\n';
   content += `Total Research Reports: ${reports.length}\n`;
   content += `Blog Articles: ${blogs.length}\n`;
   content += `Consulting Services: ${services.length}\n`;
@@ -162,7 +162,7 @@ export function generateLLMTxt(): string {
   content += '---\n\n';
   content += `Generated: ${new Date().toISOString()}\n`;
   content += `Total Pages: ${reports.length + blogs.length + services.length + categories.length + 10}\n`;
-  content += 'Content Type: Healthcare Market Research, Life Sciences, Pharmaceuticals, Medical Devices, Biotechnology\n';
+  content += 'Content Type: Neograph Analytics, Life Sciences, Pharmaceuticals, Medical Devices, Biotechnology\n';
 
   return content;
 }

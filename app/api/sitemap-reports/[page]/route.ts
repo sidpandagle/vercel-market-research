@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getAllJsonReports } from '@/lib/jsonReports';
+import { getReports } from '@/lib/api/reports';
 
 const BASE_URL = 'https://www.neographanalytics.com';
 const ITEMS_PER_SITEMAP = 500;
@@ -15,7 +15,8 @@ export async function GET(
     return new NextResponse('Not Found', { status: 404 });
   }
 
-  const allReports = getAllJsonReports();
+  const reportsRes = await getReports();
+  const allReports = reportsRes.success ? reportsRes.data : [];
   const startIndex = (page - 1) * ITEMS_PER_SITEMAP;
   const pageReports = allReports.slice(startIndex, startIndex + ITEMS_PER_SITEMAP);
 
@@ -25,7 +26,7 @@ export async function GET(
 
   const reportUrls = pageReports.map((report) => ({
     url: `${BASE_URL}/reports/${report.slug}`,
-    lastModified: new Date(`${report.published_year}-01-01`).toISOString(),
+    lastModified: new Date(`${report.year}-01-01`).toISOString(),
     changeFrequency: 'weekly',
     priority: 0.7,
   }));

@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { Container } from '@/components/ui';
-import allReportsData from '@/data/all_reports.json';
-import type { JsonReport } from '@/lib/jsonReports';
+import { supabase } from '@/lib/supabase/client';
 
 const accentPalette = [
   {
@@ -28,9 +27,26 @@ const accentPalette = [
   },
 ];
 
-const reports = (allReportsData as JsonReport[]).slice(0, 3);
+export default async function FeaturedReportsSection() {
+  const { data } = await supabase
+    .from('neograph_reports')
+    .select('report_id, slug, title, industry, published_year, market_size, market_overview, regional_analysis')
+    .order('published_year', { ascending: false })
+    .limit(3);
 
-export default function FeaturedReportsSection() {
+  const reports = (data ?? []) as Array<{
+    report_id: string;
+    slug: string;
+    title: string;
+    industry: string;
+    published_year: number;
+    market_size: { cagr: number };
+    market_overview: { summary: string };
+    regional_analysis: Array<{ region: string }>;
+  }>;
+
+  if (reports.length === 0) return null;
+
   const [featured, ...secondary] = reports;
 
   return (

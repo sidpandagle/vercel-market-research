@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import pressReleasesData from '@/data/press-releases.json';
+import { getPressReleases } from '@/lib/api/press-releases';
 
 const BASE_URL = 'https://www.neographanalytics.com';
 const ITEMS_PER_SITEMAP = 500;
@@ -15,8 +15,10 @@ export async function GET(
     return new NextResponse('Not Found', { status: 404 });
   }
 
+  const prRes = await getPressReleases();
+  const allPressReleases = prRes.success ? prRes.data : [];
   const start = (page - 1) * ITEMS_PER_SITEMAP;
-  const pressReleases = pressReleasesData.slice(start, start + ITEMS_PER_SITEMAP);
+  const pressReleases = allPressReleases.slice(start, start + ITEMS_PER_SITEMAP);
 
   if (pressReleases.length === 0) {
     return new NextResponse('Not Found', { status: 404 });

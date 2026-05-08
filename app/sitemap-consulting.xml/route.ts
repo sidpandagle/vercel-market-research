@@ -6,7 +6,7 @@ const BASE_URL = 'https://www.neographanalytics.com';
 export async function GET() {
   try {
     // Get dynamic consulting services from JSON
-    const consultingServices = getAllConsultingServices();
+    const consultingServices = await getAllConsultingServices();
 
     // Consulting hub page
     const consultingHubPage = {

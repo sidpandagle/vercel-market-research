@@ -317,7 +317,7 @@ cagr.includes('%') ? cagr : `${cagr}%`
 // Input from API: "Cell Therapy Raw Materials Market, Global Cell Therapy Raw Materials Market, Cell Therapy Raw Materials Market Share"
 const keywords = report.meta_keywords
   ? report.meta_keywords.split(',').map(k => k.trim()).filter(Boolean)
-  : ["healthcare market research", "healthcare industry analysis", report.category, report.region];
+  : ["neograph analytics", "healthcare industry analysis", report.category, report.region];
 
 // Output: [
 //   "Cell Therapy Raw Materials Market",
@@ -326,7 +326,7 @@ const keywords = report.meta_keywords
 // ]
 
 // If meta_keywords is not provided:
-// Output: ["healthcare market research", "healthcare industry analysis", "Therapeutic Area", "Global"]
+// Output: ["neograph analytics", "healthcare industry analysis", "Therapeutic Area", "Global"]
 ```
 
 ### 6. HTML Content Processing

@@ -170,7 +170,7 @@ export default function MegaMenu({ categories, isActive }: MegaMenuProps) {
                   "group block p-3 rounded-md min-h-[72px]",
                   "border-l-2 border-l-transparent",
                   "transition-all duration-200",
-                  "focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
+                  "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
                 )}
                 style={{ backgroundColor: 'var(--muted)' }}
                 onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderLeftColor = 'var(--accent)'; (e.currentTarget as HTMLElement).style.backgroundColor = 'var(--card)'; }}
